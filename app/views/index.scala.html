@@ -1,7 +1,17 @@
-@(message: String)
+@graphs = {
 
-@main("Paramount Investment League") {
-
-    @play20.welcome(message, style = "Java")
+	<h1>Graphs</1>
 
 }
+
+@trades = { 
+
+	<h1>Trades</h1>
+
+}
+
+@main("Paramount Investment League")(graphs)(trades) {
+
+    <h1> Portfolio </h1>
+
+} 
