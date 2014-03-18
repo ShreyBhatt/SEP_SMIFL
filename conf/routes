@@ -7,3 +7,7 @@ GET     /                           controllers.Application.index()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
+
+
+# Make a query into YahooFinanceService and return Stock data for symbol
+GET     /query/:stock              controllers.Query.getQuery(stock:String)
