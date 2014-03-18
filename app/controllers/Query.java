@@ -20,10 +20,16 @@ public class Query extends Controller {
     YahooFinanceService yahoo = YahooFinanceService.getInstance();
     ObjectNode result = Json.newObject();
     Stock stock = yahoo.getStock(symbol);
-    result.put("status", "OK");
-    result.put("ticker", symbol);
-    result.put("price", stock.getPrice());
-
-    return ok(result);
+    if ( stock == null ) {
+      result.put("status", "KO");
+      result.put("message", "Stock symbol: " + symbol + " can not be found");
+      return badRequest(result);
+    }
+    else {
+      result.put("status", "OK");
+      result.put("ticker", symbol);
+      result.put("price", stock.getPrice());
+      return ok(result);
+    }
   }
 }
