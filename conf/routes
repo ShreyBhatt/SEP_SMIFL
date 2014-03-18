@@ -10,4 +10,19 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 
 # Make a query into YahooFinanceService and return Stock data for symbol
-GET     /query/:stock              controllers.Query.getQuery(stock:String)
+GET     /quote/:stock              controllers.Query.getQuery(stock:String)
+
+# This point lets us get a user.  If the user doens't exist, it will return
+# a badRequest will be returned and a status of "KO"
+GET     /u/:email                  controllers.UserController.getUser(email:String)
+
+# This should be a POST or PUT
+# This should only be hit after we check to see if the user exists,
+# either way, this point is protected and will return a registered or new
+# user
+GET    /u/:first/:last/:email      controllers.UserController.addUser(first:String, last:String, email:String)
+
+# This should be a POST or PUT
+# This should only be hit to create a new league
+# Also need to add support for goals
+GET    /l/:name                    controllers.LeagueController.addLeague(name:String)

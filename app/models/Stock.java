@@ -1,11 +1,13 @@
 package models;
 
+import play.libs.Json;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
  * A Stock class.
- * TODO: Flesh this out. Need to get the company name.
  */
 public class Stock {
+    private final String name;
     private final String sym;
     private final double price;
     private final int volume;
@@ -24,6 +26,8 @@ public class Stock {
             double dayLow, double dayHigh, double moving50DayAvg,
             String marketCap
             ) {
+      //TODO, change this
+        this.name = null;
         this.sym = sym;
         this.price = price;
         this.volume = volume;
@@ -37,6 +41,26 @@ public class Stock {
         this.marketCap = marketCap;
             }
 
+
+    public ObjectNode getJson() {
+      return Json.newObject()
+        .put("company", "")
+        .put("ticker", this.sym)
+        .put("price", this.price)
+        .put("volume", this.volume)
+        .put("pe", this.pe)
+        .put("eps", this.eps)
+        .put("week52High", this.week52High)
+        .put("week52Low", this.week52Low)
+        .put("dayLow", this.dayLow)
+        .put("dayHigh", this.dayHigh)
+        .put("moving50DayAvg", this.moving50DayAvg)
+        .put("marketCap",this.marketCap);
+
+    }
+
+
+    //Getter Methods
     public String getSymbol() { return this.sym; }
     public double getPrice() { return this.price; }
     public int getVolume() { return this.volume; }
@@ -49,3 +73,4 @@ public class Stock {
     public double getMoving50DayAvg() { return this.moving50DayAvg; }
     public String getMarketCap() { return this.marketCap; }
 }
+

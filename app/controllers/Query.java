@@ -27,8 +27,7 @@ public class Query extends Controller {
     }
     else {
       result.put("status", "OK");
-      result.put("ticker", symbol);
-      result.put("price", stock.getPrice());
+      result.put("stock", stock.getJson());
       return ok(result);
     }
   }
