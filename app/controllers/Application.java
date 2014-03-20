@@ -25,6 +25,15 @@ public class Application extends Controller {
     return ok(index.render(user));
   }
 
+  @SecureSocial.SecuredAction
+  public static Result portfolio() {
+    if (logger.isWarnEnabled()) {
+      logger.warn("access granted to index");
+    }
+    Identity user = (Identity) ctx().args.get(SecureSocial.USER_KEY);
+    return ok(index.render(user));
+  }
+
   @SecureSocial.UserAwareAction
   public static Result userAware() {
     Identity user = (Identity) ctx().args.get(SecureSocial.USER_KEY);
