@@ -6,10 +6,12 @@ import play.mvc.*;
 import securesocial.core.Identity;
 import securesocial.core.java.BaseUserService;
 import securesocial.core.java.SecureSocial;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import service.MyUserService;
 
 import models.User;
+import models.Portfolio;
 
 import views.html.*;
 
@@ -42,22 +44,31 @@ public class Application extends Controller {
    * register them and generate a new global portfolio.
    */
   //TODO protect against an empty option, shouldn't be a problem though
+  //TODO this should be done in the portfolio controller
+  //this should simply load the page but we'll leave this for testing
   @SecureSocial.SecuredAction
   public static Result portfolio() {
     
     Identity identity = (Identity) ctx().args.get(SecureSocial.USER_KEY);
     User user = User.find(identity.email().get());
-    
+
     if ( user == null ) {
       //user isn't in DB so we add them
       user = User.add(identity.firstName(), identity.lastName(), identity.email().get());
+      //add a global portfolio for them
+      //TODO Give them their cash position
+
     }
     if ( user == null ) {
       //Something bad happend
       //TODO log this and build a message
       return badRequest();
     }
-    return ok(user.getJson());
+    Portfolio portfolio = Portfolio.getPortfolio( user.getId(), 1 );
+    ObjectNode result = user.getJson();
+    result.put("portfolio", portfolio.getJson());
+
+    return ok(result);
   }
 
   //This is just example code

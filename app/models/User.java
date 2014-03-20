@@ -24,6 +24,7 @@ public class User extends Model {
 
   @Id
   private long id;
+  public long getId() { return this.id; }
 
   @Constraints.Required
   private String first;
@@ -46,27 +47,46 @@ public class User extends Model {
     this.email = email;
       }
 
+  /**
+   * Returns this object as JSON
+   */
   public ObjectNode getJson() {
-    ObjectNode node =  Json.newObject()
+    return Json.newObject()
       .put("first", this.first)
       .put("last", this.last)
       .put("email", this.email)
       .put("id", this.id);
-    /*ArrayNode arr = node.putArray("portfolios");
+  }
+
+  /**
+   * Returns this object with JSON and all the portfolios it owns
+   */
+  public ObjectNode getJsonWithPortfolios() {
+    ObjectNode node = this.getJson();
+    ArrayNode arr = node.putArray("portfolios");
     for ( final Portfolio portfolio : portfolios ) {
       arr.add(portfolio.getJson());
-    }*/
+    }
     return node;
   }
 
-
   /**
-   * Method for finding a registered user.
+   * Method for finding a registered user by their email.
    */
   public static User find ( final String email ) {
     return Ebean.find(User.class)
       .where()
       .eq("email", email)
+      .findUnique();
+  }
+
+  /**
+   * Method for finding a registered user by their db id
+   */
+  public static User findById( final long id ) {
+    return Ebean.find(User.class)
+      .where()
+      .eq("id", id)
       .findUnique();
   }
 
