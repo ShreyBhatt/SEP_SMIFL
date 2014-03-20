@@ -23,20 +23,22 @@ public class User extends Model {
   private static final long serialVersionUID = 1L;
 
   @Id
-  public long id;
+  private long id;
 
   @Constraints.Required
-  public String first;
+  private String first;
 
   @Constraints.Required
-  public String last;
+  private String last;
   
   @Constraints.Required
-  public String email;
+  private String email;
 
-  public Set<Portfolio> portfolios;
+  /** We use this to get all the users portfolios. */
+  private Set<Portfolio> portfolios;
 
-  public User (
+  /** Constructor */
+  private User (
       final String first, final String last, final String email
       ) {
     this.first = first;

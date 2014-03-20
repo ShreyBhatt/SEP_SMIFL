@@ -13,11 +13,19 @@ import models.User;
 
 import views.html.*;
 
+/**
+ * Our main controller for routing major pages
+ */
 public class Application extends Controller {
 
   public static Logger.ALogger logger = Logger.of("application.controllers.Application");
 
 
+  /**
+   * We don't ever go to index, everything sits at login or elsewhere
+   * so we redirect as appropriate
+   */
+  //TODO Make login page fit our style and eliminate warning message
   @SecureSocial.SecuredAction
   public static Result index() {
 
@@ -29,6 +37,11 @@ public class Application extends Controller {
     return redirect("/p");
   }
 
+  /**
+   * Get a user and load their portfolio, or if the user doesn't exist,
+   * register them and generate a new global portfolio.
+   */
+  //TODO protect against an empty option, shouldn't be a problem though
   @SecureSocial.SecuredAction
   public static Result portfolio() {
     
@@ -36,9 +49,12 @@ public class Application extends Controller {
     User user = User.find(identity.email().get());
     
     if ( user == null ) {
+      //user isn't in DB so we add them
       user = User.add(identity.firstName(), identity.lastName(), identity.email().get());
     }
     if ( user == null ) {
+      //Something bad happend
+      //TODO log this and build a message
       return badRequest();
     }
     return ok(user.getJson());
