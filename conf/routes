@@ -3,7 +3,7 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index()
+# GET     /                           controllers.Application.index()
 GET     /link-result                controllers.Application.linkResult()
 
 # Map static resources from the /public folder to the /assets URL path
@@ -12,8 +12,7 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 # ROUTES TO HANDLE LOGIN
 
 # Login page
-# TODO move login to root and make front page
-GET     /login                      securesocial.controllers.LoginPage.login
+GET     /                           securesocial.controllers.LoginPage.login
 GET     /logout                     securesocial.controllers.LoginPage.logout
 
 # User Registration and password handling
