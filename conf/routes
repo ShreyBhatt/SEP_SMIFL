@@ -26,3 +26,8 @@ GET    /u/:first/:last/:email      controllers.UserController.addUser(first:Stri
 # This should only be hit to create a new league
 # Also need to add support for goals
 GET    /l/:name                    controllers.LeagueController.addLeague(name:String)
+
+# GET a portfolio based on the league and user ids
+GET    /p/:userId/:leagueId        controllers.PortfolioController.getPortfolio(userId:Long, leagueId:Long)
+
+

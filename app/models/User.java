@@ -34,12 +34,8 @@ public class User extends Model {
   @Constraints.Required
   public String email;
 
-  //@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
-  //@JoinColumn(name="user_id")
-  //public Set<Portfolio> portfolios;
+  public Set<Portfolio> portfolios;
 
-  //@OneToMany
-  //Portfolio
   public User (
       final String first, final String last, final String email
       ) {
