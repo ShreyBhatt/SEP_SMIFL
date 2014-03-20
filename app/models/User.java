@@ -11,15 +11,16 @@ import com.avaje.ebean.*;
 
 import play.libs.Json;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 
 /**
  * User entity managed by EBean
  */
 @Entity
-@Table(name="user")
+@Table(name="users")
 public class User extends Model {
 
-  private static final long serialVersionIUD = 1L;
+  private static final long serialVersionUID = 1L;
 
   @Id
   public long id;
@@ -33,6 +34,10 @@ public class User extends Model {
   @Constraints.Required
   public String email;
 
+  //@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+  //@JoinColumn(name="user_id")
+  //public Set<Portfolio> portfolios;
+
   //@OneToMany
   //Portfolio
   public User (
@@ -44,11 +49,16 @@ public class User extends Model {
       }
 
   public ObjectNode getJson() {
-    return Json.newObject()
+    ObjectNode node =  Json.newObject()
       .put("first", this.first)
       .put("last", this.last)
       .put("email", this.email)
       .put("id", this.id);
+    /*ArrayNode arr = node.putArray("portfolios");
+    for ( final Portfolio portfolio : portfolios ) {
+      arr.add(portfolio.getJson());
+    }*/
+    return node;
   }
 
 
