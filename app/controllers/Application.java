@@ -34,23 +34,13 @@ public class Application extends Controller {
     return ok(index.render(user));
   }
 
+  //This is just example code
   @SecureSocial.UserAwareAction
   public static Result userAware() {
     Identity user = (Identity) ctx().args.get(SecureSocial.USER_KEY);
     final String userName = user != null ? user.fullName() : "guest";
 
     return ok("Hello" + userName);
-  }
-
-  @SecureSocial.SecuredAction
-  public static Result linkResult() {
-    Identity id = (Identity) ctx().args.get(SecureSocial.USER_KEY);
-
-    MyUserService service = (MyUserService) Play.application().plugin(BaseUserService.class);
-    MyUserService.User user = service.userForIdentity(id);
-
-    return ok(linkResult.render(id, user.identities));
-
   }
 
 }
