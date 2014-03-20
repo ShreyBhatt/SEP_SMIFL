@@ -20,13 +20,13 @@ public class Application extends Controller {
 
   @SecureSocial.SecuredAction
   public static Result index() {
-    if (logger.isWarnEnabled()) {
-      logger.warn("access granted to index");
-    }
-    Identity user = (Identity) ctx().args.get(SecureSocial.USER_KEY);
 
-    
-    return ok(index.render(user));
+    Identity identity = (Identity) ctx().args.get(SecureSocial.USER_KEY);
+
+    if ( identity == null ) {
+      return redirect("/login");
+    }
+    return redirect("/p");
   }
 
   @SecureSocial.SecuredAction
