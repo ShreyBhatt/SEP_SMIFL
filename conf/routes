@@ -4,8 +4,6 @@
 
 # Home page
 # GET     /                           controllers.Application.index()
-GET     /link-result                controllers.Application.linkResult()
-GET     /p                          controllers.Application.linkResult()
 
 
 # Map static resources from the /public folder to the /assets URL path
