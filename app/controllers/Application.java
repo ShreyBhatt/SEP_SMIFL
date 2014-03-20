@@ -9,6 +9,8 @@ import securesocial.core.java.SecureSocial;
 
 import service.MyUserService;
 
+import models.User;
+
 import views.html.*;
 
 public class Application extends Controller {
@@ -22,6 +24,8 @@ public class Application extends Controller {
       logger.warn("access granted to index");
     }
     Identity user = (Identity) ctx().args.get(SecureSocial.USER_KEY);
+
+    
     return ok(index.render(user));
   }
 
@@ -30,8 +34,16 @@ public class Application extends Controller {
     if (logger.isWarnEnabled()) {
       logger.warn("access granted to index");
     }
-    Identity user = (Identity) ctx().args.get(SecureSocial.USER_KEY);
-    return ok(index.render(user));
+    Identity identity = (Identity) ctx().args.get(SecureSocial.USER_KEY);
+    User user = User.find(identity.email);
+    if ( user == null ) {
+      user = User.add(identity.firstName, identity.lastName, identity.email);
+    }
+    if user( == null ) {
+      return badRequest();
+    }
+    return ok(user.getJson())
+    //return ok(index.render(user));
   }
 
   //This is just example code
