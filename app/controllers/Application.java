@@ -35,14 +35,14 @@ public class Application extends Controller {
       logger.warn("access granted to index");
     }
     Identity identity = (Identity) ctx().args.get(SecureSocial.USER_KEY);
-    User user = User.find(identity.email);
+    User user = User.find(identity.email().get());
     if ( user == null ) {
-      user = User.add(identity.firstName, identity.lastName, identity.email);
+      user = User.add(identity.firstName(), identity.lastName(), identity.email().get());
     }
-    if user( == null ) {
+    if ( user == null ) {
       return badRequest();
     }
-    return ok(user.getJson())
+    return ok(user.getJson());
     //return ok(index.render(user));
   }
 
