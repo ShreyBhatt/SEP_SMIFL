@@ -82,6 +82,10 @@ public class Trader extends Controller {
     List<Position> ownPositions =
       Position.getAllOwnPositionsForTicker( portfolioId, ticker );
 
+    if ( ownPositions == null || ownPositions.isEmpty() ) {
+      return invalidRequest("No positions in " + ticker + " found");
+    }
+
     long ownQty = 0;
     for ( final Position position : ownPositions ) {
       ownQty += position.qty;
