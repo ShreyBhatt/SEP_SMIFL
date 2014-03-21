@@ -56,10 +56,10 @@ public class Trader extends Controller {
       return invalidRequest("Insufficient Funds");
     }
 
-    return ok(
-        Json.newObject()
-        .put("status", "OK")
-        .put("order", pos.getJson()));
+    ObjectNode result = Json.newObject();
+    result.put("status", "OK");
+    result.put("order", pos.getJson());
+    return ok(result);
   }
 
 
@@ -114,16 +114,16 @@ public class Trader extends Controller {
       }
     }
     cashPosition.update();
+    ObjectNode result = Json.newObject();
+    result.put("status", "OK");
+    result.put("sold", ticker);
+    result.put("qty", qty);
+    result.put("price", price);
+    result.put("total", price * qty);
+    result.put("cashPosition", Position.getCashPosition( portfolioId ).getJson());
 
-    return ok(
-        Json.newObject()
-        .put("status", "OK")
-        .put("sold", ticker)
-        .put("qty", qty)
-        .put("price", stock.getPrice())
-        .put("total", stock.getPrice() * qty)
-        .put("cashPosition", Position.getCashPosition( portfolioId ).getJson()));
+    return ok(result);
   }
-      
+
 }
 
