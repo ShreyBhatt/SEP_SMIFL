@@ -6,6 +6,7 @@ import play.mvc.*;
 import securesocial.core.Identity;
 import securesocial.core.java.BaseUserService;
 import securesocial.core.java.SecureSocial;
+import play.libs.Json;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import service.MyUserService;
@@ -55,22 +56,22 @@ public class Application extends Controller {
     
     if ( user != null ) {
       result = user.getJson();
-      port = Portfolio.getPortfolio( user.getId(), 1 );
+      port = Portfolio.getPortfolio( user.id, 1 );
       result.put("globalPortfolio", port.getJson() );
       result.put("cashPosition", Position.getCashPosition( port.getId() ).getJson() );
       return ok(result);
     }
     //TODO check to make sure nothing here returns null
     //user isn't in DB so we add them
-    user = User.add(identity.firstName(), identity.lastName(), identity.email().get());
+    //user = User.add(identity.firstName(), identity.lastName(), identity.email().get());
     //add a global portfolio for them
-    port = Portfolio.getPortfolio( user.getId(), 1 );
+    //port = Portfolio.getPortfolio( user.getId(), 1 );
     //Give them their cash position
-    Position pos = Position.addCashPosition(port.getId(), 250000);
+    //Position pos = Position.addCashPosition(port.getId(), 250000);
 
-    result = user.getJson();
-    result.put("globalPortfolio", port.getJson());
-    result.put("cashPosition", pos.getJson() );
+    result = Json.newObject();
+    result.put("status", "KO");
+    result.put("message", "fixme" );
 
     return ok(result);
   }

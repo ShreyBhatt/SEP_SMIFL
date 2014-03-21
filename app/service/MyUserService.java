@@ -1,164 +1,210 @@
 package service;
 
 import play.*;
+import models.*;
 import scala.Option;
+import scala.Some;
 
-import securesocial.core.Identity;
-import securesocial.core.IdentityId;
+import securesocial.core.*;
 import securesocial.core.java.BaseUserService;
 import securesocial.core.java.Token;
 
 import java.util.*;
 
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
+import java.text.DateFormat;
+
+import org.joda.time.DateTime;
+
 /**
- * ??
+ * Service for handling OpenID/OAuth
  */
 public class MyUserService extends BaseUserService {
 
   public Logger.ALogger logger = play.Logger.of("application.service.MyUserService");
-
-  public static class User {
-
-    public String id;
-    public List<Identity> identities;
-
-    public User ( final String id, final Identity ident ) {
-      this.id = id;
-      identities = new ArrayList<Identity>();
-      identities.add(ident);
-    }
-  }
-
-  private HashMap<String, User> users = new HashMap<String, User>();
-  private HashMap<String, Token> tokens = new HashMap<String, Token>();
 
   public MyUserService(Application application) {
     super(application);
   }
 
   @Override
-  public Identity doSave(Identity identity) {
-
-    logger.warn("In doSave");
-
-    User found = null;
-
-    for ( User u : users.values() ) {
-      if ( u.identities.contains(identity) ) {
-        found = u;
-        break;
-      }
+  public Identity doSave( final Identity identity ) {
+    if (Logger.isDebugEnabled()) {
+      Logger.debug("save...");
+      Logger.debug(String.format("user = %s", identity));
     }
 
-    if ( found != null ) {
-      found.identities.remove(identity);
-      found.identities.add(identity);
+    User user = User.findUserId( identity.identityId().userId() );
+    OAuth2 oauth;
+    
+    if ( user == null ) {
+      user = new User();
+      user.userId = identity.identityId().userId();
+      user.provider = identity.identityId().providerId();
+      user.first = identity.firstName();
+      user.last = identity.lastName();
+      user.email = identity.email().get();
+      user.save();
+      user = User.find(user.email);
+      Portfolio port = Portfolio.getPortfolio( user.id, 1 );
+      Position.addCashPosition( port.getId(), 250000 );
+      oauth = new OAuth2();
+      oauth.id = user.id;
+      oauth.token = identity.oAuth2Info().get().accessToken();
+      oauth.type = identity.oAuth2Info().get().tokenType().get();
+      oauth.expiresIn = (Integer) identity.oAuth2Info().get().expiresIn().get();
+      oauth.refresh = identity.oAuth2Info().get().refreshToken().get();
+      oauth.save();
     }
     else {
-      User u = new User(String.valueOf(System.currentTimeMillis()), identity);
-      users.put(u.id, u);
+      oauth = OAuth2.find( user.id );
+      user.userId = identity.identityId().userId();
+      user.provider = identity.identityId().providerId();
+      user.first = identity.firstName();
+      user.last = identity.lastName();
+      user.email = identity.email().get();
+      oauth.token = identity.oAuth2Info().get().accessToken();
+      oauth.type = identity.oAuth2Info().get().tokenType().get();
+      oauth.expiresIn = (Integer) identity.oAuth2Info().get().expiresIn().get();
+      oauth.refresh = identity.oAuth2Info().get().refreshToken().get();
+      oauth.update();
+      user.update();
+    }
+    return identity;
+  }
+
+  @Override
+  public Identity doFind( final IdentityId userId ) {
+    if (Logger.isDebugEnabled()) {
+      Logger.debug("find...");
+      Logger.debug(String.format("id = %s", userId.userId()));
     }
 
-    return identity;
+    User localUser = User.findUserId(userId.userId());
+    if ( localUser == null ) {
+      return null;
+    }
+    SocialUser socialUser =
+      new SocialUser(
+          new IdentityId(localUser.userId, localUser.provider),
+          localUser.first,
+          localUser.last,
+          String.format("%s %s", localUser.first, localUser.last),
+          Option.apply(localUser.email),
+          Option.apply((String) null), //avatarURL
+          new AuthenticationMethod("oauth2"),
+          Option.apply((OAuth1Info) null), //Oauth1Info
+          Option.apply(OAuth2.find(localUser.id).toOAuth2Info()), //Oauth2Info
+          Option.apply((PasswordInfo) null) //password
+        );  
+    if (Logger.isDebugEnabled()) {
+      Logger.debug(String.format("socialUser = %s", socialUser));
+    }
+    return socialUser;
   }
 
 
   public void doLink(Identity current, Identity to) {
-    logger.warn("In doLink");
-    User target = null;
-
-    for ( User u: users.values() ) {
-      if ( u.identities.contains(current) ) {
-        target = u;
-        break;
-      }
-    }
-
-    if ( target == null ) {
-      throw new RuntimeException("Can't find a user for identity: " + current.identityId());
-    }
-    if ( !target.identities.contains(to)) target.identities.add(to);
   }
+
 
   @Override
   public void doSave(Token token) {
-    logger.warn("In doSave for token");
-    tokens.put(token.uuid, token);
+    if (Logger.isDebugEnabled()) {
+      Logger.debug("save...");
+      Logger.debug(String.format("token = %s", token.uuid));
+    }
+
+    LocalToken localToken = new LocalToken();
+    localToken.id = token.uuid;
+    localToken.email = token.email;
+    try {
+      SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+      localToken.createdAt = df.parse(token.creationTime.toString("yyyy-MM-dd HH:mm:ss"));
+      localToken.expireAt = df.parse(token.expirationTime.toString("yyyy-MM-dd HH:mm:ss"));
+    } catch (ParseException e) {
+      Logger.error("SqlUserService.doSave(): ", e);
+    }
+    localToken.save();
   }
 
   @Override
-  public Identity doFind(IdentityId userId) {
-    logger.warn("In doFind");
-    if(logger.isDebugEnabled()){
-      logger.debug("Finding user " + userId);
+  public Token doFindToken(String token) {
+    if (Logger.isDebugEnabled()) {
+      Logger.debug("findToken...");
+      Logger.debug(String.format("token = %s", token));
     }
-    Identity found = null;
-
-    for ( User u: users.values() ) {
-      for ( Identity i : u.identities ) {
-        if ( i.identityId().equals(userId) ) {
-          found = i;
-          break;
-        }
-      }
+    LocalToken localToken = LocalToken.find.byId(token);
+    if(localToken == null) {
+      return null;
     }
-
-    return found;
-  }
-
-  @Override
-  public Token doFindToken(String tokenId) {
-    logger.warn("In doFindToken");
-    return tokens.get(tokenId);
+    Token result = new Token();
+    result.uuid = localToken.id;
+    result.creationTime = new DateTime(localToken.createdAt);
+    result.email = localToken.email;
+    result.expirationTime = new DateTime(localToken.expireAt);
+    result.isSignUp = false;
+    if (Logger.isDebugEnabled()) {
+      Logger.debug(String.format("foundToken = %s", result));
+    }
+    return result;
   }
 
   @Override
   public Identity doFindByEmailAndProvider(String email, String providerId) {
-    logger.warn("In doFindByEmailAndProvider");
-    Identity result = null;
-    for( User user : users.values() ) {
-      for ( Identity identity : user.identities ) {
-        Option<String> optionalEmail = identity.email();
-        if ( identity.identityId().providerId().equals(providerId) &&
-            optionalEmail.isDefined() &&
-            optionalEmail.get().equalsIgnoreCase(email))
-        {
-          result = identity;
-          break;
-        }
-      }
+    if (Logger.isDebugEnabled()) {
+      Logger.debug("findByEmailAndProvider...");
+      Logger.debug(String.format("email = %s", email));
+      Logger.debug(String.format("providerId = %s", providerId));
     }
-    return result;
+
+    User localUser = User.find(email);
+    if( localUser == null) {
+      return null;
+    }
+    SocialUser socialUser =
+      new SocialUser(
+          new IdentityId(localUser.userId, localUser.provider),
+          localUser.first,
+          localUser.last,
+          String.format("%s %s", localUser.first, localUser.last),
+          Option.apply(localUser.email),
+          Option.apply((String) null), //avatarURL
+          new AuthenticationMethod("oauth2"),
+          Option.apply((OAuth1Info) null), //Oauth1Info
+          Option.apply(OAuth2.find(localUser.id).toOAuth2Info()), //Oauth2Info
+          Option.apply((PasswordInfo) null) //password
+        );  
+    if (Logger.isDebugEnabled()) {
+      Logger.debug(String.format("socialUser = %s", socialUser));
+    }
+    return socialUser;
   }
 
   @Override
   public void doDeleteToken(String uuid) {
-    logger.warn("In doDeleteToken");
-    tokens.remove(uuid);
+    if (Logger.isDebugEnabled()) {
+      Logger.debug("deleteToken...");
+      Logger.debug(String.format("uuid = %s", uuid));
+    }
+    LocalToken localToken = LocalToken.find.byId(uuid);
+    if(localToken != null) {
+      localToken.delete();
+    }
   }
 
   @Override
   public void doDeleteExpiredTokens() {
-    logger.warn("In doDleteExpiredTokens");
-    Iterator<Map.Entry<String,Token>> iterator = tokens.entrySet().iterator();
-    while ( iterator.hasNext() ) {
-      Map.Entry<String, Token> entry = iterator.next();
-      if ( entry.getValue().isExpired() ) {
-        iterator.remove();
-      }
+    if (Logger.isDebugEnabled()) {
+      Logger.debug("deleteExpiredTokens...");
+    }
+    List<LocalToken> list =
+      LocalToken.find.where().lt("expireAt", new DateTime().toString()).findList();
+    for(LocalToken localToken : list) {
+      localToken.delete();
     }
   }
 
-  public User userForIdentity(Identity identity) {
-    User result = null;
-
-    for ( User u : users.values() ) {
-      if ( u.identities.contains(identity) ) {
-        result = u;
-        break;
-      }
-    }
-
-    return result;
-  }
 }
+

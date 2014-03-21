@@ -23,29 +23,25 @@ public class User extends Model {
   private static final long serialVersionUID = 1L;
 
   @Id
-  private long id;
-  public long getId() { return this.id; }
+  public long id;
 
   @Constraints.Required
-  private String first;
+  public String first;
 
   @Constraints.Required
-  private String last;
+  public String last;
   
   @Constraints.Required
-  private String email;
+  public String email;
+
+  @Constraints.Required
+  public String provider;
+
+  @Constraints.Required
+  public String userId;
 
   /** We use this to get all the users portfolios. */
   private Set<Portfolio> portfolios;
-
-  /** Constructor */
-  private User (
-      final String first, final String last, final String email
-      ) {
-    this.first = first;
-    this.last = last;
-    this.email = email;
-      }
 
   /**
    * Returns this object as JSON
@@ -55,6 +51,8 @@ public class User extends Model {
       .put("first", this.first)
       .put("last", this.last)
       .put("email", this.email)
+      .put("provider", this.provider)
+      .put("userId", this.userId)
       .put("id", this.id);
   }
 
@@ -81,6 +79,16 @@ public class User extends Model {
   }
 
   /**
+   * Method for finding a registered user by their email.
+   */
+  public static User findUserId ( final String userId ) {
+    return Ebean.find(User.class)
+      .where()
+      .eq("userId", userId)
+      .findUnique();
+  }
+
+  /**
    * Method for finding a registered user by their db id
    */
   public static User findById( final long id ) {
@@ -89,25 +97,6 @@ public class User extends Model {
       .eq("id", id)
       .findUnique();
   }
-
-  /**
-   * Method for adding a user
-   */
-  public static User add (
-      final String first, final String last, final String email
-      ) {
-
-    //Make sure this endpoint doesn't try adding a duplicate entry
-    User user = User.find( email );
-
-    if ( user != null ) {
-      return user;
-    }
-      
-    user =  new User(first, last, email);
-    Ebean.save(user);
-    return User.find(email);
-      }
 
 }
 

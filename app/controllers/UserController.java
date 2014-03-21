@@ -16,7 +16,13 @@ public class UserController extends Controller {
   public static Result addUser (
       final String first, final String last, final String email
       ) {
-    User user = User.add ( first, last, email );
+    User user = new User();
+    user.first = first;
+    user.last = last;
+    user.email = email;
+    user.save();
+    user = User.find(user.email);
+
     ObjectNode result = Json.newObject();
 
     if ( user == null) {
