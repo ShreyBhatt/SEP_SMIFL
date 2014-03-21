@@ -22,27 +22,20 @@ public class Position extends Model {
   private static final long serialVersionUID = 1L;
 
   @Id
-  private long id;
+  public long id;
 
-  @Constraints.Required
-  private long portfolioId;
+  public long portfolioId;
   
-  @Constraints.Required
-  private String typeOf;
+  public String typeOf;
 
-  @Constraints.Required
-  private String ticker;
+  public String ticker;
 
-  @Constraints.Required
-  private long qty;
+  public long qty;
 
-  @Constraints.Required
-  private double price;
-  public double getPrice() { return this.price; }
+  public double price;
 
-  @Constraints.Required
   @Temporal(TemporalType.TIMESTAMP)
-  private Date dateOf; 
+  public Date dateOf; 
   
   /**
    * Constructor
@@ -85,13 +78,13 @@ public class Position extends Model {
       .eq("typeOf", "CASH")
       .findUnique();
 
-    final double cashValue = cashPosition.getPrice();
+    final double cashValue = cashPosition.price;
     if ( stock.getPrice() * qty > cashValue ) {
       return null;
     }
 
-    cashPosition.price -= stock.getPrice() * qty;
-    Ebean.save(cashPosition);
+    cashPosition.price = cashPosition.price -= stock.getPrice() * qty;
+    Ebean.update(cashPosition);
 
     Position pos = new Position( portfolioId, "OWN",
         stock.getTicker(), stock.getPrice(), qty );
