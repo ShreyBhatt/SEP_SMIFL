@@ -10,8 +10,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import service.MyUserService;
 
-import models.User;
-import models.Portfolio;
+import models.*;
 
 import views.html.*;
 
@@ -51,22 +50,27 @@ public class Application extends Controller {
     
     Identity identity = (Identity) ctx().args.get(SecureSocial.USER_KEY);
     User user = User.find(identity.email().get());
-
-    if ( user == null ) {
-      //user isn't in DB so we add them
-      user = User.add(identity.firstName(), identity.lastName(), identity.email().get());
-      //add a global portfolio for them
-      //TODO Give them their cash position
-
+    ObjectNode result;
+    Portfolio port;
+    
+    if ( user != null ) {
+      result = user.getJson();
+      port = Portfolio.getPortfolio( user.getId(), 1 );
+      result.put("globalPortfolio", port.getJson() );
+      result.put("cashPosition", Position.getCashPosition( port.getId() ).getJson() );
+      return ok(result);
     }
-    if ( user == null ) {
-      //Something bad happend
-      //TODO log this and build a message
-      return badRequest();
-    }
-    Portfolio portfolio = Portfolio.getPortfolio( user.getId(), 1 );
-    ObjectNode result = user.getJson();
-    result.put("portfolio", portfolio.getJson());
+    //TODO check to make sure nothing here returns null
+    //user isn't in DB so we add them
+    user = User.add(identity.firstName(), identity.lastName(), identity.email().get());
+    //add a global portfolio for them
+    port = Portfolio.getPortfolio( user.getId(), 1 );
+    //Give them their cash position
+    Position pos = Position.addCashPosition(port.getId(), 250000);
+
+    result = user.getJson();
+    result.put("globalPortfolio", port.getJson());
+    result.put("cashPosition", pos.getJson() );
 
     return ok(result);
   }
@@ -81,3 +85,4 @@ public class Application extends Controller {
   }
 
 }
+

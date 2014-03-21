@@ -22,6 +22,7 @@ public class Portfolio extends Model {
 
   @Id
   private long id;
+  public long getId() { return this.id; }
 
   @Constraints.Required
   private long userId;

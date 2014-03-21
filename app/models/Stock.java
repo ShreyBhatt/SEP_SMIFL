@@ -61,7 +61,7 @@ public class Stock {
 
 
     //Getter Methods
-    public String getSymbol() { return this.sym; }
+    public String getTicker() { return this.sym; }
     public double getPrice() { return this.price; }
     public int getVolume() { return this.volume; }
     public double getPE() { return this.pe; }
