@@ -27,7 +27,7 @@ public class Application extends Controller {
    * so we redirect as appropriate
    */
   //TODO Make login page fit our style and eliminate warning message
-  @SecureSocial.SecuredAction
+  @SecureSocial.UserAwareAction
   public static Result index() {
 
     Identity identity = (Identity) ctx().args.get(SecureSocial.USER_KEY);
