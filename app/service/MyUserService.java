@@ -52,9 +52,9 @@ public class MyUserService extends BaseUserService {
       oauth = new OAuth2();
       oauth.id = user.id;
       oauth.token = identity.oAuth2Info().get().accessToken();
-      oauth.type = identity.oAuth2Info().get().tokenType().get();
+      oauth.type = null;//identity.oAuth2Info().get().tokenType().get();
       oauth.expiresIn = (Integer) identity.oAuth2Info().get().expiresIn().get();
-      oauth.refresh = identity.oAuth2Info().get().refreshToken().get();
+      oauth.refresh = null;//identity.oAuth2Info().get().refreshToken().get();
       oauth.save();
     }
     else {
@@ -65,9 +65,9 @@ public class MyUserService extends BaseUserService {
       user.last = identity.lastName();
       user.email = identity.email().get();
       oauth.token = identity.oAuth2Info().get().accessToken();
-      oauth.type = identity.oAuth2Info().get().tokenType().get();
+      oauth.type = null;//identity.oAuth2Info().get().tokenType().get();
       oauth.expiresIn = (Integer) identity.oAuth2Info().get().expiresIn().get();
-      oauth.refresh = identity.oAuth2Info().get().refreshToken().get();
+      oauth.refresh = null;//identity.oAuth2Info().get().refreshToken().get();
       oauth.update();
       user.update();
     }
@@ -110,7 +110,7 @@ public class MyUserService extends BaseUserService {
 
 
   @Override
-  public void doSave(Token token) {
+  public void doSave(Token token) {/*
     if (Logger.isDebugEnabled()) {
       Logger.debug("save...");
       Logger.debug(String.format("token = %s", token.uuid));
@@ -126,7 +126,7 @@ public class MyUserService extends BaseUserService {
     } catch (ParseException e) {
       Logger.error("SqlUserService.doSave(): ", e);
     }
-    localToken.save();
+    localToken.save();*/
   }
 
   @Override
