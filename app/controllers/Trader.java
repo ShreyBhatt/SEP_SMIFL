@@ -122,7 +122,7 @@ public class Trader extends Controller {
         .put("qty", qty)
         .put("price", stock.getPrice())
         .put("total", stock.getPrice() * qty)
-        .put("cashPosition", cashPosition.getJson()));
+        .put("cashPosition", Position.getCashPosition( portfolioId ).getJson()));
   }
       
 }
