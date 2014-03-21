@@ -49,8 +49,8 @@ public class YahooFinanceService {
     /**
      * Work horse for updating the cache, runs on its own thread and
      * does a complete replacement of the Global HashMap.
-     * There should be no race case here, that concerns us.
      */
+    // There should be no race case here, that concerns us.
     public void update() {
 
         System.out.println(stockString);
@@ -63,8 +63,6 @@ public class YahooFinanceService {
             String line = br.readLine();
             String[] a = stockString.split(",");
             while ( line != null ) {
-
-                System.out.println(line);
                 Stock stock = stockFromCSV(line.split(","), a[count]);
                 newCache.put(a[count++], stock);
                 line = br.readLine();
@@ -183,10 +181,7 @@ public class YahooFinanceService {
             try {
 
                 String line = callYahooAPI(sym).readLine();
-                System.out.println(line);
-
                 stock = stockFromCSV(line.split(","), sym);
-
             }
             catch (IOException e) {
                 Logger log = Logger.getLogger(YahooFinanceService.class.getName());
