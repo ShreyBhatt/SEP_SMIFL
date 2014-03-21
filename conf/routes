@@ -15,25 +15,6 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 GET     /login                      securesocial.controllers.LoginPage.login
 GET     /logout                     securesocial.controllers.LoginPage.logout
 
-# User Registration and password handling
-# TODO I don't think we need most of these, we should play with them and see if
-# we can get rid of them
-GET     /signup                     securesocial.controllers.Registration.startSignUp
-POST    /signup                     securesocial.controllers.Registration.handleStartSignUp
-GET     /signup/:token              securesocial.controllers.Registration.signUp(token)
-POST    /signup/:token              securesocial.controllers.Registration.handleSignUp(token)
-GET     /reset                      securesocial.controllers.Registration.startResetPassword
-POST    /reset                      securesocial.controllers.Registration.handleStartResetPassword
-GET     /reset/:token               securesocial.controllers.Registration.resetPassword(token)
-POST    /reset/:token               securesocial.controllers.Registration.handleResetPassword(token)
-GET     /password                   securesocial.controllers.PasswordChange.page
-POST    /password                   securesocial.controllers.PasswordChange.handlePasswordChange
-
-# Providers entry points
-GET     /authenticate/:provider     securesocial.controllers.ProviderController.authenticate(provider)
-POST    /authenticate/:provider     securesocial.controllers.ProviderController.authenticateByPost(provider)
-GET     /not-authorized             securesocial.controllers.ProviderController.notAuthorized
-
 # ROUTES TO HANDLE OUR APP
 
 # Make a query into YahooFinanceService and return Stock data for symbol
@@ -57,13 +38,31 @@ GET    /l/:name                    controllers.LeagueController.addLeague(name:S
 # GET a portfolio based on the league and user ids
 GET    /p/:userId/:leagueId        controllers.PortfolioController.getPortfolio(userId:Long, leagueId:Long)
 
-# Make a stock purchase
-GET    /b/:portfolioId/:ticker/:qty controllers.Trader.buyStock(portfolioId:Long, ticker:String, qty:Long)
+# TRADES
+GET    /b/:portfolioId/:ticker/:qty controllers.Trader.buyStock(portfolioId:Long,ticker:String,qty:Long)
+GET    /s/:portfolioId/:ticker/:qty controllers.Trader.sellStock(portfolioId:Long,ticker:String,qty:Long)
 
 
 
 
 
+# User Registration and password handling
+# TODO I don't think we need most of these, we should play with them and see if
+# we can get rid of them
+GET     /signup                     securesocial.controllers.Registration.startSignUp
+POST    /signup                     securesocial.controllers.Registration.handleStartSignUp
+GET     /signup/:token              securesocial.controllers.Registration.signUp(token)
+POST    /signup/:token              securesocial.controllers.Registration.handleSignUp(token)
+GET     /reset                      securesocial.controllers.Registration.startResetPassword
+POST    /reset                      securesocial.controllers.Registration.handleStartResetPassword
+GET     /reset/:token               securesocial.controllers.Registration.resetPassword(token)
+POST    /reset/:token               securesocial.controllers.Registration.handleResetPassword(token)
+GET     /password                   securesocial.controllers.PasswordChange.page
+POST    /password                   securesocial.controllers.PasswordChange.handlePasswordChange
 
+# Providers entry points
+GET     /authenticate/:provider     securesocial.controllers.ProviderController.authenticate(provider)
+POST    /authenticate/:provider     securesocial.controllers.ProviderController.authenticateByPost(provider)
+GET     /not-authorized             securesocial.controllers.ProviderController.notAuthorized
 
 

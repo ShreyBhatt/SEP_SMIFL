@@ -49,7 +49,12 @@ public class Position extends Model {
     this.price = price;
     this.qty = qty;
     this.dateOf = new Date();
-      }
+  }
+
+  /**
+   * Method for making a JSON representation of this object.
+   * @return Returns an ObjectNode that contains the JSON for this object.
+   */
   public ObjectNode getJson() {
     return Json.newObject()
       .put("portfolioId", this.portfolioId)
@@ -60,6 +65,9 @@ public class Position extends Model {
       .put("dateOf", this.dateOf.toString());
   }
 
+  /**
+   * Method to get all the positions in a portfolio.
+   */
   public static List<Position> getAllPortfolioPositions( final long portfolioId ) {
     return Ebean.find(Position.class)
       .where()
@@ -68,7 +76,28 @@ public class Position extends Model {
   }
 
   /**
-   * A method for adding a new position to a portfolio, this is for a stock purchase.
+   * Method for getting all the OWN positions of a stock in the portfolio.
+   * @param portfolioId is the unique database id of the portfolio
+   * @param ticker is the ticker symbol of the stock positions to retrieve.
+   * @return a list of all the OWN positions of the ticker in portfolioId
+   */
+  public static List<Position> getAllOwnPositionsForTicker(
+      final long portfolioId, final String ticker
+      ) {
+    return Ebean.find(Position.class)
+      .where()
+      .eq("portfolioId", portfolioId)
+      .eq("typeOf", "OWN")
+      .eq("ticker", ticker)
+      .findList();
+  }
+
+  /**
+   * A method for adding a new OWN position to a portfolio, this is for a stock purchase.
+   * @param portfolioId is the unique database id of the portfolio
+   * @param qty is the number of shares to own
+   * @param stock is the stock information to conduct the trade
+   * @return the object representation of the created position
    */
   public static Position addOwnPosition (
       final long portfolioId, final long qty, final Stock stock ) {
@@ -96,9 +125,18 @@ public class Position extends Model {
       .findUnique();
   }
 
-  //TODO allow additional cash to be added
+  /**
+   * Method for initializing a portfolio with a cash position.
+   * @param portfolioId is the unique database id of the portfolio
+   * @param price is the amount of cash to add to the portfolio
+   * @return the object representation of the created position
+   */
   public static Position addCashPosition (final long portfolioId, final double price) {
-    Position cashPosition = new Position(portfolioId, "CASH", "", price, 1 );
+    Position cashPosition = getCashPosition( portfolioId );
+    if ( cashPosition != null ) {
+      return cashPosition;
+    }
+    cashPosition = new Position(portfolioId, "CASH", "", price, 1 );
     Ebean.save(cashPosition);
     return Ebean.find(Position.class)
       .where()
@@ -106,6 +144,11 @@ public class Position extends Model {
       .findUnique();
   }
 
+  /**
+   * Method for getting just the cash position of a portfolio.
+   * @param portfolioId is the unique database id of the portfolio
+   * @return the object representation of the created position
+   */
   public static Position getCashPosition ( final long portfolioId ) {
     return Ebean.find(Position.class)
       .where()
@@ -113,4 +156,6 @@ public class Position extends Model {
       .eq("typeOf", "CASH")
       .findUnique();
   }
+
 }
+
