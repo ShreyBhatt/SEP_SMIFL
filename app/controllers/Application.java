@@ -57,7 +57,6 @@ public class Application extends Controller {
       result = user.getJson();
       port = Portfolio.getPortfolio( user.getId(), 1 );
       result.put("globalPortfolio", port.getJson() );
-      Position pos = Position.addCashPosition(port.getId(), 250000);
       result.put("cashPosition", Position.getCashPosition( port.getId() ).getJson() );
       return ok(result);
     }
