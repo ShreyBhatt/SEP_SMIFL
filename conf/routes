@@ -2,7 +2,7 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# Home page
+# GLOBAL SITE NAVIGATION
 GET     /                           controllers.Application.index()
 GET     /p                          controllers.Application.portfolio()
 
@@ -57,6 +57,8 @@ GET    /l/:name                    controllers.LeagueController.addLeague(name:S
 # GET a portfolio based on the league and user ids
 GET    /p/:userId/:leagueId        controllers.PortfolioController.getPortfolio(userId:Long, leagueId:Long)
 
+# Make a stock purchase
+GET    /b/:portfolioId/:ticker/:qty controllers.Trader.buyStock(portfolioId:Long, ticker:String, qty:Long)
 
 
 
