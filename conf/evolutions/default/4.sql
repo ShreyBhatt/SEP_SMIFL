@@ -1,12 +1,16 @@
 # --- !Ups
 
-drop table portfolio;
+drop table position;
 
-create table portfolio (
+create table position (
   id                       bigint auto_increment not null,
-  user_id                  bigint not null,
-  league_id                bigint not null,
-  constraint pk_portfolio primary key (id))
+  portfolio_id             bigint not null,
+  type_of                  varchar(255),
+  ticker                   varchar(255),
+  qty                      bigint,
+  price                    double,
+  date_of                   datetime,
+  constraint pk_position primary key (id))
 ;
 
 # --- !Downs
