@@ -81,7 +81,7 @@ public class Position extends Model {
       final long portfolioId, final long qty, final Stock stock ) {
     Position cashPosition = Ebean.find(Position.class)
       .where()
-      .eq("potfolioId", portfolioId)
+      .eq("portfolioId", portfolioId)
       .eq("typeOf", "CASH")
       .findUnique();
 
