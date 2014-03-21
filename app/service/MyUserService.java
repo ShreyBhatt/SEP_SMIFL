@@ -10,6 +10,9 @@ import securesocial.core.java.Token;
 
 import java.util.*;
 
+/**
+ * ??
+ */
 public class MyUserService extends BaseUserService {
 
   public Logger.ALogger logger = play.Logger.of("application.service.MyUserService");
@@ -35,6 +38,9 @@ public class MyUserService extends BaseUserService {
 
   @Override
   public Identity doSave(Identity identity) {
+
+    logger.warn("In doSave");
+
     User found = null;
 
     for ( User u : users.values() ) {
@@ -58,6 +64,7 @@ public class MyUserService extends BaseUserService {
 
 
   public void doLink(Identity current, Identity to) {
+    logger.warn("In doLink");
     User target = null;
 
     for ( User u: users.values() ) {
@@ -75,11 +82,13 @@ public class MyUserService extends BaseUserService {
 
   @Override
   public void doSave(Token token) {
+    logger.warn("In doSave for token");
     tokens.put(token.uuid, token);
   }
 
   @Override
   public Identity doFind(IdentityId userId) {
+    logger.warn("In doFind");
     if(logger.isDebugEnabled()){
       logger.debug("Finding user " + userId);
     }
@@ -99,11 +108,13 @@ public class MyUserService extends BaseUserService {
 
   @Override
   public Token doFindToken(String tokenId) {
+    logger.warn("In doFindToken");
     return tokens.get(tokenId);
   }
 
   @Override
   public Identity doFindByEmailAndProvider(String email, String providerId) {
+    logger.warn("In doFindByEmailAndProvider");
     Identity result = null;
     for( User user : users.values() ) {
       for ( Identity identity : user.identities ) {
@@ -122,11 +133,13 @@ public class MyUserService extends BaseUserService {
 
   @Override
   public void doDeleteToken(String uuid) {
+    logger.warn("In doDeleteToken");
     tokens.remove(uuid);
   }
 
   @Override
   public void doDeleteExpiredTokens() {
+    logger.warn("In doDleteExpiredTokens");
     Iterator<Map.Entry<String,Token>> iterator = tokens.entrySet().iterator();
     while ( iterator.hasNext() ) {
       Map.Entry<String, Token> entry = iterator.next();

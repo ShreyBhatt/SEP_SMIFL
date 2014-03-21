@@ -15,21 +15,20 @@ import models.*;
 import views.html.*;
 
 /**
- * Our main controller for routing major pages
+ * Our main controller for routing to major pages,
+ * content will be handled by AJAX calls
  */
 public class Application extends Controller {
 
   public static Logger.ALogger logger = Logger.of("application.controllers.Application");
 
-
   /**
    * We don't ever go to index, everything sits at login or elsewhere
    * so we redirect as appropriate
+   * @return always returns a redirect to login or to the user portfolio
    */
-  //TODO Make login page fit our style and eliminate warning message
   @SecureSocial.UserAwareAction
   public static Result index() {
-
     Identity identity = (Identity) ctx().args.get(SecureSocial.USER_KEY);
 
     if ( identity == null ) {
@@ -38,13 +37,14 @@ public class Application extends Controller {
     return redirect("/p");
   }
 
+  //this should simply load the page but we'll leave this for testing
+  //until the view is built out
   /**
    * Get a user and load their portfolio, or if the user doesn't exist,
    * register them and generate a new global portfolio.
    */
   //TODO protect against an empty option, shouldn't be a problem though
   //TODO this should be done in the portfolio controller
-  //this should simply load the page but we'll leave this for testing
   @SecureSocial.SecuredAction
   public static Result portfolio() {
     
@@ -73,15 +73,6 @@ public class Application extends Controller {
     result.put("cashPosition", pos.getJson() );
 
     return ok(result);
-  }
-
-  //This is just example code
-  @SecureSocial.UserAwareAction
-  public static Result userAware() {
-    Identity user = (Identity) ctx().args.get(SecureSocial.USER_KEY);
-    final String userName = user != null ? user.fullName() : "guest";
-
-    return ok("Hello" + userName);
   }
 
 }
