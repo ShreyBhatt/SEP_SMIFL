@@ -6,12 +6,16 @@ import play.*;
 import play.mvc.*;
 import play.libs.Json;
 
+import securesocial.core.Identity;
+import securesocial.core.java.BaseUserService;
+import securesocial.core.java.SecureSocial;
+
+import play.libs.Json;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import views.html.*;
-
 import models.*;
-import service.YahooFinanceService;
+import service.*;
+import views.html.*;
 
 /**
  * Controller for handling buy, sell, and short market orders.
@@ -20,7 +24,6 @@ public class Trader extends Controller {
 
   /** The service that provides our stock data. */
   private static final YahooFinanceService YAHOO = YahooFinanceService.getInstance();
-
 
   /**
    * Method for returning a badRequest for an invalid stock ticker.
@@ -34,6 +37,22 @@ public class Trader extends Controller {
           .put("message", message)
           );
   }
+
+  /**
+   * Method for ensuring that a user attempting to make a trade
+   * is authorized to do so.
+   * @param portfolioId is the DB id for a portfolio
+   * @param userId is the OAuth userId
+   * @return true is they are authorized, false otherwise.
+   */
+  private static boolean validateUser( final long portfolioId, final String userId ) {
+    User user = User.findUserId(userId);
+    Portfolio port = Portfolio.find( portfolioId );
+    if ( user == null || port == null) {
+      return false;
+    }
+    return user.id == port.userId;
+  }
   
   /**
    * Method for purchasing stock in a portfolio.
@@ -42,10 +61,16 @@ public class Trader extends Controller {
    * @param qty is the amount of stock to purchase
    * @return returns a JSON result.
    */
+  @SecureSocial.SecuredAction
   public static Result buyStock (
       final long portfolioId, final String ticker, final long qty
       ) {
     Stock stock = YAHOO.getStock( ticker );
+    Identity identity = (Identity) ctx().args.get(SecureSocial.USER_KEY);
+
+    if ( !validateUser(portfolioId, identity.identityId().userId()) ) {
+      return invalidRequest("Unauthorized Operation");
+    }
 
     if ( stock == null ) {
       return invalidRequest("Invalid Ticker Symbol");
@@ -70,10 +95,16 @@ public class Trader extends Controller {
    * @param qty is the amount of stock to purchase
    * @return returns a JSON result.
    */
+  @SecureSocial.SecuredAction
   public static Result sellStock (
     final long portfolioId, final String ticker, final long qty
     ) {
     Stock stock = YAHOO.getStock( ticker );
+    Identity identity = (Identity) ctx().args.get(SecureSocial.USER_KEY);
+
+    if ( !validateUser(portfolioId, identity.identityId().userId()) ) {
+      return invalidRequest("Unauthorized Operation");
+    }
 
     if ( stock == null ) {
       return invalidRequest("Invalid Ticker Symbol");

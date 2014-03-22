@@ -18,16 +18,58 @@ import java.text.DateFormat;
 import org.joda.time.DateTime;
 
 /**
- * Service for handling OpenID/OAuth
+ * Service for handling OAuth
  */
 public class MyUserService extends BaseUserService {
 
   public Logger.ALogger logger = play.Logger.of("application.service.MyUserService");
 
+  /**
+   * Constructor for instantiating the service
+   */
   public MyUserService(Application application) {
     super(application);
   }
 
+  /**
+   * Internal method for creating/updating a user.
+   * @param user is a User object to be initialized/updated
+   * @param identity is the container for the OAuth information
+   * @return the user
+   */
+  private User userHelper( final User user, final Identity identity ) {
+    user.userId = identity.identityId().userId();
+    user.provider = identity.identityId().providerId();
+    user.first = identity.firstName();
+    user.last = identity.lastName();
+    user.email = identity.email().get();
+    return user;
+  }
+
+  /**
+   * Internal method for creating/updating an OAuth2 object.
+   * @param oauth is a OAuth2 object to be initialized/updated
+   * @param identity is the container for the OAuth information
+   * @return the oauth
+   */
+  private OAuth2 oauth2Helper( final OAuth2 oauth, final Identity identity ) {
+    try {
+      OAuth2Info info = identity.oAuth2Info().get();
+      oauth.token = info.accessToken();
+      //need to figure this out
+      oauth.type = null; //info.tokenType().get();
+      oauth.expiresIn = (Integer) identity.oAuth2Info().get().expiresIn().get();
+      oauth.refresh = null;//info.refreshToken().get();
+      return oauth;
+    }
+    catch ( final Exception e ) {
+      logger.warn("OAuth Info failed to be delivered");
+      return null;
+    }
+
+  }
+
+  /** {@inheritDoc} */
   @Override
   public Identity doSave( final Identity identity ) {
     if (Logger.isDebugEnabled()) {
@@ -39,41 +81,32 @@ public class MyUserService extends BaseUserService {
     OAuth2 oauth;
     
     if ( user == null ) {
-      user = new User();
-      user.userId = identity.identityId().userId();
-      user.provider = identity.identityId().providerId();
-      user.first = identity.firstName();
-      user.last = identity.lastName();
-      user.email = identity.email().get();
+      user = userHelper(new User(), identity);
       user.save();
       user = User.find(user.email);
-      Portfolio port = Portfolio.getPortfolio( user.id, 1 );
-      Position.addCashPosition( port.getId(), 250000 );
-      oauth = new OAuth2();
+      oauth = oauth2Helper(new OAuth2(), identity);
       oauth.id = user.id;
-      oauth.token = identity.oAuth2Info().get().accessToken();
-      oauth.type = null;//identity.oAuth2Info().get().tokenType().get();
-      oauth.expiresIn = (Integer) identity.oAuth2Info().get().expiresIn().get();
-      oauth.refresh = null;//identity.oAuth2Info().get().refreshToken().get();
       oauth.save();
+      Portfolio port = Portfolio.getPortfolio( user.id, 1 );
+      Position.addCashPosition( port.id, 250000 );
     }
     else {
-      oauth = OAuth2.find( user.id );
-      user.userId = identity.identityId().userId();
-      user.provider = identity.identityId().providerId();
-      user.first = identity.firstName();
-      user.last = identity.lastName();
-      user.email = identity.email().get();
-      oauth.token = identity.oAuth2Info().get().accessToken();
-      oauth.type = null;//identity.oAuth2Info().get().tokenType().get();
-      oauth.expiresIn = (Integer) identity.oAuth2Info().get().expiresIn().get();
-      oauth.refresh = null;//identity.oAuth2Info().get().refreshToken().get();
-      oauth.update();
+      user = userHelper(user, identity);
       user.update();
+      oauth = OAuth2.find( user.id );
+      if ( oauth != null ) {
+        oauth = oauth2Helper(oauth, identity);
+      }
+      else {
+        oauth = oauth2Helper(new OAuth2(), identity);
+      }
+      oauth.id = user.id;
+      oauth.update();
     }
     return identity;
   }
 
+  /** {@inheritDoc} */
   @Override
   public Identity doFind( final IdentityId userId ) {
     if (Logger.isDebugEnabled()) {
@@ -105,11 +138,9 @@ public class MyUserService extends BaseUserService {
   }
 
 
-  public void doLink(Identity current, Identity to) {
-  }
-
-
+  /** {@inheritDoc} */
   @Override
+  //We don't use tokens right now so we aren't saving them
   public void doSave(Token token) {/*
     if (Logger.isDebugEnabled()) {
       Logger.debug("save...");
@@ -129,6 +160,7 @@ public class MyUserService extends BaseUserService {
     localToken.save();*/
   }
 
+  /** {@inheritDoc} */
   @Override
   public Token doFindToken(String token) {
     if (Logger.isDebugEnabled()) {
@@ -151,6 +183,7 @@ public class MyUserService extends BaseUserService {
     return result;
   }
 
+  /** {@inheritDoc} */
   @Override
   public Identity doFindByEmailAndProvider(String email, String providerId) {
     if (Logger.isDebugEnabled()) {
@@ -182,6 +215,7 @@ public class MyUserService extends BaseUserService {
     return socialUser;
   }
 
+  /** {@inheritDoc} */
   @Override
   public void doDeleteToken(String uuid) {
     if (Logger.isDebugEnabled()) {
@@ -194,6 +228,7 @@ public class MyUserService extends BaseUserService {
     }
   }
 
+  /** {@inheritDoc} */
   @Override
   public void doDeleteExpiredTokens() {
     if (Logger.isDebugEnabled()) {

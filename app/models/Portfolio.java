@@ -21,14 +21,13 @@ public class Portfolio extends Model {
   private static final long serialVersionUID = 1L;
 
   @Id
-  private long id;
-  public long getId() { return this.id; }
+  public long id;
 
   @Constraints.Required
-  private long userId;
+  public long userId;
 
   @Constraints.Required
-  private long leagueId;
+  public long leagueId;
 
   /**
    * Constructor
@@ -51,6 +50,8 @@ public class Portfolio extends Model {
 
   /**
    * Method for finding a Portfolio in the DB.
+   * @param userId is the DB id for a user
+   * @param leagueId is the DB id for a league
    * @return Returns a Portfolio if found, null otherwise.
    */
   public static Portfolio find( final long userId, final long leagueId ) {
@@ -58,6 +59,18 @@ public class Portfolio extends Model {
       .where()
       .eq("userId", userId)
       .eq("leagueId", leagueId)
+      .findUnique();
+  }
+
+  /**
+   * Method for finding a Portfolio in the DB.
+   * @param portfolioId is the DB id for the portfolio
+   * @return Returns a Portfolio if found, null otherwise.
+   */
+  public static Portfolio find( final long portfolioId ) {
+    return Ebean.find(Portfolio.class)
+      .where()
+      .eq("id", portfolioId)
       .findUnique();
   }
 

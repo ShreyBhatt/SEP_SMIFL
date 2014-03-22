@@ -44,7 +44,6 @@ public class Application extends Controller {
    * Get a user and load their portfolio, or if the user doesn't exist,
    * register them and generate a new global portfolio.
    */
-  //TODO protect against an empty option, shouldn't be a problem though
   //TODO this should be done in the portfolio controller
   @SecureSocial.SecuredAction
   public static Result portfolio() {
@@ -58,22 +57,16 @@ public class Application extends Controller {
       result = user.getJson();
       port = Portfolio.getPortfolio( user.id, 1 );
       result.put("globalPortfolio", port.getJson() );
-      result.put("cashPosition", Position.getCashPosition( port.getId() ).getJson() );
+      result.put("cashPosition", Position.getCashPosition( port.id ).getJson() );
       return ok(result);
     }
-    //TODO check to make sure nothing here returns null
-    //user isn't in DB so we add them
-    //user = User.add(identity.firstName(), identity.lastName(), identity.email().get());
-    //add a global portfolio for them
-    //port = Portfolio.getPortfolio( user.getId(), 1 );
-    //Give them their cash position
-    //Position pos = Position.addCashPosition(port.getId(), 250000);
 
+    //THIS SHOULDN'T HAPPEN
     result = Json.newObject();
     result.put("status", "KO");
     result.put("message", "fixme" );
 
-    return ok(result);
+    return badRequest(result);
   }
 
 }
