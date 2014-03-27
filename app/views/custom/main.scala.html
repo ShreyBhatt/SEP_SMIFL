@@ -42,7 +42,6 @@
             </ul>
             <div id="login" class="form-action show">
                 <h1>Login with:</h1>
-		<h1><span id="fname">test</span></h1>
                 <p>
 
             	
@@ -67,9 +66,6 @@
         </div>
 	</div>
 	</div>
-
-
-	<div class="getAjaxForThisContainer"><a href="#" id="#test1">GOOG</a></div>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -105,23 +101,6 @@
 
 </script>
 
-<script>
-
-
-$('.getAjaxForThisContainer').click(function(e) {
-    var idToGet = "GOOG";
-    myJsRoutes.controllers.Query.getQuery(idToGet).ajax({
-    success : function(data) { 
-
-	document.getElementById("fname").innerHTML = data.stock.ticker; 
-
-	}
-	
-
-});
-
-});
-</script>
 
 
     <script src="js/bootstrap.min.js"></script>
