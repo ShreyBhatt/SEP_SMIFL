@@ -43,7 +43,9 @@ GET    /b/:portfolioId/:ticker/:qty controllers.Trader.buyStock(portfolioId:Long
 GET    /s/:portfolioId/:ticker/:qty controllers.Trader.sellStock(portfolioId:Long,ticker:String,qty:Long)
 
 
+# JAVASCRIPT ROUTES
 
+GET     /javascriptRoutes     controllers.Application.javascriptRoutes
 
 
 # User Registration and password handling

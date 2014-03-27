@@ -1,5 +1,136 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto:100);
+
 .x_container {
 
 margin-top: 100px;
 
 }
+
+.main_top {
+	background: #f3f9ff;
+  width: 100%;
+	height: 250px;
+          margin-left: auto;
+          margin-right: auto;
+}
+
+.main_top_header {
+color: #FFFFFF;
+	background-color: #338bd6;
+  width: 100%;
+  height: 50px;
+  font-family: "Roboto";
+  font-size: 30px;
+  padding-left: 12px;
+  padding-top: 4px;
+}
+
+.main_bot {
+	background: #d4ebff;
+  width: 100%;
+	height: 450px;
+	display: none;
+	  font-family: "Roboto";
+  font-size: 16px;
+  padding-top: 30px;
+}
+
+.main_bot_link {
+float: right;
+  font-family: "Roboto";
+  font-size: 12px;
+  padding-right: 20px;
+  padding-top: 10px;
+}
+.slide {
+	margin-left: auto;
+  margin-right: auto;
+	padding: 0;
+  background-color: #f3f9ff;
+width: 100%;
+height: 50px;
+  font-family: "Roboto";
+  font-size: 10px;
+
+
+}
+.btn-slide {
+	background-color: #338bd6;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #1873c1;
+  border-radius: 20px;
+  text-align: center;
+	width: 35px;
+	height: 35px;
+	padding: 10px 0 3px 0;
+	margin-right: 10px;
+  margin-top: 4px;
+	display: block;
+	font: bold 120%/100% Arial, Helvetica, sans-serif;
+	color: #fff;
+	text-decoration: none;
+float: right;
+}
+
+
+
+
+
+
+
+.right {
+width: 100%;
+	background: #f3f9ff;
+
+
+}
+
+.right_header {
+color: #FFFFFF;
+	background-color: #338bd6;
+  width: 100%;
+  height: 50px;
+  font-family: "Roboto";
+  font-size: 30px;
+  padding-left: 12px;
+  padding-top: 4px;
+}
+
+.right_top {
+
+height: 100%;
+padding-top: 20px;
+padding-bottom: 50px;
+
+}
+
+.right_bot {
+
+  font-family: "Roboto";
+  font-size: 18px;
+text-align: left;
+padding-left: 10px;
+padding-bottom: 40px;
+
+}
+
+/* Image in Text Box */
+.tb11 {
+	margin-left: 20px;
+	background:#FFFFFF;
+	padding:4px 4px 4px 4px;
+	border:1px solid #CCCCCC;
+	width:200px;
+	height:25px;
+	float: left;
+}
+
+.tb11_go {
+margin-left: 5px;
+float: left;
+background:url("../images/search.png") no-repeat 4px 4px;
+height: 30px;
+width: 30px;
+}
+

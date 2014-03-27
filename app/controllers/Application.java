@@ -48,26 +48,19 @@ public class Application extends Controller {
   @SecureSocial.SecuredAction
   public static Result portfolio() {
     
-    Identity identity = (Identity) ctx().args.get(SecureSocial.USER_KEY);
-    User user = User.find(identity.email().get());
-    ObjectNode result;
-    Portfolio port;
-    
-    if ( user != null ) {
-      result = user.getJson();
-      port = Portfolio.getPortfolio( user.id, 1 );
-      result.put("globalPortfolio", port.getJson() );
-      result.put("cashPosition", Position.getCashPosition( port.id ).getJson() );
-      return ok(result);
-    }
+    Identity user = (Identity) ctx().args.get(SecureSocial.USER_KEY);
+    return ok(index.render(user));
 
-    //THIS SHOULDN'T HAPPEN
-    result = Json.newObject();
-    result.put("status", "KO");
-    result.put("message", "fixme" );
-
-    return badRequest(result);
   }
+
+public static Result javascriptRoutes() {
+    response().setContentType("text/javascript");
+    return ok(
+        Routes.javascriptRouter("myJsRoutes",
+            routes.javascript.Query.getQuery()
+        )
+    );
+}
 
 }
 

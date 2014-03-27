@@ -1,15 +1,16 @@
-@(title: String)(content: Html)
+@(title: String, username: String)(content: Html)
 
 <!DOCTYPE html>
 
 <html>
   <head>
-    <title>@title</title>
+    <title>Paramount Investment League</title>
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.css")">
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/style.css")">
     <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
     <script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
     <script src="@routes.Assets.at("javascripts/bootstrap.js")" type="text/javascript"></script>
+    <script type="text/javascript" src='@routes.Application.javascriptRoutes()'></script>
   </head>
 
 
@@ -35,7 +36,7 @@
 
           <li class="active">
           <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">username<b class="caret"></b></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">@username<b class="caret"></b></a>
           <ul class="dropdown-menu">
             <li><a href="#">My Account</a></li>
             <li><a href="@securesocial.controllers.routes.LoginPage.logout()">Sign Out</a></li>
@@ -49,31 +50,232 @@
 
   <div class="x_container">
     <div class="container">
-      <!-- Example row of columns -->
       <div class="row">
 
         <div class="col-md-9">
-          <div class="col-md-12">
-            @content
+
+          <div class="main_top">
+          
+            <div class="main_top_header">Portfolio Overview ></div>
+            
+
           </div>
 
-          <div class="col-md-12">
-            graphs
-          </div>
+			<div class="main_bot">
+            
+				<style type="text/css">
+.tftable {color:#333333;width:100%;text-align:center;}
+.tftable th {background-color:#acc8cc;padding: 8px;text-align:center;}
+.tftable tr {background-color:#d4ebff;}
+.tftable td {padding: 8px;}
+.tftable tr:hover {background-color:#f3f9ff;}
+</style>
+
+<table class="tftable" border="0">
+<tr><td>Sell1</td><td>GOOG</td><td>OWN</td><td>10</td><td>price_purchased</td><td>date_of_purchase</td><td>price_current</td></tr>
+<tr><td>Sell2</td><td>GOOG</td><td>OWN</td><td>10</td><td>price_purchased</td><td>date_of_purchase</td><td>price_current</td></tr>
+<tr><td>Sell3</td><td>GOOG</td><td>OWN</td><td>10</td><td>price_purchased</td><td>date_of_purchase</td><td>price_current</td></tr>
+<tr><td>Sell4</td><td>GOOG</td><td>OWN</td><td>10</td><td>price_purchased</td><td>date_of_purchase</td><td>price_current</td></tr>
+<tr><td>Sell5</td><td>GOOG</td><td>OWN</td><td>10</td><td>price_purchased</td><td>date_of_purchase</td><td>price_current</td></tr>
+<tr><td>Sell6</td><td>GOOG</td><td>OWN</td><td>10</td><td>price_purchased</td><td>date_of_purchase</td><td>price_current</td></tr>
+<tr><td>Sell7</td><td>GOOG</td><td>OWN</td><td>10</td><td>price_purchased</td><td>date_of_purchase</td><td>price_current</td></tr>
+<tr><td>Sell8</td><td>GOOG</td><td>OWN</td><td>10</td><td>price_purchased</td><td>date_of_purchase</td><td>price_current</td></tr>
+<tr><td>Sell9</td><td>GOOG</td><td>OWN</td><td>10</td><td>price_purchased</td><td>date_of_purchase</td><td>price_current</td></tr>
+<tr><td>Sell10</td><td>GOOG</td><td>OWN</td><td>10</td><td>price_purchased</td><td>date_of_purchase</td><td>price_current</td></tr>
+</table>
+
+<a href="" class="main_bot_link">
+Load next 10 stocks
+</a>
+			
+			</div>
+
+          <div class="slide">
+            <div class="btn-slide">
+              v</div></div>
+
         </div>
 
         <div class="col-md-3">
-          trades
+
+          <div class="right">
+			
+			<div class="right_header">Query ></div>
+			
+			<div class="right_top">
+				<input type="text" maxlength=4 class="tb11" id="query_input" name="query" onblur="this.value=this.value.toUpperCase()">
+				<a href="#"><div class="tb11_go"></div></a>
+			</div>
+			
+			<div class="right_bot">
+			<table>
+			<tr>
+			  <td style="text-align: right;">
+			    <b>Ticker:</b>
+			  </td>
+			  <td style="text-align: left;">
+			    <span id="stock_1"></span>
+			  </td>
+			</tr>
+			<tr>
+			  <td style="text-align: right;">
+			    <b>Price:</b>
+			  </td>
+			  <td style="text-align: left;">
+			    <span id="stock_2"></span>
+			  </td>
+			</tr>
+			<tr>
+			  <td style="text-align: right;">
+			    <b>Volume:</b>
+			  </td>
+			  <td style="text-align: left;">
+			    <span id="stock_3"></span>
+			  </td>
+			</tr>
+			<tr>
+			  <td style="text-align: right;">
+			    <b>PE:</b>
+			  </td>
+			  <td style="text-align: left;">
+			    <span id="stock_4"></span>
+			  </td>
+			</tr>
+			<tr>
+			  <td style="text-align: right;">
+			    <b>EPS:</b>
+			  </td>
+			  <td style="text-align: left;">
+			    <span id="stock_5"></span>
+			  </td>
+			</tr>
+			<tr>
+			  <td style="text-align: right;">
+			    <b>Week52High:</b>
+			  </td>
+			  <td style="text-align: left;">
+			    <span id="stock_6"></span>
+			  </td>
+			</tr>
+			<tr>
+			  <td style="text-align: right;">
+			    <b>Week52Low:</b>
+			  </td>
+			  <td style="text-align: left;">
+			    <span id="stock_7"></span>
+			  </td>
+			</tr>
+			<tr>
+			  <td style="text-align: right;">
+			    <b>DayLow:</b>
+			  </td>
+			  <td style="text-align: left;">
+			    <span id="stock_8"></span>
+			  </td>
+			</tr>
+			<tr>
+			  <td style="text-align: right;">
+			    <b>DayHigh:</b>
+			  </td>
+			  <td style="text-align: left;">
+			    <span id="stock_9"></span>
+			  </td>
+			</tr>
+			<tr>
+			  <td style="text-align: right;">
+			    <b>Moving50DayAvg:</b>
+			  </td>
+			  <td style="text-align: left;">
+			    <span id="stock_10"></span>
+			  </td>
+			</tr>
+			<tr>
+			  <td style="text-align: right;">
+			    <b>MarketCap:</b>
+			  </td>
+			  <td style="text-align: left;">
+			    <span id="stock_11"></span>
+			  </td>
+			</tr>
+		        </table>
+			
         </div>
 
+        </div>
       </div>
+    </div>
+  </div>
 
-      <hr>
+	<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+	  <script>
+$(document).ready(function(){
 
-      <footer>
-      <p>&copy; Paramount Investment League</p>
-      </footer>
-    </div> <!-- /container -->
+	$(".btn-slide").click(function(){
+	  $(".main_bot").slideToggle("slow");
+	  $(this).toggleClass("active");
+	});
+	
+});
+</script>
 
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+	  <script>
+  (function( $ ) {
+  // constants
+  var SHOW_CLASS = 'show',
+      HIDE_CLASS = 'hide',
+      ACTIVE_CLASS = 'active';
+  
+  $( '.tabs' ).on( 'click', 'li a', function(e){
+    e.preventDefault();
+    var $tab = $( this ),
+         href = $tab.attr( 'href' );
+  
+     $( '.active' ).removeClass( ACTIVE_CLASS );
+     $tab.addClass( ACTIVE_CLASS );
+  
+     $( '.show' )
+        .removeClass( SHOW_CLASS )
+        .addClass( HIDE_CLASS )
+        .hide();
+    
+      $(href)
+        .removeClass( HIDE_CLASS )
+        .addClass( SHOW_CLASS )
+        .hide()
+        .fadeIn( 550 );
+  });
+})( jQuery );
+
+</script>
+
+<script>
+
+
+$('.tb11_go').click(function(e) {
+    var idToGet = document.getElementById('query_input').value;
+    myJsRoutes.controllers.Query.getQuery(idToGet).ajax({
+    success : function(data) { 
+
+	document.getElementById("stock_1").innerHTML = data.stock.ticker; 
+	document.getElementById("stock_2").innerHTML = data.stock.price; 
+	document.getElementById("stock_3").innerHTML = data.stock.volume; 
+	document.getElementById("stock_4").innerHTML = data.stock.pe; 
+	document.getElementById("stock_5").innerHTML = data.stock.eps; 
+	document.getElementById("stock_6").innerHTML = data.stock.week52High; 
+	document.getElementById("stock_7").innerHTML = data.stock.week52Low;
+	document.getElementById("stock_8").innerHTML = data.stock.dayLow;
+	document.getElementById("stock_9").innerHTML = data.stock.dayHigh;
+	document.getElementById("stock_10").innerHTML = data.stock.moving50DayAvg;
+	document.getElementById("stock_11").innerHTML = data.stock.marketCap;
+	}
+	
+
+});
+
+});
+</script>
+    
+    <script src="js/bootstrap.min.js"></script>
   </body>
 </html>

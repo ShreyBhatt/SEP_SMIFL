@@ -9,6 +9,7 @@
         <link rel="stylesheet" media="screen" href="@RoutesHelper.bootstrapCssPath">
         <link rel="shortcut icon" type="image/png" href="@RoutesHelper.faviconPath">
         <link rel="stylesheet" media="screen" href="@RoutesHelper.customCssPath.getOrElse("")">
+<script type="text/javascript" src='@routes.Application.javascriptRoutes()'></script>
         <script src="@RoutesHelper.jqueryPath" type="text/javascript"></script>
     </head>
     <body>
@@ -27,7 +28,6 @@
 
       </div>
     </div>
-
  
 	<div class="x_container">
     
@@ -42,11 +42,13 @@
             </ul>
             <div id="login" class="form-action show">
                 <h1>Login with:</h1>
+		<h1><span id="fname">test</span></h1>
                 <p>
 
             	
             		@content
         	
+
 
                 </p>
             </div>
@@ -65,6 +67,9 @@
         </div>
 	</div>
 	</div>
+
+
+	<div class="getAjaxForThisContainer"><a href="#" id="#test1">GOOG</a></div>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -97,7 +102,27 @@
         .fadeIn( 550 );
   });
 })( jQuery );
+
 </script>
+
+<script>
+
+
+$('.getAjaxForThisContainer').click(function(e) {
+    var idToGet = "GOOG";
+    myJsRoutes.controllers.Query.getQuery(idToGet).ajax({
+    success : function(data) { 
+
+	document.getElementById("fname").innerHTML = data.stock.ticker; 
+
+	}
+	
+
+});
+
+});
+</script>
+
 
     <script src="js/bootstrap.min.js"></script>
 
