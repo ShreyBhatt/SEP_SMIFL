@@ -108,92 +108,92 @@ Load next 10 stocks
 			</div>
 			
 			<div class="right_bot">
-			<table>
-			<tr>
-			  <td style="text-align: right;">
+			<table style="table-layout: fixed; with: 100%;">
+			<tr width="50%">
+			  <td>
 			    <b>Ticker:</b>
 			  </td>
-			  <td style="text-align: left;">
+			  <td>
 			    <span id="stock_1"></span>
 			  </td>
 			</tr>
-			<tr>
-			  <td style="text-align: right;">
+			<tr width="50%">
+			  <td>
 			    <b>Price:</b>
 			  </td>
-			  <td style="text-align: left;">
+			  <td>
 			    <span id="stock_2"></span>
 			  </td>
 			</tr>
-			<tr>
-			  <td style="text-align: right;">
+			<tr width="50%">
+			  <td>
 			    <b>Volume:</b>
 			  </td>
-			  <td style="text-align: left;">
+			  <td>
 			    <span id="stock_3"></span>
 			  </td>
 			</tr>
-			<tr>
-			  <td style="text-align: right;">
+			<tr width="50%">
+			  <td>
 			    <b>PE:</b>
 			  </td>
-			  <td style="text-align: left;">
+			  <td>
 			    <span id="stock_4"></span>
 			  </td>
 			</tr>
-			<tr>
-			  <td style="text-align: right;">
+			<tr width="50%">
+			  <td>
 			    <b>EPS:</b>
 			  </td>
-			  <td style="text-align: left;">
+			  <td>
 			    <span id="stock_5"></span>
 			  </td>
 			</tr>
 			<tr>
-			  <td style="text-align: right;">
-			    <b>Week52High:</b>
+			  <td>
+			    <b>Week 52 High:</b>
 			  </td>
-			  <td style="text-align: left;">
+			  <td>
 			    <span id="stock_6"></span>
 			  </td>
 			</tr>
-			<tr>
-			  <td style="text-align: right;">
-			    <b>Week52Low:</b>
+			<tr width="50%">
+			  <td>
+			    <b>Week 52 Low:</b>
 			  </td>
-			  <td style="text-align: left;">
+			  <td>
 			    <span id="stock_7"></span>
 			  </td>
 			</tr>
-			<tr>
-			  <td style="text-align: right;">
-			    <b>DayLow:</b>
+			<tr width="50%">
+			  <td>
+			    <b>Day Low:</b>
 			  </td>
-			  <td style="text-align: left;">
+			  <td>
 			    <span id="stock_8"></span>
 			  </td>
 			</tr>
-			<tr>
-			  <td style="text-align: right;">
-			    <b>DayHigh:</b>
+			<tr width="50%">
+			  <td>
+			    <b>Day High:</b>
 			  </td>
-			  <td style="text-align: left;">
+			  <td>
 			    <span id="stock_9"></span>
 			  </td>
 			</tr>
-			<tr>
-			  <td style="text-align: right;">
-			    <b>Moving50DayAvg:</b>
+			<tr width="50%">
+			  <td>
+			    <b>Moving 50 Day Avg:</b>
 			  </td>
-			  <td style="text-align: left;">
+			  <td>
 			    <span id="stock_10"></span>
 			  </td>
 			</tr>
-			<tr>
-			  <td style="text-align: right;">
-			    <b>MarketCap:</b>
+			<tr width="50%">
+			  <td>
+			    <b>Market Cap:</b>
 			  </td>
-			  <td style="text-align: left;">
+			  <td>
 			    <span id="stock_11"></span>
 			  </td>
 			</tr>
@@ -256,6 +256,7 @@ $('.tb11_go').click(function(e) {
     var idToGet = document.getElementById('query_input').value;
     myJsRoutes.controllers.Query.getQuery(idToGet).ajax({
     success : function(data) { 
+	requestOK = true;
 
 	document.getElementById("stock_1").innerHTML = data.stock.ticker; 
 	document.getElementById("stock_2").innerHTML = data.stock.price; 
@@ -268,10 +269,15 @@ $('.tb11_go').click(function(e) {
 	document.getElementById("stock_9").innerHTML = data.stock.dayHigh;
 	document.getElementById("stock_10").innerHTML = data.stock.moving50DayAvg;
 	document.getElementById("stock_11").innerHTML = data.stock.marketCap;
-	}
-	
 
-});
+
+
+	},
+    error: function (jqXHR, textStatus, errorThrown) {
+	alert("Invalid Stock Query");
+	}
+    });
+
 
 });
 </script>
