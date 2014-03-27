@@ -1,0 +1,105 @@
+@(title: String)(content: Html)
+
+@import securesocial.core.providers.utils.RoutesHelper
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>@title</title>
+        <link rel="stylesheet" media="screen" href="@RoutesHelper.bootstrapCssPath">
+        <link rel="shortcut icon" type="image/png" href="@RoutesHelper.faviconPath">
+        <link rel="stylesheet" media="screen" href="@RoutesHelper.customCssPath.getOrElse("")">
+        <script src="@RoutesHelper.jqueryPath" type="text/javascript"></script>
+    </head>
+    <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Paramount Investment League</a>
+        </div>
+
+      </div>
+    </div>
+
+ 
+	<div class="x_container">
+    
+    <div class="flat-form">
+            <ul class="tabs">
+                <li>
+                    <a href="#login" class="active">Login</a>
+                </li>
+                <li>
+                    <a href="#about">About</a>
+                </li>
+            </ul>
+            <div id="login" class="form-action show">
+                <h1>Login with:</h1>
+                <p>
+
+            	
+            		@content
+        	
+
+                </p>
+            </div>
+            <!--/#login.form-action-->
+            <div id="about" class="form-action hide">
+                <h1>About</h1>
+                <p>
+                    Paramount Investment League Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+                    Maecenas sed diam eget risus varius bladit sit amet non Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+                    Maecenas sed diam eget risus varius bladit sit amet non Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+                    Maecenas sed diam eget risus varius bladit sit amet non Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+                    Maecenas sed diam eget risus varius bladit sit amet non
+                </p>
+            </div>
+            <!--/#register.form-action-->
+        </div>
+	</div>
+	</div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+	  <script>
+  (function( $ ) {
+  // constants
+  var SHOW_CLASS = 'show',
+      HIDE_CLASS = 'hide',
+      ACTIVE_CLASS = 'active';
+  
+  $( '.tabs' ).on( 'click', 'li a', function(e){
+    e.preventDefault();
+    var $tab = $( this ),
+         href = $tab.attr( 'href' );
+  
+     $( '.active' ).removeClass( ACTIVE_CLASS );
+     $tab.addClass( ACTIVE_CLASS );
+  
+     $( '.show' )
+        .removeClass( SHOW_CLASS )
+        .addClass( HIDE_CLASS )
+        .hide();
+    
+      $(href)
+        .removeClass( HIDE_CLASS )
+        .addClass( SHOW_CLASS )
+        .hide()
+        .fadeIn( 550 );
+  });
+})( jQuery );
+</script>
+
+    <script src="js/bootstrap.min.js"></script>
+
+    </body>
+</html>

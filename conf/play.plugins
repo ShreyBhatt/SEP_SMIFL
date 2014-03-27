@@ -1,5 +1,5 @@
 9994:securesocial.core.DefaultAuthenticatorStore
 9995:securesocial.core.DefaultIdGenerator
-9997:securesocial.controllers.DefaultTemplatesPlugin
+9997:controllers.plugin.CustomTemplatesPlugin
 9998:service.MyUserService
 10001:securesocial.core.providers.FacebookProvider
