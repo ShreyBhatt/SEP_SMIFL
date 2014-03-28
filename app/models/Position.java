@@ -78,6 +78,19 @@ public class Position extends Model {
   /**
    * Method for getting all the OWN positions of a stock in the portfolio.
    * @param portfolioId is the unique database id of the portfolio
+   * @return a list of all the OWN positions of the ticker in portfolioId
+   */
+  public static List<Position> getAllOwnPositions( final long portfolioId ) {
+    return Ebean.find(Position.class)
+      .where()
+      .eq("portfolioId", portfolioId)
+      .eq("typeOf", "OWN")
+      .findList();
+  }
+
+  /**
+   * Method for getting all the OWN positions of a stock for a ticker in the portfolio.
+   * @param portfolioId is the unique database id of the portfolio
    * @param ticker is the ticker symbol of the stock positions to retrieve.
    * @return a list of all the OWN positions of the ticker in portfolioId
    */

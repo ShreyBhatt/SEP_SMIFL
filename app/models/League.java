@@ -49,6 +49,13 @@ public class League extends Model {
       .findUnique();
   }
 
+  public static League findById ( final Long id ) {
+    return Ebean.find(League.class)
+      .where()
+      .eq("id", id)
+      .findUnique();
+  }
+
   public static League add ( final String name ) {
     League league = League.find( name );
 

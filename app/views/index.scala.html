@@ -1,11 +1,11 @@
-@(user: securesocial.core.Identity)
+@(user: securesocial.core.Identity, userId: Long, leagueId: Long)
 @import securesocial.core.IdentityProvider
 @import securesocial.core.Registry
 @import securesocial.core.AuthenticationMethod._
 @import securesocial.core.providers.utils.RoutesHelper
 @import Http.Context.Implicit
 
-@main("SecureSocial - Sample Protected Page", user.firstName) {
+@main("SecureSocial - Sample Protected Page", user.firstName, userId, leagueId) {
 
 <div class="page-header">
   <h2><img src="@user.avatarUrl" alt="@user.fullName" width="40px" height="40px"/> Welcome @user.firstName</h2>

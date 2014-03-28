@@ -1,4 +1,4 @@
-@(title: String, username: String)(content: Html)
+@(title: String, username: String, userId: Long, leagueId: Long)(content: Html)
 
 <!DOCTYPE html>
 
@@ -57,7 +57,44 @@
           <div class="main_top">
           
             <div class="main_top_header">Portfolio Overview ></div>
-            
+	
+	<table class="main_top_table">
+	  <tr>
+	    <td>
+	      <b>Portfolio Value:</b> <span id="portfolio_value">Frank Underwood</span>
+	    </td>
+	    <td>
+	      <b>League Name:</b> <span id="league_name">Frank Underwood</span>
+	    </td>
+	  </tr>
+	  <tr>
+	    <td>
+	      <b>Cash Available:</b> <span id="cash">Frank Underwood</span>
+	    </td>
+	    <td>
+	      <b>Percentage Return:</b> <span id="percent_return">Frank Underwood</span>
+	    </td>
+	  </tr>
+	  <tr>
+	    <td>
+	      <b>Total Stock Value:</b> <span id="total_stock_value">Frank Underwood</span>
+	    </td>
+	    <td>
+	      <b>Initial Cash Balance:</b> <span id="starting_value">Frank Underwood</span>
+	    </td>
+	  </tr>
+	</table>
+
+
+
+
+	      
+	    </td>
+	    <td>
+	      
+	    </td>
+
+
 
           </div>
 
@@ -151,7 +188,7 @@ Load next 10 stocks
 			</tr>
 			<tr>
 			  <td>
-			    <b>Week 52 High:</b>
+			    <b>52 Week High:</b>
 			  </td>
 			  <td>
 			    <span id="stock_6"></span>
@@ -159,7 +196,7 @@ Load next 10 stocks
 			</tr>
 			<tr width="50%">
 			  <td>
-			    <b>Week 52 Low:</b>
+			    <b>52 Week Low:</b>
 			  </td>
 			  <td>
 			    <span id="stock_7"></span>
@@ -183,7 +220,7 @@ Load next 10 stocks
 			</tr>
 			<tr width="50%">
 			  <td>
-			    <b>Moving 50 Day Avg:</b>
+			    <b>50 Day Moving Avg:</b>
 			  </td>
 			  <td>
 			    <span id="stock_10"></span>
@@ -252,6 +289,23 @@ $(document).ready(function(){
 <script>
 
 
+
+function initPortfolio()
+{
+    myJsRoutes.controllers.PortfolioController.getPortfolioOverview(@userId, @leagueId).ajax({
+    success : function(data) { 
+	document.getElementById("league_name").innerHTML = capitalizeFirstLetter(data.leagueName); 
+	document.getElementById("cash").innerHTML = data.cash;
+	document.getElementById("total_stock_value").innerHTML = data.totalStockValue;
+	document.getElementById("starting_value").innerHTML = data.startingValue;
+	document.getElementById("portfolio_value").innerHTML = data.totalStockValue + data.cash;
+	document.getElementById("percent_return").innerHTML = 100 * (-1 + ((data.totalStockValue + data.cash) / data.startingValue)) + "%";
+    }
+});
+}
+
+initPortfolio();
+
 $('.tb11_go').click(function(e) {
     var idToGet = document.getElementById('query_input').value;
     myJsRoutes.controllers.Query.getQuery(idToGet).ajax({
@@ -280,6 +334,11 @@ $('.tb11_go').click(function(e) {
 
 
 });
+
+function capitalizeFirstLetter(string)
+{
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
 </script>
     
     <script src="js/bootstrap.min.js"></script>

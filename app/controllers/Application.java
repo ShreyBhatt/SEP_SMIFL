@@ -48,8 +48,9 @@ public class Application extends Controller {
   @SecureSocial.SecuredAction
   public static Result portfolio() {
     
-    Identity user = (Identity) ctx().args.get(SecureSocial.USER_KEY);
-    return ok(index.render(user));
+    Identity identity = (Identity) ctx().args.get(SecureSocial.USER_KEY);
+    User user = User.find(identity.email().get());
+    return ok(index.render(identity, (Long) user.id, (Long) 1L));
 
   }
 
@@ -57,7 +58,8 @@ public static Result javascriptRoutes() {
     response().setContentType("text/javascript");
     return ok(
         Routes.javascriptRouter("myJsRoutes",
-            routes.javascript.Query.getQuery()
+            routes.javascript.Query.getQuery(),
+	    routes.javascript.PortfolioController.getPortfolioOverview()
         )
     );
 }

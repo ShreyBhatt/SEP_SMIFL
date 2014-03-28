@@ -2,15 +2,16 @@ package controllers;
 
 import play.*;
 import play.mvc.*;
-
+import java.util.*;
 import securesocial.core.Identity;
 import securesocial.core.java.BaseUserService;
 import securesocial.core.java.SecureSocial;
 import models.*;
 
 import play.libs.Json;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
+import service.*;
 import views.html.*;
 
 public class PortfolioController extends Controller {
@@ -28,30 +29,79 @@ public class PortfolioController extends Controller {
     return ok(result);
   }
 
+  /**
+   * Method for returning a badRequest for an invalid stock ticker.
+   * @param message is the message to return in the Result
+   * @return a JSON Result
+   */
+  private static Result invalidRequest( final String message ) {
+      return badRequest(
+          Json.newObject()
+          .put("status", "KO")
+          .put("message", message)
+          );
+  }
+
+  /**
+   * Method for ensuring that a user attempting to make a trade
+   * is authorized to do so.
+   * @param portfolioId is the DB id for a portfolio
+   * @param userId is the OAuth userId
+   * @return true is they are authorized, false otherwise.
+   */
+  private static boolean validateUser( final long portfolioId, final String userId ) {
+    User user = User.findUserId(userId);
+    Portfolio port = Portfolio.find( portfolioId );
+    if ( user == null || port == null) {
+      return false;
+    }
+    return user.id == port.userId;
+  }
 
 	//TODO: Make this work. bitch :) and fix tabs
-	public static Result portfolioTest() {
+	@SecureSocial.SecuredAction
+	public static Result getPortfolioOverview( final long userId, final long leagueId ) {
 
+	    Portfolio portfolio = Portfolio.getPortfolio(userId, leagueId);
 	    Identity identity = (Identity) ctx().args.get(SecureSocial.USER_KEY);
+
+	    if ( !validateUser(portfolio.id, identity.identityId().userId()) ) {
+      		return invalidRequest("Unauthorized Operation");
+    	    }
+
 	    User user = User.find(identity.email().get());
-	    ObjectNode result;
-	    Portfolio port;
 	    
-	    if ( user != null ) {
-	      result = user.getJson();
-	      port = Portfolio.getPortfolio( user.id, 1 );
-	      result.put("globalPortfolio", port.getJson() );
-	      result.put("cashPosition", Position.getCashPosition( port.id ).getJson() );
-	      return ok(result);
+//league name, get from 1 query
+//available cash, 1 query
+//calculation of total value of all stocks in portfolio
+//return first 10 stocks in portfolio
+
+	    League league = League.findById(leagueId);
+	    Position cash = Position.getCashPosition(portfolio.id);
+	    List<Position> positions = Position.getAllOwnPositions(portfolio.id);
+	   
+  	    ObjectNode result = Json.newObject();
+
+	    result.put("leagueName", league.name);
+	    result.put("cash", cash.price);
+	
+	    double totalStockValue = 0;
+	    YahooFinanceService yahoo = YahooFinanceService.getInstance();
+	    for (Position position: positions) {
+		totalStockValue += position.qty * yahoo.getStock(position.ticker).getPrice();
 	    }
+	    result.put("totalStockValue", totalStockValue);    
+	    result.put("startingValue", 250000);
 
-	    //THIS SHOULDN'T HAPPEN
-	    result = Json.newObject();
-	    result.put("status", "KO");
-	    result.put("message", "fixme" );
+	    
 
-	    return badRequest(result);
+	return ok(result);
 
 	}
 
 }
+
+
+
+
+
