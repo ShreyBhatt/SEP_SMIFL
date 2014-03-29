@@ -18,14 +18,14 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 @Entity
 @Table(name="position")
 public class Position extends Model {
-  
+
   private static final long serialVersionUID = 1L;
 
   @Id
   public long id;
 
   public long portfolioId;
-  
+
   public String typeOf;
 
   public String ticker;
@@ -35,8 +35,8 @@ public class Position extends Model {
   public double price;
 
   @Temporal(TemporalType.TIMESTAMP)
-  public Date dateOf; 
-  
+  public Date dateOf;
+
   /**
    * Constructor
    */
@@ -66,6 +66,23 @@ public class Position extends Model {
   }
 
   /**
+   * Method for making a JSON representation of this object.
+   * @return Returns an ObjectNode that contains the JSON for this object.
+   */
+  public ObjectNode getJson( final double price) {
+    return Json.newObject()
+      .put("portfolioId", this.portfolioId)
+      .put("typeOf", this.typeOf)
+      .put("ticker", this.ticker)
+      .put("qty", this.qty)
+      .put("price", this.price)
+      .put("dateOf",
+              this.dateOf.toString()
+                .substring(0, this.dateOf.toString().length() - 9))
+      .put("currentPrice", price);
+  }
+
+  /**
    * Method to get all the positions in a portfolio.
    */
   public static List<Position> getAllPortfolioPositions( final long portfolioId ) {
@@ -80,7 +97,9 @@ public class Position extends Model {
    * @param portfolioId is the unique database id of the portfolio
    * @return a list of all the OWN positions of the ticker in portfolioId
    */
-  public static List<Position> getAllOwnPositions( final long portfolioId ) {
+  public static List<Position> getAllOwnPositions(
+          final long portfolioId
+          ) {
     return Ebean.find(Position.class)
       .where()
       .eq("portfolioId", portfolioId)
@@ -89,7 +108,8 @@ public class Position extends Model {
   }
 
   /**
-   * Method for getting all the OWN positions of a stock for a ticker in the portfolio.
+   * Method for getting all the OWN positions of a stock for a ticker in the
+   * portfolio.
    * @param portfolioId is the unique database id of the portfolio
    * @param ticker is the ticker symbol of the stock positions to retrieve.
    * @return a list of all the OWN positions of the ticker in portfolioId

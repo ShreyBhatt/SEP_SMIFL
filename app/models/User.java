@@ -30,7 +30,7 @@ public class User extends Model {
 
   @Constraints.Required
   public String last;
-  
+
   @Constraints.Required
   public String email;
 
