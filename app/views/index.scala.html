@@ -5,8 +5,305 @@
 @import securesocial.core.providers.utils.RoutesHelper
 @import Http.Context.Implicit
 
-@main("SecureSocial - Sample Protected Page", user.firstName, userId, leagueId) {
+@main("Paramoutn Investment League - Portfolio", user.fullName, userId, leagueId) {
 
+    <div class="x_container">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-9">
+
+                    <div class="main_top">
+
+                        <div class="main_top_header">Portfolio Overview ></div>
+
+                        <table class="main_top_table">
+                            <tr>
+                                <td>
+                                    <b>Portfolio Value:</b> <span id="portfolio_value">Frank Underwood</span>
+                                </td>
+                                <td>
+                                    <b>League Name:</b> <span id="league_name">Frank Underwood</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>Cash Available:</b> <span id="cash">Frank Underwood</span>
+                                </td>
+                                <td>
+                                    <b>Percentage Return:</b> <span id="percent_return">Frank Underwood</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>Total Stock Value:</b> <span id="total_stock_value">Frank Underwood</span>
+                                </td>
+                                <td>
+                                    <b>Initial Cash Balance:</b> <span id="starting_value">Frank Underwood</span>
+                                </td>
+                            </tr>
+                        </table>
+
+
+
+
+
+                    </td>
+                    <td>
+
+                    </td>
+
+
+
+                </div>
+
+                <div class="main_bot">
+
+                    <style type="text/css">
+                        .tftable {color:#333333;width:100%;text-align:center;}
+                        .tftable th {background-color:#acc8cc;padding: 8px;text-align:center;}
+                        .tftable tr {background-color:#d4ebff;}
+                        .tftable td {padding: 8px;}
+                        .tftable tr:hover {background-color:#f3f9ff;}
+                    </style>
+
+                    <table class="tftable" border="0">
+                        <tr><td>Sell1</td><td>GOOG</td><td>OWN</td><td>10</td><td>price_purchased</td><td>date_of_purchase</td><td>price_current</td></tr>
+                        <tr><td>Sell2</td><td>GOOG</td><td>OWN</td><td>10</td><td>price_purchased</td><td>date_of_purchase</td><td>price_current</td></tr>
+                        <tr><td>Sell3</td><td>GOOG</td><td>OWN</td><td>10</td><td>price_purchased</td><td>date_of_purchase</td><td>price_current</td></tr>
+                        <tr><td>Sell4</td><td>GOOG</td><td>OWN</td><td>10</td><td>price_purchased</td><td>date_of_purchase</td><td>price_current</td></tr>
+                        <tr><td>Sell5</td><td>GOOG</td><td>OWN</td><td>10</td><td>price_purchased</td><td>date_of_purchase</td><td>price_current</td></tr>
+                        <tr><td>Sell6</td><td>GOOG</td><td>OWN</td><td>10</td><td>price_purchased</td><td>date_of_purchase</td><td>price_current</td></tr>
+                        <tr><td>Sell7</td><td>GOOG</td><td>OWN</td><td>10</td><td>price_purchased</td><td>date_of_purchase</td><td>price_current</td></tr>
+                        <tr><td>Sell8</td><td>GOOG</td><td>OWN</td><td>10</td><td>price_purchased</td><td>date_of_purchase</td><td>price_current</td></tr>
+                        <tr><td>Sell9</td><td>GOOG</td><td>OWN</td><td>10</td><td>price_purchased</td><td>date_of_purchase</td><td>price_current</td></tr>
+                        <tr><td>Sell10</td><td>GOOG</td><td>OWN</td><td>10</td><td>price_purchased</td><td>date_of_purchase</td><td>price_current</td></tr>
+                    </table>
+
+                    <a href="" class="main_bot_link">
+                        Load next 10 stocks
+                    </a>
+
+                </div>
+
+                <div class="slide">
+                    <div class="btn-slide">
+                        v</div></div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div class="right">
+
+                    <div class="right_header">Query ></div>
+
+                    <div class="right_top">
+                        <input type="text" maxlength=4 class="tb11" id="query_input" name="query" onblur="this.value=this.value.toUpperCase()">
+                        <a href="#"><div class="tb11_go"></div></a>
+                    </div>
+
+                    <div class="right_bot">
+                        <table style="table-layout: fixed; with: 100%;">
+                            <tr width="50%">
+                                <td>
+                                    <b>Ticker:</b>
+                                </td>
+                                <td>
+                                    <span id="stock_1"></span>
+                                </td>
+                            </tr>
+                            <tr width="50%">
+                                <td>
+                                    <b>Price:</b>
+                                </td>
+                                <td>
+                                    <span id="stock_2"></span>
+                                </td>
+                            </tr>
+                            <tr width="50%">
+                                <td>
+                                    <b>Volume:</b>
+                                </td>
+                                <td>
+                                    <span id="stock_3"></span>
+                                </td>
+                            </tr>
+                            <tr width="50%">
+                                <td>
+                                    <b>PE:</b>
+                                </td>
+                                <td>
+                                    <span id="stock_4"></span>
+                                </td>
+                            </tr>
+                            <tr width="50%">
+                                <td>
+                                    <b>EPS:</b>
+                                </td>
+                                <td>
+                                    <span id="stock_5"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>52 Week High:</b>
+                                </td>
+                                <td>
+                                    <span id="stock_6"></span>
+                                </td>
+                            </tr>
+                            <tr width="50%">
+                                <td>
+                                    <b>52 Week Low:</b>
+                                </td>
+                                <td>
+                                    <span id="stock_7"></span>
+                                </td>
+                            </tr>
+                            <tr width="50%">
+                                <td>
+                                    <b>Day Low:</b>
+                                </td>
+                                <td>
+                                    <span id="stock_8"></span>
+                                </td>
+                            </tr>
+                            <tr width="50%">
+                                <td>
+                                    <b>Day High:</b>
+                                </td>
+                                <td>
+                                    <span id="stock_9"></span>
+                                </td>
+                            </tr>
+                            <tr width="50%">
+                                <td>
+                                    <b>50 Day Moving Avg:</b>
+                                </td>
+                                <td>
+                                    <span id="stock_10"></span>
+                                </td>
+                            </tr>
+                            <tr width="50%">
+                                <td>
+                                    <b>Market Cap:</b>
+                                </td>
+                                <td>
+                                    <span id="stock_11"></span>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script>
+        $(document).ready(function(){
+
+            $(".btn-slide").click(function(){
+                $(".main_bot").slideToggle("slow");
+                $(this).toggleClass("active");
+            });
+
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script>
+        (function( $ ) {
+            // constants
+            var SHOW_CLASS = 'show',
+            HIDE_CLASS = 'hide',
+            ACTIVE_CLASS = 'active';
+
+            $( '.tabs' ).on( 'click', 'li a', function(e){
+                e.preventDefault();
+                var $tab = $( this ),
+                href = $tab.attr( 'href' );
+
+                $( '.active' ).removeClass( ACTIVE_CLASS );
+                $tab.addClass( ACTIVE_CLASS );
+
+                $( '.show' )
+                .removeClass( SHOW_CLASS )
+                .addClass( HIDE_CLASS )
+                .hide();
+
+                $(href)
+                .removeClass( HIDE_CLASS )
+                .addClass( SHOW_CLASS )
+                .hide()
+                .fadeIn( 550 );
+            });
+        })( jQuery );
+
+    </script>
+
+    <script>
+
+
+
+        function initPortfolio()
+        {
+            myJsRoutes.controllers.PortfolioController.getPortfolioOverview(@userId, @leagueId).ajax({
+                success : function(data) { 
+                    document.getElementById("league_name").innerHTML = capitalizeFirstLetter(data.leagueName); 
+                    document.getElementById("cash").innerHTML = data.cash;
+                    document.getElementById("total_stock_value").innerHTML = data.totalStockValue;
+                    document.getElementById("starting_value").innerHTML = data.startingValue;
+                    document.getElementById("portfolio_value").innerHTML = data.totalStockValue + data.cash;
+                    document.getElementById("percent_return").innerHTML = 100 * (-1 + ((data.totalStockValue + data.cash) / data.startingValue)) + "%";
+                }
+            });
+        }
+
+        initPortfolio();
+
+        $('.tb11_go').click(function(e) {
+            var idToGet = document.getElementById('query_input').value;
+            myJsRoutes.controllers.Query.getQuery(idToGet).ajax({
+                success : function(data) { 
+                    requestOK = true;
+
+                    document.getElementById("stock_1").innerHTML = data.stock.ticker; 
+                    document.getElementById("stock_2").innerHTML = data.stock.price; 
+                    document.getElementById("stock_3").innerHTML = data.stock.volume; 
+                    document.getElementById("stock_4").innerHTML = data.stock.pe; 
+                    document.getElementById("stock_5").innerHTML = data.stock.eps; 
+                    document.getElementById("stock_6").innerHTML = data.stock.week52High; 
+                    document.getElementById("stock_7").innerHTML = data.stock.week52Low;
+                    document.getElementById("stock_8").innerHTML = data.stock.dayLow;
+                    document.getElementById("stock_9").innerHTML = data.stock.dayHigh;
+                    document.getElementById("stock_10").innerHTML = data.stock.moving50DayAvg;
+                    document.getElementById("stock_11").innerHTML = data.stock.marketCap;
+
+
+
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert("Invalid Stock Query");
+                }
+            });
+
+
+        });
+
+        function capitalizeFirstLetter(string)
+        {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+    </script>
+
+    <script src="js/bootstrap.min.js"></script>
+
+}
+<!--
 <div class="page-header">
   <h2><img src="@user.avatarUrl" alt="@user.fullName" width="40px" height="40px"/> Welcome @user.firstName</h2>
 </div>
@@ -52,5 +349,5 @@
 
   <hr>
   <a class="btn" href="@securesocial.controllers.routes.LoginPage.logout()">Logout</a>
-</div>
-}
+</div> -->
+
