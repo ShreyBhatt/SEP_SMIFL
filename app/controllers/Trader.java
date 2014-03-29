@@ -53,7 +53,7 @@ public class Trader extends Controller {
     }
     return user.id == port.userId;
   }
-  
+
   /**
    * Method for purchasing stock in a portfolio.
    * @param portfolioId is the unique id of the portfolio to purchase stock in
