@@ -9,7 +9,7 @@ margin-top: 100px;
 .main_top {
 	background: #f3f9ff;
   width: 100%;
-	height: 250px;
+	height: 200px;
           margin-left: auto;
           margin-right: auto;
 font-family: "Open Sans";
@@ -37,7 +37,7 @@ color: #FFFFFF;
 .main_bot {
 	background: #d4ebff;
   width: 100%;
-	height: 450px;
+	height: 525px;
 	display: none;
 	  font-family: "Roboto";
   font-size: 16px;

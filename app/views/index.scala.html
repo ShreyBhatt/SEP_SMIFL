@@ -55,16 +55,17 @@
                 </style>
 
                 <table class="tftable" border="0">
-                    <tr><td>Sell1</td><td>GOOG</td><td>OWN</td><td>10</td><td>price_purchased</td><td>date_of_purchase</td><td>price_current</td></tr>
-                    <tr><td>Sell2</td><td>GOOG</td><td>OWN</td><td>10</td><td>price_purchased</td><td>date_of_purchase</td><td>price_current</td></tr>
-                    <tr><td>Sell3</td><td>GOOG</td><td>OWN</td><td>10</td><td>price_purchased</td><td>date_of_purchase</td><td>price_current</td></tr>
-                    <tr><td>Sell4</td><td>GOOG</td><td>OWN</td><td>10</td><td>price_purchased</td><td>date_of_purchase</td><td>price_current</td></tr>
-                    <tr><td>Sell5</td><td>GOOG</td><td>OWN</td><td>10</td><td>price_purchased</td><td>date_of_purchase</td><td>price_current</td></tr>
-                    <tr><td>Sell6</td><td>GOOG</td><td>OWN</td><td>10</td><td>price_purchased</td><td>date_of_purchase</td><td>price_current</td></tr>
-                    <tr><td>Sell7</td><td>GOOG</td><td>OWN</td><td>10</td><td>price_purchased</td><td>date_of_purchase</td><td>price_current</td></tr>
-                    <tr><td>Sell8</td><td>GOOG</td><td>OWN</td><td>10</td><td>price_purchased</td><td>date_of_purchase</td><td>price_current</td></tr>
-                    <tr><td>Sell9</td><td>GOOG</td><td>OWN</td><td>10</td><td>price_purchased</td><td>date_of_purchase</td><td>price_current</td></tr>
-                    <tr><td>Sell10</td><td>GOOG</td><td>OWN</td><td>10</td><td>price_purchased</td><td>date_of_purchase</td><td>price_current</td></tr>
+										<tr><td><b>SELL</b></td><td><b>TICKER</b></td><td><b>TYPEOF</b></td><td><b>QTY</b></td><td><b>PRICE</b></td><td><b>DATEOF</b></td><td><b>CURRENTPRICE</b></td></tr>
+                    <tr><td>Sell1</td><td><span id="pos_ticker_1"></span></td><td><span id="pos_typeOf_1"></span></td><td><span id="pos_qty_1"></span></td><td><span id="pos_price_1"></span></td><td><span id="pos_dateOf_1"></span></td><td><span id="pos_currentPrice_1"></span></td></tr>
+                    <tr><td>Sell2</td><td><span id="pos_ticker_2"></span></td><td><span id="pos_typeOf_2"></span></td><td><span id="pos_qty_2"></span></td><td><span id="pos_price_2"></span></td><td><span id="pos_dateOf_2"></span></td><td><span id="pos_currentPrice_2"></span></td></tr>
+                    <tr><td>Sell3</td><td><span id="pos_ticker_3"></span></td><td><span id="pos_typeOf_3"></span></td><td><span id="pos_qty_3"></span></td><td><span id="pos_price_3"></span></td><td><span id="pos_dateOf_3"></span></td><td><span id="pos_currentPrice_3"></span></td></tr>
+                    <tr><td>Sell4</td><td><span id="pos_ticker_4"></span></td><td><span id="pos_typeOf_4"></span></td><td><span id="pos_qty_4"></span></td><td><span id="pos_price_4"></span></td><td><span id="pos_dateOf_4"></span></td><td><span id="pos_currentPrice_4"></span></td></tr>
+                    <tr><td>Sell5</td><td><span id="pos_ticker_5"></span></td><td><span id="pos_typeOf_5"></span></td><td><span id="pos_qty_5"></span></td><td><span id="pos_price_5"></span></td><td><span id="pos_dateOf_5"></span></td><td><span id="pos_currentPrice_5"></span></td></tr>
+                    <tr><td>Sell6</td><td><span id="pos_ticker_6"></span></td><td><span id="pos_typeOf_6"></span></td><td><span id="pos_qty_6"></span></td><td><span id="pos_price_6"></span></td><td><span id="pos_dateOf_6"></span></td><td><span id="pos_currentPrice_6"></span></td></tr>
+                    <tr><td>Sell7</td><td><span id="pos_ticker_7"></span></td><td><span id="pos_typeOf_7"></span></td><td><span id="pos_qty_7"></span></td><td><span id="pos_price_7"></span></td><td><span id="pos_dateOf_7"></span></td><td><span id="pos_currentPrice_7"></span></td></tr>
+                    <tr><td>Sell8</td><td><span id="pos_ticker_8"></span></td><td><span id="pos_typeOf_8"></span></td><td><span id="pos_qty_8"></span></td><td><span id="pos_price_8"></span></td><td><span id="pos_dateOf_8"></span></td><td><span id="pos_currentPrice_8"></span></td></tr>
+                    <tr><td>Sell9</td><td><span id="pos_ticker_9"></span></td><td><span id="pos_typeOf_9"></span></td><td><span id="pos_qty_9"></span></td><td><span id="pos_price_9"></span></td><td><span id="pos_dateOf_9"></span></td><td><span id="pos_currentPrice_9"></span></td></tr>
+                    <tr><td>Sell10</td><td><span id="pos_ticker_10"></span></td><td><span id="pos_typeOf_10"></span></td><td><span id="pos_qty_10"></span></td><td><span id="pos_price_10"></span></td><td><span id="pos_dateOf_10"></span></td><td><span id="pos_currentPrice_10"></span></td></tr>
                 </table>
 
                 <a href="" class="main_bot_link">
@@ -254,9 +255,28 @@
                 "$ " + Number(data.startingValue).toFixed(2);
                 document.getElementById("portfolio_value").innerHTML =
                 "$ " + Number(data.totalStockValue + data.cash).toFixed(2);
+
+  var jsontest = data.positions;
+  var obj = $.parseJSON(data.positions);
+	var i = 1;
+  $.each(obj, function() {
+	if (i<11) {
+		document.getElementById("pos_ticker_" + i).innerHTML = this['ticker'];
+		document.getElementById("pos_typeOf_" + i).innerHTML = this['typeOf'];
+		document.getElementById("pos_qty_" + i).innerHTML = this['qty'];
+		document.getElementById("pos_price_" + i).innerHTML = "$ " + Number(this['price']).toFixed(2);
+		document.getElementById("pos_dateOf_" + i).innerHTML = this['dateOf'];
+		document.getElementById("pos_currentPrice_" + i).innerHTML = "$ " + Number(this['currentPrice']).toFixed(2);
+	}
+	i++;
+  });								
+
                 document.getElementById("percent_return").innerHTML =
                 Number(100 *
                 (-1 + ((data.totalStockValue + data.cash) / data.startingValue))).toFixed(2) + "%";
+
+
+
             }
         });
     }
@@ -266,7 +286,7 @@
     $('.tb11_go').click(function(e) {
         var idToGet = document.getElementById('query_input').value;
         myJsRoutes.controllers.Query.getQuery(idToGet).ajax({
-            success : function(data) {
+        		success : function(data) {
                 requestOK = true;
 
                 document.getElementById("stock_1").innerHTML = data.stock.ticker;
@@ -288,6 +308,7 @@
                 document.getElementById("stock_10").innerHTML =
                 "$ " + Number(data.stock.moving50DayAvg).toFixed(2);
                 document.getElementById("stock_11").innerHTML = data.stock.marketCap;
+
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 alert("Invalid Stock Query");
