@@ -81,18 +81,25 @@ public class PortfolioController extends Controller {
 	    List<Position> positions = Position.getAllOwnPositions(portfolio.id);
 	   
   	    ObjectNode result = Json.newObject();
-
+			
 	    result.put("leagueName", league.name);
 	    result.put("cash", cash.price);
 	
 	    double totalStockValue = 0;
 	    YahooFinanceService yahoo = YahooFinanceService.getInstance();
+			String positionsObj = "[";
 	    for (Position position: positions) {
-		totalStockValue += position.qty * yahoo.getStock(position.ticker).getPrice();
+				double currentPrice = yahoo.getStock(position.ticker).getPrice();
+				positionsObj = positionsObj + "{\"ticker\":\"" + position.ticker + "\",\"typeOf\":\"" + position.typeOf + "\",\"qty\":\"" + position.qty + "\",\"price\":\"" + position.price + "\", \"dateOf\":\"" + position.dateOf + "\",\"currentPrice\":\"" + currentPrice + "\"},";
+				totalStockValue += position.qty * currentPrice;
 	    }
+			
+			positionsObj = positionsObj.substring(0, positionsObj.length()-1) + "]";
+			System.out.println(positionsObj);
 	    result.put("totalStockValue", totalStockValue);    
 	    result.put("startingValue", 250000);
-
+			//result.put("positions", "[{\"name\":\"jack\"},{\"name\":\"john\"},{\"name\":\"joe\"}]");
+			result.put("positions", positionsObj);
 	    
 
 	return ok(result);
