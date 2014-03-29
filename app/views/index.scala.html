@@ -12,359 +12,373 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="main_top">
-                    <div class="main_top_header">Portfolio Overview> </div>
+                    <div class="main_top_header">Portfolio Overview ></div>
+                    <div class="unfuckthespan">
                     <table class="main_top_table">
                         <tr>
                             <td>
-                                <b>Portfolio Value:</b> <span id="portfolio_value">Frank Underwood</span>
+                                <b>Cash Available:</b>
+                                <span id="cash"></span>
                             </td>
                             <td>
-                                <b>League Name:</b> <span id="league_name">Frank Underwood</span>
+                                <b>League Name:</b>
+                                <span id="league_name"></span>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <b>Cash Available:</b> <span id="cash">Frank Underwood</span>
+                                <b>Stock Value:</b>
+                                <span id="total_stock_value"></span>
                             </td>
                             <td>
-                                <b>Percentage Return:</b> <span id="percent_return">Frank Underwood</span>
+                                <b>Percentage Return:</b>
+                                <span id="percent_return"></span>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <b>Total Stock Value:</b> <span id="total_stock_value">Frank Underwood</span>
+                                <b>Total Portfolio Value:</b>
+                                <span id="portfolio_value"></span>
                             </td>
                             <td>
-                                <b>Initial Cash Balance:</b> <span id="starting_value">Frank Underwood</span>
+                                <b>Initial Cash Balance:</b>
+                                <span id="starting_value"></span>
                             </td>
                         </tr>
-                    </table>
-                </td>
-                <td>
-                </td>
-            </div>
-
-            <div class="main_bot">
-
-                <style type="text/css">
-                    .tftable {color:#333333;width:100%;text-align:center;}
-                    .tftable th {background-color:#acc8cc;padding: 8px;text-align:center;}
-                    .tftable tr {background-color:#d4ebff;}
-                    .tftable td {padding: 8px;}
-                    .tftable tr:hover {background-color:#f3f9ff;}
-                </style>
-
-                <table class="tftable" border="0">
-                    <tr><td><b>SELL</b></td><td><b>TICKER</b></td><td><b>TYPEOF</b></td><td><b>QTY</b></td><td><b>PRICE</b></td><td><b>DATEOF</b></td><td><b>CURRENTPRICE</b></td></tr>
-                    <tr><td>Sell1</td><td><span id="pos_ticker_1"></span></td><td><span id="pos_typeOf_1"></span></td><td><span id="pos_qty_1"></span></td><td><span id="pos_price_1"></span></td><td><span id="pos_dateOf_1"></span></td><td><span id="pos_currentPrice_1"></span></td></tr>
-                    <tr><td>Sell2</td><td><span id="pos_ticker_2"></span></td><td><span id="pos_typeOf_2"></span></td><td><span id="pos_qty_2"></span></td><td><span id="pos_price_2"></span></td><td><span id="pos_dateOf_2"></span></td><td><span id="pos_currentPrice_2"></span></td></tr>
-                    <tr><td>Sell3</td><td><span id="pos_ticker_3"></span></td><td><span id="pos_typeOf_3"></span></td><td><span id="pos_qty_3"></span></td><td><span id="pos_price_3"></span></td><td><span id="pos_dateOf_3"></span></td><td><span id="pos_currentPrice_3"></span></td></tr>
-                    <tr><td>Sell4</td><td><span id="pos_ticker_4"></span></td><td><span id="pos_typeOf_4"></span></td><td><span id="pos_qty_4"></span></td><td><span id="pos_price_4"></span></td><td><span id="pos_dateOf_4"></span></td><td><span id="pos_currentPrice_4"></span></td></tr>
-                    <tr><td>Sell5</td><td><span id="pos_ticker_5"></span></td><td><span id="pos_typeOf_5"></span></td><td><span id="pos_qty_5"></span></td><td><span id="pos_price_5"></span></td><td><span id="pos_dateOf_5"></span></td><td><span id="pos_currentPrice_5"></span></td></tr>
-                    <tr><td>Sell6</td><td><span id="pos_ticker_6"></span></td><td><span id="pos_typeOf_6"></span></td><td><span id="pos_qty_6"></span></td><td><span id="pos_price_6"></span></td><td><span id="pos_dateOf_6"></span></td><td><span id="pos_currentPrice_6"></span></td></tr>
-                    <tr><td>Sell7</td><td><span id="pos_ticker_7"></span></td><td><span id="pos_typeOf_7"></span></td><td><span id="pos_qty_7"></span></td><td><span id="pos_price_7"></span></td><td><span id="pos_dateOf_7"></span></td><td><span id="pos_currentPrice_7"></span></td></tr>
-                    <tr><td>Sell8</td><td><span id="pos_ticker_8"></span></td><td><span id="pos_typeOf_8"></span></td><td><span id="pos_qty_8"></span></td><td><span id="pos_price_8"></span></td><td><span id="pos_dateOf_8"></span></td><td><span id="pos_currentPrice_8"></span></td></tr>
-                    <tr><td>Sell9</td><td><span id="pos_ticker_9"></span></td><td><span id="pos_typeOf_9"></span></td><td><span id="pos_qty_9"></span></td><td><span id="pos_price_9"></span></td><td><span id="pos_dateOf_9"></span></td><td><span id="pos_currentPrice_9"></span></td></tr>
-                    <tr><td>Sell10</td><td><span id="pos_ticker_10"></span></td><td><span id="pos_typeOf_10"></span></td><td><span id="pos_qty_10"></span></td><td><span id="pos_price_10"></span></td><td><span id="pos_dateOf_10"></span></td><td><span id="pos_currentPrice_10"></span></td></tr>
-                </table>
-
-                <a href="" class="main_bot_link">
-                    Load next 10 stocks
-                </a>
-
-            </div>
-
-            <div class="slide">
-                <div class="btn-slide">
-                    v</div></div>
-
-        </div>
-
-        <div class="col-md-4">
-
-            <div class="right">
-
-                <div class="right_header">Query ></div>
-
-                <div class="right_top">
-                    <input
-                    type="text"
-                    maxlength=4
-                    class="tb11"
-                    id="query_input"
-                    name="query"
-                    onblur="this.value=this.value.toUpperCase()"
-                    style="text-transform:uppercase"
-                    >
-                    <a href="#"><div class="tb11_go"></div></a>
+                    </table></div>
                 </div>
 
-                <div class="right_bot">
-                    <table style="table-layout: fixed; with: 100%;">
-                        <tr width="50%">
-                            <td>
-                                <b>Ticker:</b>
-                            </td>
-                            <td>
-                                <span id="stock_1"></span>
-                            </td>
+                <div class="main_bot">
+
+                    <style type="text/css">
+                        .tftable {color:#333333;width:100%;text-align:center;}
+                        .tftable th {background-color:#acc8cc;padding: 8px;text-align:center;}
+                        .tftable tr {background-color:#d4ebff;}
+                        .tftable td {padding: 8px;}
+                        .tftable tr:hover {background-color:#f3f9ff;}
+                    </style>
+
+                    <table class="tftable" border="0">
+                        <tr><td><b>SELL</b></td>
+                            <td><b>TICKER</b></td>
+                            <td><b>TYPEOF</b></td>
+                            <td><b>QTY</b></td>
+                            <td><b>PRICE</b></td>
+                            <td><b>DATEOF</b></td>
+                            <td><b>CURRENTPRICE</b></td>
                         </tr>
-                        <tr width="50%">
-                            <td>
-                                <b>Price:</b>
-                            </td>
-                            <td>
-                                <span id="stock_2"></span>
-                            </td>
+                        <tr><td>Sell1</td><td><span id="pos_ticker_1"></span></td>
+                            <td><span id="pos_typeOf_1"></span></td>
+                            <td><span id="pos_qty_1"></span></td>
+                            <td><span id="pos_price_1"></span></td>
+                            <td><span id="pos_dateOf_1"></span></td>
+                            <td><span id="pos_currentPrice_1"></span></td>
                         </tr>
-                        <tr width="50%">
-                            <td>
-                                <b>Volume:</b>
-                            </td>
-                            <td>
-                                <span id="stock_3"></span>
-                            </td>
+                        <tr><td>Sell2</td>
+                            <td><span id="pos_ticker_2"></span></td>
+                            <td><span id="pos_typeOf_2"></span></td>
+                            <td><span id="pos_qty_2"></span></td>
+                            <td><span id="pos_price_2"></span></td>
+                            <td><span id="pos_dateOf_2"></span></td>
+                            <td><span id="pos_currentPrice_2"></span></td>
                         </tr>
-                        <tr width="50%">
-                            <td>
-                                <b>PE:</b>
-                            </td>
-                            <td>
-                                <span id="stock_4"></span>
-                            </td>
+                        <tr><td>Sell3</td>
+                            <td><span id="pos_ticker_3"></span></td>
+                            <td><span id="pos_typeOf_3"></span></td>
+                            <td><span id="pos_qty_3"></span></td>
+                            <td><span id="pos_price_3"></span></td>
+                            <td><span id="pos_dateOf_3"></span></td>
+                            <td><span id="pos_currentPrice_3"></span></td>
                         </tr>
-                        <tr width="50%">
-                            <td>
-                                <b>EPS:</b>
-                            </td>
-                            <td>
-                                <span id="stock_5"></span>
-                            </td>
+                        <tr><td>Sell4</td>
+                            <td><span id="pos_ticker_4"></span></td>
+                            <td><span id="pos_typeOf_4"></span></td>
+                            <td><span id="pos_qty_4"></span></td>
+                            <td><span id="pos_price_4"></span></td>
+                            <td><span id="pos_dateOf_4"></span></td>
+                            <td><span id="pos_currentPrice_4"></span></td>
                         </tr>
-                        <tr>
-                            <td>
-                                <b>52 Week High:</b>
-                            </td>
-                            <td>
-                                <span id="stock_6"></span>
-                            </td>
+                        <tr><td>Sell5</td>
+                            <td><span id="pos_ticker_5"></span></td>
+                            <td><span id="pos_typeOf_5"></span></td>
+                            <td><span id="pos_qty_5"></span></td>
+                            <td><span id="pos_price_5"></span></td>
+                            <td><span id="pos_dateOf_5"></span></td>
+                            <td><span id="pos_currentPrice_5"></span></td>
                         </tr>
-                        <tr width="50%">
-                            <td>
-                                <b>52 Week Low:</b>
-                            </td>
-                            <td>
-                                <span id="stock_7"></span>
-                            </td>
+                        <tr><td>Sell6</td>
+                            <td><span id="pos_ticker_6"></span></td>
+                            <td><span id="pos_typeOf_6"></span></td>
+                            <td><span id="pos_qty_6"></span></td>
+                            <td><span id="pos_price_6"></span></td>
+                            <td><span id="pos_dateOf_6"></span></td>
+                            <td><span id="pos_currentPrice_6"></span></td>
                         </tr>
-                        <tr width="50%">
-                            <td>
-                                <b>Day Low:</b>
-                            </td>
-                            <td>
-                                <span id="stock_8"></span>
-                            </td>
+                        <tr><td>Sell7</td><td><span id="pos_ticker_7"></span></td>
+                            <td><span id="pos_typeOf_7"></span></td>
+                            <td><span id="pos_qty_7"></span></td>
+                            <td><span id="pos_price_7"></span></td>
+                            <td><span id="pos_dateOf_7"></span></td>
+                            <td><span id="pos_currentPrice_7"></span></td>
                         </tr>
-                        <tr width="50%">
-                            <td>
-                                <b>Day High:</b>
-                            </td>
-                            <td>
-                                <span id="stock_9"></span>
-                            </td>
+                        <tr><td>Sell8</td>
+                            <td><span id="pos_ticker_8"></span></td>
+                            <td><span id="pos_typeOf_8"></span></td>
+                            <td><span id="pos_qty_8"></span></td>
+                            <td><span id="pos_price_8"></span></td>
+                            <td><span id="pos_dateOf_8"></span></td>
+                            <td><span id="pos_currentPrice_8"></span></td>
                         </tr>
-                        <tr width="50%">
-                            <td>
-                                <b>50 Day Moving Avg:</b>
-                            </td>
-                            <td>
-                                <span id="stock_10"></span>
-                            </td>
+                        <tr><td>Sell9</td>
+                            <td><span id="pos_ticker_9"></span></td>
+                            <td><span id="pos_typeOf_9"></span></td>
+                            <td><span id="pos_qty_9"></span></td>
+                            <td><span id="pos_price_9"></span></td>
+                            <td><span id="pos_dateOf_9"></span></td>
+                            <td><span id="pos_currentPrice_9"></span></td>
                         </tr>
-                        <tr width="50%">
-                            <td>
-                                <b>Market Cap:</b>
-                            </td>
-                            <td>
-                                <span id="stock_11"></span>
-                            </td>
+                        <tr><td>Sell10</td>
+                            <td><span id="pos_ticker_10"></span></td>
+                            <td><span id="pos_typeOf_10"></span></td>
+                            <td><span id="pos_qty_10"></span></td>
+                            <td><span id="pos_price_10"></span></td>
+                            <td><span id="pos_dateOf_10"></span></td>
+                            <td><span id="pos_currentPrice_10"></span></td>
                         </tr>
                     </table>
 
+                    <a href="" class="main_bot_link">
+                        Load next 10 stocks
+                    </a>
+
                 </div>
 
+                <div class="slide">
+                    <div class="btn-slide">
+                        v</div></div>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <div class="right">
+
+                    <div class="right_header">Query ></div>
+
+                    <div class="right_top">
+                        <input
+                        type="text"
+                        maxlength=4
+                        class="tb11"
+                        id="query_input"
+                        name="query"
+                        onblur="this.value=this.value.toUpperCase()"
+                        style="text-transform:uppercase"
+                        >
+                        <a href="#"><div class="tb11_go"></div></a>
+                    </div>
+
+                    <div class="right_bot">
+                        <table style="table-layout: fixed; with: 100%;">
+                            <tr width="50%">
+                                <td><b>Ticker:</b></td>
+                                <td><span id="stock_1"></span></td>
+                            </tr>
+                            <tr width="50%">
+                                <td><b>Price:</b></td>
+                                <td><span id="stock_2"></span></td>
+                            </tr>
+                            <tr width="50%">
+                                <td><b>Volume:</b></td>
+                                <td><span id="stock_3"></span></td>
+                            </tr>
+                            <tr width="50%">
+                                <td><b>PE Ratio:</b></td>
+                                <td><span id="stock_4"></span></td>
+                            </tr>
+                            <tr width="50%">
+                                <td><b>EPS:</b></td>
+                                <td><span id="stock_5"></span></td>
+                            </tr>
+                            <tr width="50%">
+                                <td><b>52 Week High:</b></td>
+                                <td><span id="stock_6"></span></td>
+                            </tr>
+                            <tr width="50%">
+                                <td><b>52 Week Low:</b></td>
+                                <td><span id="stock_7"></span></td>
+                            </tr>
+                            <tr width="50%">
+                                <td><b>Day Low:</b></td>
+                                <td><span id="stock_8"></span></td>
+                            </tr>
+                            <tr width="50%">
+                                <td><b>Day High:</b></td>
+                                <td><span id="stock_9"></span></td>
+                            </tr>
+                            <tr width="50%">
+                                <td><b>50 Day Moving Avg:</b></td>
+                                <td><span id="stock_10"></span></td>
+                            </tr>
+                            <tr width="50%">
+                                <td><b>Market Cap:</b></td>
+                                <td><span id="stock_11"></span></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-<script>
-    $(document).ready(function(){
+    <script>
+        $(document).ready(function(){
 
-        $(".btn-slide").click(function(){
-            $(".main_bot").slideToggle("slow");
-            $(this).toggleClass("active");
+            $(".btn-slide").click(function(){
+                $(".main_bot").slideToggle("slow");
+                $(this).toggleClass("active");
+            });
+
         });
+    </script>
 
-    });
-</script>
+    <script>
+        (function( $ ) {
+            // constants
+            var SHOW_CLASS = 'show',
+            HIDE_CLASS = 'hide',
+            ACTIVE_CLASS = 'active';
 
-<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-<script>
-    (function( $ ) {
-        // constants
-        var SHOW_CLASS = 'show',
-        HIDE_CLASS = 'hide',
-        ACTIVE_CLASS = 'active';
+            $( '.tabs' ).on( 'click', 'li a', function(e){
+                e.preventDefault();
+                var $tab = $( this ),
+                href = $tab.attr( 'href' );
 
-        $( '.tabs' ).on( 'click', 'li a', function(e){
-            e.preventDefault();
-            var $tab = $( this ),
-            href = $tab.attr( 'href' );
+                $( '.active' ).removeClass( ACTIVE_CLASS );
+                $tab.addClass( ACTIVE_CLASS );
 
-            $( '.active' ).removeClass( ACTIVE_CLASS );
-            $tab.addClass( ACTIVE_CLASS );
+                $( '.show' )
+                .removeClass( SHOW_CLASS )
+                .addClass( HIDE_CLASS )
+                .hide();
 
-            $( '.show' )
-            .removeClass( SHOW_CLASS )
-            .addClass( HIDE_CLASS )
-            .hide();
+                $(href)
+                .removeClass( HIDE_CLASS )
+                .addClass( SHOW_CLASS )
+                .hide()
+                .fadeIn( 550 );
+            });
+        })( jQuery );
 
-            $(href)
-            .removeClass( HIDE_CLASS )
-            .addClass( SHOW_CLASS )
-            .hide()
-            .fadeIn( 550 );
-        });
-    })( jQuery );
+    </script>
 
-</script>
+    <script>
 
-<script>
+        iterator = 1;
+        arr = [];
+        initPortfolio();
 
-    iterator = 1;
-    arr = [];
-    initPortfolio();
+        function initPortfolio() {
+            myJsRoutes.controllers.PortfolioController.getPortfolioOverview(@userId, @leagueId).ajax({
+                type: "GET",
+                dataType: 'json',
+                success : function(data) {
+                    document.getElementById("league_name").innerHTML = capitalizeFirstLetter(data.leagueName);
+                    document.getElementById("cash").innerHTML =
+                    "$ " + Number(data.cash).toFixed(2);
+                    document.getElementById("total_stock_value").innerHTML =
+                    "$ " + Number(data.totalStockValue).toFixed(2);
+                    document.getElementById("starting_value").innerHTML =
+                    "$ " + Number(data.startingValue).toFixed(2);
+                    document.getElementById("portfolio_value").innerHTML =
+                    "$ " + Number(data.totalStockValue + data.cash).toFixed(2);
+                    document.getElementById("percent_return").innerHTML =
+                    Number(100 *
+                    (-1 + (data.totalStockValue * data.cash)) / data.startingValue).toFixed(2) + "%";
 
-    function initPortfolio() {
-        myJsRoutes.controllers.PortfolioController.getPortfolioOverview(@userId, @leagueId).ajax({
-            type: "GET",
-            dataType: 'json',
-            success : function(data) {
-                document.getElementById("league_name").innerHTML = capitalizeFirstLetter(data.leagueName);
-                document.getElementById("cash").innerHTML =
-                "$ " + Number(data.cash).toFixed(2);
-                document.getElementById("total_stock_value").innerHTML =
-                "$ " + Number(data.totalStockValue).toFixed(2);
-                document.getElementById("starting_value").innerHTML =
-                "$ " + Number(data.startingValue).toFixed(2);
-                document.getElementById("portfolio_value").innerHTML =
-                "$ " + Number(data.totalStockValue + data.cash).toFixed(2);
-                document.getElementById("percent_return").innerHTML =
-                Number(100 *
-                (-1 + (data.totalStockValue * data.cash)) / data.startingValue).toFixed(2) + "%";
-
-                arr = data.positions;
-                var i = 0;
-                for ( var k in arr ) {
-                    document.getElementById("pos_ticker_" + (i + 2 - iterator)).innerHTML = arr[k].ticker;
-                    document.getElementById("pos_typeOf_" + (i + 2 - iterator)).innerHTML = arr[k].typeOf;
-                    document.getElementById("pos_qty_" + (i + 2 - iterator)).innerHTML = arr[k].qty;
-                    document.getElementById("pos_price_" + (i + 2 - iterator)).innerHTML = "$ " + Number(arr[k].price).toFixed(2);
-                    document.getElementById("pos_dateOf_" + (i + 2 - iterator)).innerHTML = arr[k].dateOf;
-                    document.getElementById("pos_currentPrice_" + (i + 2 - iterator)).innerHTML = "$ " + Number(arr[k].currentPrice).toFixed(2);
-                    ++i;
+                    arr = data.positions;
+                    var i = 0;
+                    for ( var k in arr ) {
+                        document.getElementById("pos_ticker_" + (i + 2 - iterator)).innerHTML = arr[k].ticker;
+                        document.getElementById("pos_typeOf_" + (i + 2 - iterator)).innerHTML = arr[k].typeOf;
+                        document.getElementById("pos_qty_" + (i + 2 - iterator)).innerHTML = arr[k].qty;
+                        document.getElementById("pos_price_" + (i + 2 - iterator)).innerHTML = "$ " + Number(arr[k].price).toFixed(2);
+                        document.getElementById("pos_dateOf_" + (i + 2 - iterator)).innerHTML = arr[k].dateOf;
+                        document.getElementById("pos_currentPrice_" + (i + 2 - iterator)).innerHTML = "$ " + Number(arr[k].currentPrice).toFixed(2);
+                        ++i;
+                    }
+                    iterator = i;
                 }
-                iterator = i;
-            }
-        });
-    }
+            });
+        }
+
+        function updateQuery(data) {
+
+            document.getElementById("stock_1").innerHTML = data.stock.ticker;
+            document.getElementById("stock_2").innerHTML =
+            "$ " + Number(data.stock.price).toFixed(2);
+            document.getElementById("stock_3").innerHTML = data.stock.volume;
+            document.getElementById("stock_4").innerHTML =
+            Number(data.stock.pe).toFixed(2);
+            document.getElementById("stock_5").innerHTML =
+            "$ " + Number(data.stock.eps).toFixed(2);
+            document.getElementById("stock_6").innerHTML =
+            "$ " + Number(data.stock.week52High).toFixed(2);
+            document.getElementById("stock_7").innerHTML =
+            "$ " + Number(data.stock.week52Low).toFixed(2);
+            document.getElementById("stock_8").innerHTML =
+            "$ " + Number(data.stock.dayLow).toFixed(2);
+            document.getElementById("stock_9").innerHTML =
+            "$ " + Number(data.stock.dayHigh).toFixed(2);
+            document.getElementById("stock_10").innerHTML =
+            "$ " + Number(data.stock.moving50DayAvg).toFixed(2);
+            document.getElementById("stock_11").innerHTML = data.stock.marketCap;
+        }
 
 
-    $('.tb11_go').click(function(e) {
-        var idToGet = document.getElementById('query_input').value;
-        myJsRoutes.controllers.Query.getQuery(idToGet).ajax({
-            success : function(data) {
-                requestOK = true;
-
-                document.getElementById("stock_1").innerHTML = data.stock.ticker;
-                document.getElementById("stock_2").innerHTML =
-                "$ " + Number(data.stock.price).toFixed(2);
-                document.getElementById("stock_3").innerHTML = data.stock.volume;
-                document.getElementById("stock_4").innerHTML =
-                Number(data.stock.pe).toFixed(2);
-                document.getElementById("stock_5").innerHTML =
-                "$ " + Number(data.stock.eps).toFixed(2);
-                document.getElementById("stock_6").innerHTML =
-                "$ " + Number(data.stock.week52High).toFixed(2);
-                document.getElementById("stock_7").innerHTML =
-                "$ " + Number(data.stock.week52Low).toFixed(2);
-                document.getElementById("stock_8").innerHTML =
-                "$ " + Number(data.stock.dayLow).toFixed(2);
-                document.getElementById("stock_9").innerHTML =
-                "$ " + Number(data.stock.dayHigh).toFixed(2);
-                document.getElementById("stock_10").innerHTML =
-                "$ " + Number(data.stock.moving50DayAvg).toFixed(2);
-                document.getElementById("stock_11").innerHTML = data.stock.marketCap;
-
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                alert("Invalid Stock Query");
-            }
-        });
-    });
-
-    $("#query_input").focus(function() {
-        $(this).data("hasfocus", true);
-        document.bg = red;
-    });
-
-    $("#query_input").blur(function() {
-        $(this).data("hasfocus", false);
-    });
-
-    $(document.body).keyup(function(e) {
-        if ((e.which == 13 || e.keystroke == 13) && $("#query_input").data("hasfocus")) {
+        $('.tb11_go').click(function(e) {
             var idToGet = document.getElementById('query_input').value;
             myJsRoutes.controllers.Query.getQuery(idToGet).ajax({
                 success : function(data) {
                     requestOK = true;
-
-                    document.getElementById("stock_1").innerHTML = data.stock.ticker;
-                    document.getElementById("stock_2").innerHTML =
-                    "$ " + Number(data.stock.price).toFixed(2);
-                    document.getElementById("stock_3").innerHTML = data.stock.volume;
-                    document.getElementById("stock_4").innerHTML =
-                    Number(data.stock.pe).toFixed(2);
-                    document.getElementById("stock_5").innerHTML =
-                    "$ " + Number(data.stock.eps).toFixed(2);
-                    document.getElementById("stock_6").innerHTML =
-                    "$ " + Number(data.stock.week52High).toFixed(2);
-                    document.getElementById("stock_7").innerHTML =
-                    "$ " + Number(data.stock.week52Low).toFixed(2);
-                    document.getElementById("stock_8").innerHTML =
-                    "$ " + Number(data.stock.dayLow).toFixed(2);
-                    document.getElementById("stock_9").innerHTML =
-                    "$ " + Number(data.stock.dayHigh).toFixed(2);
-                    document.getElementById("stock_10").innerHTML =
-                    "$ " + Number(data.stock.moving50DayAvg).toFixed(2);
-                    document.getElementById("stock_11").innerHTML = data.stock.marketCap;
+                    updateQuery(data);
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     alert("Invalid Stock Query");
                 }
             });
+        });
+
+        $("#query_input").focus(function() {
+            $(this).data("hasfocus", true);
+            document.bg = red;
+        });
+
+        $("#query_input").blur(function() {
+            $(this).data("hasfocus", false);
+        });
+
+        $(document.body).keyup(function(e) {
+            if ((e.which == 13 || e.keystroke == 13) && $("#query_input").data("hasfocus")) {
+                var idToGet = document.getElementById('query_input').value;
+                myJsRoutes.controllers.Query.getQuery(idToGet).ajax({
+                    success : function(data) {
+                        requestOK = true;
+                        updateQuery(data);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        alert("Invalid Stock Query");
+                    }
+                });
+            }
+        });
+
+        function capitalizeFirstLetter(string)
+        {
+            return string.charAt(0).toUpperCase() + string.slice(1);
         }
-    });
+    </script>
 
-    function capitalizeFirstLetter(string)
-    {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-    }
-</script>
-
-<script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 
 }
-
