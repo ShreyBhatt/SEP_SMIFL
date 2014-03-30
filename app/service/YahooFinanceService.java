@@ -53,7 +53,6 @@ public class YahooFinanceService {
     // There should be no race case here, that concerns us.
     public void update() {
 
-        //System.out.println(stockString);
         final HashMap<String, Stock> newCache = new HashMap<String, Stock>();
         int count = 0;
 
@@ -165,8 +164,6 @@ public class YahooFinanceService {
      */
     //@ThreadSafe
     public Stock getStock ( final String symbol ) {
-
-	System.out.println(symbol);	
 
         final String sym = symbol.toUpperCase();
         final Stock stock;
