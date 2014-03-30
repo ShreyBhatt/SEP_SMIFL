@@ -91,7 +91,6 @@ public class PortfolioController extends Controller {
         }
         result.put("totalStockValue", totalStockValue);
         result.put("startingValue", 250000);
-        System.out.println(result);
 
         return ok(result);
 
