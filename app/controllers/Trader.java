@@ -103,6 +103,11 @@ public class Trader extends Controller {
   public static Result sellStock (
     final long portfolioId, final String ticker, final long qty
     ) {
+
+    if (qty < 1) {
+        return invalidRequest("Cannot sell a negative amount of stock");
+    }
+
     Stock stock = YAHOO.getStock( ticker );
     Identity identity = (Identity) ctx().args.get(SecureSocial.USER_KEY);
 

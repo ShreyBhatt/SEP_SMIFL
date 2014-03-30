@@ -60,6 +60,7 @@ public class Application extends Controller {
                 Routes.javascriptRouter("myJsRoutes",
                     routes.javascript.Query.getQuery(),
                     routes.javascript.Trader.buyStock(),
+                    routes.javascript.Trader.sellStock(),
                     routes.javascript.PortfolioController.getPortfolioOverview()
                     )
                 );

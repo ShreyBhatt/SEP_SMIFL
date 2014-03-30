@@ -11,8 +11,7 @@
     $(function() {
         var name = $( "#name" ),
         email = $( "#email" ),
-        password = $( "#password" ),
-        allFields = $( [] ).add( name ).add( email ).add( password ),
+        allFields = $( [] ).add( name ).add( email ),
         tips = $( ".validateTips" );
         function updateTips( t ) {
             tips
@@ -34,17 +33,22 @@
                     allFields.removeClass( "ui-state-error" );
                     var ticker = document.getElementById('name').value;
                     var qty = document.getElementById('email').value;
-                    myJsRoutes.controllers.Trader.buyStock(@portfolioId, ticker, qty).ajax({
-                        success : function(data) {
-                            requestOK = true;
-                            initPortfolio();
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-                            var err = JSON.parse( jqXHR.responseText );
-                            alert(err.message);
-                        }
-                    });
-                    $( this ).dialog( "close" );
+                    if (ticker === "" || qty === "") {
+                        alert("All fields must be filled out")
+                    }
+                    else {
+                        myJsRoutes.controllers.Trader.buyStock(@portfolioId, ticker, qty).ajax({
+                            success : function(data) {
+                                requestOK = true;
+                                initPortfolio();
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                var err = JSON.parse( jqXHR.responseText );
+                                alert(err.message);
+                            }
+                        });
+                        $( this ).dialog( "close" );
+                    }
                 },
                 Cancel: function() {
                     $( this ).dialog( "close" );
@@ -62,9 +66,66 @@
     });
 
 </script>
+<script>
+    $(function() {
+        var ticker = $( "#ticker2" ),
+        qty = $( "#qty2" ),
+        allFields = $( [] ).add( ticker ).add( qty ),
+        tips = $( ".validateTips" );
+        function updateTips( t ) {
+            tips
+            .text( t )
+            .addClass( "ui-state-highlight" );
+            setTimeout(function() {
+                tips.removeClass( "ui-state-highlight", 1500 );
+            }, 500 );
+        }
+        $( "#sell-form" ).dialog({
+            dialogClass:"diag",
+            autoOpen: false,
+            height: 300,
+            width: 350,
+            modal: true,
+            buttons: {
+                "Sell": function() {
+                    var bValid = true;
+                    allFields.removeClass( "ui-state-error" );
+                    var ticker = document.getElementById('ticker2').value;
+                    var qty = document.getElementById('qty2').value;
+                    if (qty === "" || ticker === "") {
+                        alert("All fields must be filled out");
+                    }
+                    else {
+                        myJsRoutes.controllers.Trader.sellStock(@portfolioId, ticker, qty).ajax({
+                            success : function(data) {
+                                requestOK = true;
+                                initPortfolio();
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                var err = JSON.parse( jqXHR.responseText );
+                                alert(err.message);
+                            }
+                        });
+                        $( this ).dialog( "close" );
+                    }
+                },
+                Cancel: function() {
+                    $( this ).dialog( "close" );
+                }
+            },
+            close: function() {
+                allFields.val( "" ).removeClass( "ui-state-error" );
+            }
+        });
+        $( "#sell1" )
+        .button()
+        .click(function() {
+            $( "#sell-form" ).dialog( "open" );
+        });
+    });
 
-    </head>
-    <body>
+</script>
+
         <div id="purchase-form" title="Create new user">
             <p class="validateTips">All form fields are required.</p>
             <form>
@@ -73,6 +134,17 @@
                     <input style="text-transform:uppercase"type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
                     <label for="email">Quantiy: </label>
                     <input type="text" name="email" id="email" value="" class="text ui-widget-content ui-corner-all">
+                </fieldset>
+            </form>
+        </div>
+        <div id="sell-form" title="Create new user">
+            <p class="validateTips">All form fields are required.</p>
+            <form>
+                <fieldset>
+                    <label for="ticker2">Ticker: </label>
+                    <input style="text-transform:uppercase"type="text" name="ticker2" id="ticker2" class="text ui-widget-content ui-corner-all">
+                    <label for="qty2">Quantiy: </label>
+                    <input type="text" name="qty2" id="qty2" class="text ui-widget-content ui-corner-all">
                 </fieldset>
             </form>
         </div>
@@ -119,8 +191,9 @@
                         <tr>
                             <td colspan="2">
                         <div class="button_container">
-                                <button id="purchase2" class="purchase_stock">Purchase Stock</button><td>
+                            <button id="purchase2" class="purchase_stock">Purchase Stock</button>
                                     </div>
+                        </td>
                             </tr>
                     </table></div>
                 </div>
@@ -255,7 +328,7 @@
                     </div>
 
                     <div class="right_bot">
-                        <table style="table-layout:fixed; width:100%;">
+                        <table style="width:100%;">
                             <tr width="50%">
                                 <td><b>Ticker:</b></td>
                                 <td><span id="stock_1"></span></td>
@@ -329,6 +402,7 @@
                     </td>
                 </tr>
                 <tr><td>
+                            <button id="sell1" class="purchase_stock2">Sell Stock</button>
                         </td><tr>
 
                             </table>
