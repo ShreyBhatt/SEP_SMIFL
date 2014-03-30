@@ -125,6 +125,7 @@
     });
 
 </script>
+</head>
 
         <div id="purchase-form" title="Create new user">
             <p class="validateTips">All form fields are required.</p>
@@ -132,7 +133,7 @@
                 <fieldset>
                     <label for="name">Ticker: </label>
                     <input style="text-transform:uppercase"type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
-                    <label for="email">Quantiy: </label>
+                    <label for="email">Quantity: </label>
                     <input type="text" name="email" id="email" value="" class="text ui-widget-content ui-corner-all">
                 </fieldset>
             </form>
@@ -143,7 +144,7 @@
                 <fieldset>
                     <label for="ticker2">Ticker: </label>
                     <input style="text-transform:uppercase"type="text" name="ticker2" id="ticker2" class="text ui-widget-content ui-corner-all">
-                    <label for="qty2">Quantiy: </label>
+                    <label for="qty2">Quantity: </label>
                     <input type="text" name="qty2" id="qty2" class="text ui-widget-content ui-corner-all">
                 </fieldset>
             </form>
@@ -297,9 +298,8 @@
                         </tr>
                     </table>
 
-                    <a href="" class="main_bot_link">
-                        Load next 10 stocks
-                    </a>
+                    <span class="main_bot_link" id="slider_button">
+                    </span>
 
                 </div>
 
@@ -392,7 +392,6 @@
                         <label for="qty_input">Quantity:</label>
                         <input
                             type="text"
-                            maxlength=4
                             id="qty_input"
                             name="ticker"
                             style="text-transform:uppercase"
@@ -458,7 +457,7 @@
 
     <script>
 
-        iterator = 1;
+        iterator = 0;
         arr = [];
         initPortfolio();
 
@@ -474,20 +473,44 @@
         }
 
         function updateSlider() {
-            var temp = iterator + 9;
-            var k;
-            for ( k = iterator - 1; k < temp; ++k ) {
-                document.getElementById("pos_ticker_" + (k + 2 - iterator)).innerHTML = arr[k].ticker;
-                document.getElementById("pos_typeOf_" + (k + 2 - iterator)).innerHTML = arr[k].typeOf;
-                document.getElementById("pos_qty_" + (k + 2 - iterator)).innerHTML = arr[k].qty;
-                document.getElementById("pos_price_" + (k + 2 - iterator)).innerHTML =
+            var temp = iterator + 10;
+            if (arr.length < temp) {
+                temp = arr.length;
+            }
+            var k, l;
+            for ( k = iterator; k < temp; ++k ) {
+                l = k + 1 - iterator
+                document.getElementById("pos_ticker_" + l).innerHTML = arr[k].ticker;
+                document.getElementById("pos_typeOf_" + l).innerHTML = arr[k].typeOf;
+                document.getElementById("pos_qty_" + l).innerHTML = arr[k].qty;
+                document.getElementById("pos_price_" + l).innerHTML =
                 "$ " + Number(arr[k].price).toFixed(2);
-                document.getElementById("pos_dateOf_" + (k + 2 - iterator)).innerHTML = arr[k].dateOf;
-                document.getElementById("pos_currentPrice_" + (k + 2 - iterator)).innerHTML =
+                document.getElementById("pos_dateOf_" + l).innerHTML = arr[k].dateOf;
+                document.getElementById("pos_currentPrice_" + l).innerHTML =
                 "$ " + Number(arr[k].currentPrice).toFixed(2);
             }
-                iterator = k;
+            iterator = k;
+            if ( iterator < arr.length) {
+                var j = arr.length - iterator;
+                if ( j > 10 ) {
+                    j = 10;
+                }
+                document.getElementById("slider_button").innerHTML =
+                '<button class="purchase_stock2">Load Next ' + j + '</button>';
+            }
+            else {
+                var elem = document.getElementById('slider_button');
+                elem.parentNode.removeChild(elem);
+            }
+
         }
+
+        $( "#slider_button" )
+        .button()
+        .click(function() {
+            clearSlider();
+            updateSlider();
+        });
 
         function initPortfolio() {
             myJsRoutes.controllers.PortfolioController.getPortfolioOverview(@userId, @leagueId).ajax({
@@ -508,7 +531,7 @@
                     (1 - (data.totalStockValue + data.cash) / data.startingValue)).toFixed(2) + "%";
 
                     arr = data.positions;
-                    iterator = 1;
+                    iterator = 0;
                     clearSlider();
                     updateSlider();
                 },
@@ -556,6 +579,9 @@
                     alert(err.message);
                 }
             });
+            iterator = 0;
+            clearSlider();
+            updateSlider();
 
         });
 
