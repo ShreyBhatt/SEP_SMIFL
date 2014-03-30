@@ -298,7 +298,7 @@
                         </tr>
                     </table>
 
-                    <span class="main_bot_link" id="slider_button">
+                    <span class="main_bot_link" id="slider_button_span">
                     </span>
 
                 </div>
@@ -473,6 +473,7 @@
         }
 
         function updateSlider() {
+            clearSlider();
             var temp = iterator + 10;
             if (arr.length < temp) {
                 temp = arr.length;
@@ -495,17 +496,17 @@
                 if ( j > 10 ) {
                     j = 10;
                 }
-                document.getElementById("slider_button").innerHTML =
-                '<button class="purchase_stock2">Load Next ' + j + '</button>';
+                document.getElementById("slider_button_span").innerHTML =
+                '<button class="purchase_stock2" id="slider_button">Load Next ' + j + '</button>';
+                $("#slider_button").show();
             }
             else {
-                var elem = document.getElementById('slider_button');
-                elem.parentNode.removeChild(elem);
+                $("#slider_button").hide();
             }
 
         }
 
-        $( "#slider_button" )
+        $( "#slider_button_span" )
         .button()
         .click(function() {
             clearSlider();
@@ -532,7 +533,6 @@
 
                     arr = data.positions;
                     iterator = 0;
-                    clearSlider();
                     updateSlider();
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
@@ -572,16 +572,14 @@
             myJsRoutes.controllers.Trader.buyStock(@portfolioId, ticker, qty).ajax({
                 success : function(data) {
                     requestOK = true;
-                    initPortfolio();
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     var err = JSON.parse( jqXHR.responseText );
                     alert(err.message);
                 }
             });
-            iterator = 0;
-            clearSlider();
-            updateSlider();
+            initPortfolio();
+            initPortfolio();
 
         });
 
