@@ -22,7 +22,12 @@ public class Query extends Controller {
     Stock stock = yahoo.getStock(symbol);
     if ( stock == null ) {
       result.put("status", "KO");
-      result.put("message", "Stock symbol: " + symbol + " can not be found");
+      result.put("message", "Stock symbol: " + symbol.toUpperCase() + " can not be found");
+      return badRequest(result);
+    }
+    else if ( stock.getPrice() == 0 ) {
+      result.put("status", "KO");
+      result.put("message", "Stock symbol: " + symbol.toUpperCase() + " appears to be defunct");
       return badRequest(result);
     }
     else {

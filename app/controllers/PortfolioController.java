@@ -72,11 +72,6 @@ public class PortfolioController extends Controller {
 
         User user = User.find(identity.email().get());
 
-        //league name, get from 1 query
-        //available cash, 1 query
-        //calculation of total value of all stocks in portfolio
-        //return first 10 stocks in portfolio
-
         League league = League.findById(leagueId);
         Position cash = Position.getCashPosition(portfolio.id);
         List<Position> positions = Position.getAllOwnPositions(portfolio.id);
@@ -90,25 +85,12 @@ public class PortfolioController extends Controller {
         YahooFinanceService yahoo = YahooFinanceService.getInstance();
         ArrayNode positionsObj = result.putArray("positions");
         for ( final Position position : positions ) {
-            positionsObj.add(position.getJson(yahoo.getStock(position.ticker).getPrice()));
-        }
-    /*
-        for (Position position: positions) {
             double currentPrice = yahoo.getStock(position.ticker).getPrice();
-            positionsObj = positionsObj
-                + "{\"ticker\":\"" + position.ticker
-                + "\",\"typeOf\":\"" + position.typeOf
-                + "\",\"qty\":\"" + position.qty
-                + "\",\"price\":\"" + position.price
-                + "\", \"dateOf\":\"" + position.dateOf
-                + "\",\"currentPrice\":\"" + currentPrice + "\"},";
+            positionsObj.add(position.getJson(currentPrice));
             totalStockValue += position.qty * currentPrice;
-        }*/
-
-        //positionsObj = positionsObj.substring(0, positionsObj.length()-1) + "]";
+        }
         result.put("totalStockValue", totalStockValue);
         result.put("startingValue", 250000);
-        //result.put("positions", "[{\"name\":\"jack\"},{\"name\":\"john\"},{\"name\":\"joe\"}]");
         System.out.println(result);
 
         return ok(result);

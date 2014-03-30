@@ -14,6 +14,10 @@
     margin-right: auto;
     font-family: "Open Sans";
     font-size: 18px;
+    border-width: thin;
+    border-color: #338bd6;
+    border-style: solid;
+    border-bottom-style: none;
 }
 
 .main_top_table {
@@ -22,8 +26,9 @@
     margin-left: 30px;
 }
 
-.main_top_table span {
-    text-align:right;
+.main_top span {
+    float: right;
+    padding-right: 40px;
 }
 
 .main_top_header {
@@ -31,7 +36,6 @@
     background-color: #338bd6;
     width: 100%;
     height: 50px;
-    font-family: "Roboto";
     font-size: 30px;
     padding-left: 12px;
     padding-top: 4px;
@@ -45,6 +49,11 @@
     font-family: "Roboto";
     font-size: 16px;
     padding-top: 30px;
+    border-width: thin;
+    border-color: #338bd6;
+    border-style: solid;
+    border-bottom-style: none;
+    border-top-style: none;
 }
 
 .main_bot_link {
@@ -54,6 +63,7 @@
     padding-right: 20px;
     padding-top: 10px;
 }
+
 .slide {
     margin-left: auto;
     margin-right: auto;
@@ -63,6 +73,10 @@
     height: 50px;
     font-family: "Roboto";
     font-size: 10px;
+    border-width: thin;
+    border-color: #338bd6;
+    border-style: solid;
+    border-top-style: none;
 }
 
 .btn-slide {
@@ -87,6 +101,9 @@
 .right {
     width: 100%;
     background: #f3f9ff;
+    border-width: thin;
+    border-color: #338bd6;
+    border-style: solid;
 }
 
 .right_header {
@@ -94,7 +111,6 @@
     background-color: #338bd6;
     width: 100%;
     height: 50px;
-    font-family: "Roboto";
     font-size: 30px;
     padding-left: 12px;
     padding-top: 4px;
@@ -113,12 +129,175 @@
     text-align: left;
     padding-left: 10px;
     padding-right: 10px;
-    padding-bottom: 40px;
+    padding-bottom: 10px;
 }
 
 .right_bot span {
     padding-left: 20px;
 }
+
+.rr {
+    padding-top:10px;
+}
+
+.purchase_header {
+    color: #FFFFFF;
+    background-color: #338bd6;
+    width: 100%;
+    height: 50px;
+    font-size: 30px;
+    padding-left: 12px;
+    padding-top: 4px;
+}
+
+.purchase {
+    font-size: 18px;
+    text-align: left;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    background: #f3f9ff;
+    height: 100%;
+    padding-top: 20px;
+    border-width: thin;
+    border-color: #338bd6;
+    border-style: solid;
+
+}
+
+.purchase_stock {
+    color: #FFFFFF;
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    background-color: #338bd6;
+    height: 30px;
+    font-size: 18px;
+    padding-left: 40px;
+    border-style: none;
+    cursor: pointer;
+}
+
+.purchase_stock2 {
+    color: #FFFFFF;
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    background-color: #338bd6;
+    height: 30px;
+    font-size: 18px;
+    border-style: none;
+    cursor: pointer;
+}
+
+.button_container {
+    padding: 10px 10px 10px 10px;
+    float: right;
+    padding-right: 40px;
+    text-align: center;
+}
+
+.diag.ui-dialog {
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left 0;
+    background: #f3f9ff;
+    border-width: thin;
+    border-color: #338bd6;
+    border-style: solid;
+}
+
+.diag.ui-dialog .ui-dialog-titlebar {
+    position: relative;
+    height: 30px;
+}
+
+.diag.ui-dialog .ui-dialog-title {
+    float: left;
+    font-size: 18px;
+    padding-left: 10px;
+    vertical-align: middle;
+    color: #FFFFFF;
+    width: 100%;
+    background-color: #338bd6;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.diag.ui-dialog .ui-dialog-titlebar-close {
+    display: none;
+    height: 20px;
+    position: absolute;
+    right: .3em;
+    top: 50%;
+    width: 20px;
+    margin: -10px 0 0 0;
+    padding: 1px;
+}
+
+.diag.ui-dialog .ui-dialog-content {
+    font-size: 12px;
+    position: relative;
+    border: 0;
+    padding: .5em, 1em;
+    background: none;
+    overflow: auto;
+}
+.diag.ui-dialog .ui-dialog-content label {
+    font-size: 18px;
+    clear:left;
+    width: 100px;
+    text-align:right;
+    padding-right: 10px;
+    float: left;
+}
+
+.diag.ui-dialog .ui-dialog-content input {
+    float: left;
+    width: 75px;
+}
+
+
+.diag.ui-dialog .ui-dialog-buttonpane {
+    text-align: center;
+    border-width: 1px 0 0 0;
+    margin-top: .5em;
+    padding: .3em 1em .5em .4em;
+}
+
+.diag.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
+    float: right;
+}
+
+.diag.ui-dialog .ui-dialog-buttonpane button {
+    color: #FFFFFF;
+    display: table-cell;
+    vertical-align: middle;
+    background-color: #338bd6;
+    height: 30px;
+    font-size: 18px;
+    text-align: center;
+    border-style: none;
+    margin: .5em .4em .5em 0;
+    cursor: pointer;
+}
+
+.purchase label {
+    font-size: 18px;
+    clear:left;
+    width: 100px;
+    text-align:right;
+    padding-right: 10px;
+    float: left;
+}
+
+.purchase input {
+    float: left;
+    width: 75px;
+}
+
 
 /* Image in Text Box */
 .tb11 {

@@ -44,7 +44,6 @@ public class Application extends Controller {
      * Get a user and load their portfolio, or if the user doesn't exist,
      * register them and generate a new global portfolio.
      */
-    //TODO this should be done in the portfolio controller
     @SecureSocial.SecuredAction
     public static Result portfolio() {
 
@@ -60,6 +59,7 @@ public class Application extends Controller {
         return ok(
                 Routes.javascriptRouter("myJsRoutes",
                     routes.javascript.Query.getQuery(),
+                    routes.javascript.Trader.buyStock(),
                     routes.javascript.PortfolioController.getPortfolioOverview()
                     )
                 );

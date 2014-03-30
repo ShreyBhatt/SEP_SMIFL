@@ -7,6 +7,77 @@
 
 @main("Paramount Investment League - Portfolio", user.fullName, userId, leagueId) {
 
+<script>
+    $(function() {
+        var name = $( "#name" ),
+        email = $( "#email" ),
+        password = $( "#password" ),
+        allFields = $( [] ).add( name ).add( email ).add( password ),
+        tips = $( ".validateTips" );
+        function updateTips( t ) {
+            tips
+            .text( t )
+            .addClass( "ui-state-highlight" );
+            setTimeout(function() {
+                tips.removeClass( "ui-state-highlight", 1500 );
+            }, 500 );
+        }
+        $( "#purchase-form" ).dialog({
+            dialogClass:"diag",
+            autoOpen: false,
+            height: 300,
+            width: 350,
+            modal: true,
+            buttons: {
+                "Purchase": function() {
+                    var bValid = true;
+                    allFields.removeClass( "ui-state-error" );
+                    var ticker = document.getElementById('name').value;
+                    var qty = document.getElementById('email').value;
+                    myJsRoutes.controllers.Trader.buyStock(@portfolioId, ticker, qty).ajax({
+                        success : function(data) {
+                            requestOK = true;
+                            initPortfolio();
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            var err = JSON.parse( jqXHR.responseText );
+                            alert(err.message);
+                        }
+                    });
+                    $( this ).dialog( "close" );
+                },
+                Cancel: function() {
+                    $( this ).dialog( "close" );
+                }
+            },
+            close: function() {
+                allFields.val( "" ).removeClass( "ui-state-error" );
+            }
+        });
+        $( "#purchase2" )
+        .button()
+        .click(function() {
+            $( "#purchase-form" ).dialog( "open" );
+        });
+    });
+
+</script>
+
+    </head>
+    <body>
+        <div id="purchase-form" title="Create new user">
+            <p class="validateTips">All form fields are required.</p>
+            <form>
+                <fieldset>
+                    <label for="name">Ticker: </label>
+                    <input style="text-transform:uppercase"type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
+                    <label for="email">Quantiy: </label>
+                    <input type="text" name="email" id="email" value="" class="text ui-widget-content ui-corner-all">
+                </fieldset>
+            </form>
+        </div>
+
+
 <div class="x_container">
     <div class="container">
         <div class="row">
@@ -45,6 +116,12 @@
                                 <span id="starting_value"></span>
                             </td>
                         </tr>
+                        <tr>
+                            <td colspan="2">
+                        <div class="button_container">
+                                <button id="purchase2" class="purchase_stock">Purchase Stock</button><td>
+                                    </div>
+                            </tr>
                     </table></div>
                 </div>
 
@@ -167,19 +244,18 @@
 
                     <div class="right_top">
                         <input
-                        type="text"
-                        maxlength=4
-                        class="tb11"
-                        id="query_input"
-                        name="query"
-                        onblur="this.value=this.value.toUpperCase()"
-                        style="text-transform:uppercase"
+                            type="text"
+                            maxlength=4
+                            class="tb11"
+                            id="query_input"
+                            name="query"
+                            style="text-transform:uppercase"
                         >
                         <a href="#"><div class="tb11_go"></div></a>
                     </div>
 
                     <div class="right_bot">
-                        <table style="table-layout: fixed; with: 100%;">
+                        <table style="table-layout:fixed; width:100%;">
                             <tr width="50%">
                                 <td><b>Ticker:</b></td>
                                 <td><span id="stock_1"></span></td>
@@ -227,6 +303,40 @@
                         </table>
                     </div>
                 </div>
+                <div class="rr">
+                    <div class="purchase_header">Purchase Stock ></div>
+                    <div class="purchase">
+                        <table style="table-layout:fixed; width:100%;">
+                            <tr><td width="60%">
+                        <label for="ticker_input">Ticker:</label>
+                        <input
+                            type="text"
+                            maxlength=4
+                            id="ticker_input"
+                            name="ticker"
+                            style="text-transform:uppercase"
+                        >
+                        <label for="qty_input">Quantity:</label>
+                        <input
+                            type="text"
+                            maxlength=4
+                            id="qty_input"
+                            name="ticker"
+                            style="text-transform:uppercase"
+                            >
+                            </td><td>
+                                <button class="purchase_stock2" name="purchase_stock" id="purchase_stock">submit</button>
+                    </td>
+                </tr>
+                <tr><td>
+                        </td><tr>
+
+                            </table>
+
+                    </div>
+
+                </div>
+
             </div>
         </div>
     </div>
@@ -278,6 +388,22 @@
         arr = [];
         initPortfolio();
 
+        function updateSlider() {
+            var temp = iterator + 9;
+            var k;
+            for ( k = iterator - 1; k < temp; ++k ) {
+                document.getElementById("pos_ticker_" + (k + 2 - iterator)).innerHTML = arr[k].ticker;
+                document.getElementById("pos_typeOf_" + (k + 2 - iterator)).innerHTML = arr[k].typeOf;
+                document.getElementById("pos_qty_" + (k + 2 - iterator)).innerHTML = arr[k].qty;
+                document.getElementById("pos_price_" + (k + 2 - iterator)).innerHTML =
+                "$ " + Number(arr[k].price).toFixed(2);
+                document.getElementById("pos_dateOf_" + (k + 2 - iterator)).innerHTML = arr[k].dateOf;
+                document.getElementById("pos_currentPrice_" + (k + 2 - iterator)).innerHTML =
+                "$ " + Number(arr[k].currentPrice).toFixed(2);
+            }
+                iterator = k;
+        }
+
         function initPortfolio() {
             myJsRoutes.controllers.PortfolioController.getPortfolioOverview(@userId, @leagueId).ajax({
                 type: "GET",
@@ -293,22 +419,17 @@
                     document.getElementById("portfolio_value").innerHTML =
                     "$ " + Number(data.totalStockValue + data.cash).toFixed(2);
                     document.getElementById("percent_return").innerHTML =
-                    Number(100 *
-                    (-1 + (data.totalStockValue * data.cash)) / data.startingValue).toFixed(2) + "%";
+                    Number(-100 *
+                    (1 - (data.totalStockValue + data.cash) / data.startingValue)).toFixed(2) + "%";
 
                     arr = data.positions;
-                    var i = 0;
-                    for ( var k in arr ) {
-                        document.getElementById("pos_ticker_" + (i + 2 - iterator)).innerHTML = arr[k].ticker;
-                        document.getElementById("pos_typeOf_" + (i + 2 - iterator)).innerHTML = arr[k].typeOf;
-                        document.getElementById("pos_qty_" + (i + 2 - iterator)).innerHTML = arr[k].qty;
-                        document.getElementById("pos_price_" + (i + 2 - iterator)).innerHTML = "$ " + Number(arr[k].price).toFixed(2);
-                        document.getElementById("pos_dateOf_" + (i + 2 - iterator)).innerHTML = arr[k].dateOf;
-                        document.getElementById("pos_currentPrice_" + (i + 2 - iterator)).innerHTML = "$ " + Number(arr[k].currentPrice).toFixed(2);
-                        ++i;
-                    }
-                    iterator = i;
+                    iterator = 1;
+                    updateSlider();
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert("Something bad happened " + errorThrown);
                 }
+
             });
         }
 
@@ -335,6 +456,23 @@
             document.getElementById("stock_11").innerHTML = data.stock.marketCap;
         }
 
+        $('#purchase_stock')
+        .click( function() {
+            var ticker = document.getElementById('ticker_input').value;
+            var qty = document.getElementById('qty_input').value;
+            myJsRoutes.controllers.Trader.buyStock(@portfolioId, ticker, qty).ajax({
+                success : function(data) {
+                    requestOK = true;
+                    initPortfolio();
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    var err = JSON.parse( jqXHR.responseText );
+                    alert(err.message);
+                }
+            });
+
+        });
+
 
         $('.tb11_go').click(function(e) {
             var idToGet = document.getElementById('query_input').value;
@@ -344,7 +482,8 @@
                     updateQuery(data);
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    alert("Invalid Stock Query");
+                    var err = JSON.parse( jqXHR.responseText );
+                    alert(err.message);
                 }
             });
         });
@@ -367,7 +506,8 @@
                         updateQuery(data);
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        alert("Invalid Stock Query");
+                        var err = JSON.parse( jqXHR.responseText );
+                        alert(err.message);
                     }
                 });
             }
@@ -379,6 +519,5 @@
         }
     </script>
 
-    <script src="js/bootstrap.min.js"></script>
 
 }

@@ -68,11 +68,15 @@ public class Trader extends Controller {
     Stock stock = YAHOO.getStock( ticker );
     Identity identity = (Identity) ctx().args.get(SecureSocial.USER_KEY);
 
+    if ( qty <= 0 ) {
+        return invalidRequest("Can not purchase a negative amount of shares");
+    }
+
     if ( !validateUser(portfolioId, identity.identityId().userId()) ) {
       return invalidRequest("Unauthorized Operation");
     }
 
-    if ( stock == null ) {
+    if ( stock == null || stock.getPrice() == 0 ) {
       return invalidRequest("Invalid Ticker Symbol");
     }
 
