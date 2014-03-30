@@ -462,6 +462,17 @@
         arr = [];
         initPortfolio();
 
+        function clearSlider() {
+            for ( var k = 1; k < 11; ++k ) {
+                document.getElementById("pos_ticker_" + k).innerHTML = "";
+                document.getElementById("pos_typeOf_" + k).innerHTML = "";
+                document.getElementById("pos_qty_" + k).innerHTML = "";
+                document.getElementById("pos_price_" + k).innerHTML = "";
+                document.getElementById("pos_dateOf_" + k).innerHTML = "";
+                document.getElementById("pos_currentPrice_" + k).innerHTML = "";
+            }
+        }
+
         function updateSlider() {
             var temp = iterator + 9;
             var k;
@@ -498,6 +509,7 @@
 
                     arr = data.positions;
                     iterator = 1;
+                    clearSlider();
                     updateSlider();
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
