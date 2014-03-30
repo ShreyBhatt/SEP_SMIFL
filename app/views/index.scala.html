@@ -123,11 +123,79 @@
             $( "#sell-form" ).dialog( "open" );
         });
     });
+    $(function() {
+        $( document ).tooltip( {
+            position: {
+                my: "center bottom-10",
+                at: "center top",
+                using: function( position, feedback ) {
+                    $( this ).css( position );
+                    $( "<div>" )
+                        .addClass( "arrow" )
+                        .addClass( feedback.vertical )
+                        .addClass( feedback.horizontal )
+                        .appendTo( this );
+                    }
+                }
+            }
+            );
+    });
 
 </script>
-</head>
 
-        <div id="purchase-form" title="Create new user">
+ <style>
+     .ui-tooltip, .arrow:after {
+     background: black;
+     border: 2px solid white;
+     }
+     .ui-tooltip {
+     position: absolute;
+     z-index: 9999;
+     max-width: 300px;
+     padding: 10px 20px;
+     color: white;
+     border-radius: 20px;
+     font: bold 14px "Helvetica Neue", Sans-Serif;
+     text-transform: uppercase;
+     box-shadow: 0 0 7px black;
+     }
+     .arrow {
+     width: 70px;
+     height: 16px;
+     overflow: hidden;
+     position: absolute;
+     right: 80%;
+     margin-left: -35px;
+     bottom: -16px;
+     }
+     .arrow.top {
+     top: -16px;
+     bottom: auto;
+     }
+     .arrow.left {
+     left: 20%;
+     }
+     .arrow:after {
+     content: "";
+     position: absolute;
+     left: 20px;
+     top: -20px;
+     width: 25px;
+     height: 25px;
+     box-shadow: 6px 5px 9px -9px black;
+     -webkit-transform: rotate(45deg);
+     -moz-transform: rotate(45deg);
+     -ms-transform: rotate(45deg);
+     -o-transform: rotate(45deg);
+     tranform: rotate(45deg);
+     }
+     .arrow.top:after {
+     bottom: -20px;
+     top: auto;
+     }
+ </style>
+
+        <div id="purchase-form" title="Purchase Stock">
             <p class="validateTips">All form fields are required.</p>
             <form>
                 <fieldset>
@@ -138,7 +206,7 @@
                 </fieldset>
             </form>
         </div>
-        <div id="sell-form" title="Create new user">
+        <div id="sell-form" title="Sell Stock">
             <p class="validateTips">All form fields are required.</p>
             <form>
                 <fieldset>
@@ -330,47 +398,47 @@
                     <div class="right_bot">
                         <table style="width:100%;">
                             <tr width="50%">
-                                <td><b>Ticker:</b></td>
+                                <td><b><div title="The stock abbreviation of a company">Ticker:</div></b></td>
                                 <td><span id="stock_1"></span></td>
                             </tr>
                             <tr width="50%">
-                                <td><b>Price:</b></td>
+                                <td><b><div title="The price of the stock">Price:</div></b></td>
                                 <td><span id="stock_2"></span></td>
                             </tr>
                             <tr width="50%">
-                                <td><b>Volume:</b></td>
+                                <td><b><div title="Amount of shares that have been traded in a specific period">Volume:</div></b></td>
                                 <td><span id="stock_3"></span></td>
                             </tr>
                             <tr width="50%">
-                                <td><b>PE Ratio:</b></td>
+                                <td><b><div title="The price of a stock relative to how much it earns">PE Ratio:</div></b></td>
                                 <td><span id="stock_4"></span></td>
                             </tr>
                             <tr width="50%">
-                                <td><b>EPS:</b></td>
+                                <td><b><div title="Percent of company's profit allocated to each share">EPS:</div></b></td>
                                 <td><span id="stock_5"></span></td>
                             </tr>
                             <tr width="50%">
-                                <td><b>52 Week High:</b></td>
+                                <td><b><div title="Highest price of stock in 52 weeks">52 Week High:</div></b></td>
                                 <td><span id="stock_6"></span></td>
                             </tr>
                             <tr width="50%">
-                                <td><b>52 Week Low:</b></td>
+                                <td><b><div title="Lowest price of stock in 52 weeks">52 Week Low:</div></b></td>
                                 <td><span id="stock_7"></span></td>
                             </tr>
                             <tr width="50%">
-                                <td><b>Day Low:</b></td>
+                                <td><b><div title="Lowest price of stock during the day">Day Low:</div></b></td>
                                 <td><span id="stock_8"></span></td>
                             </tr>
                             <tr width="50%">
-                                <td><b>Day High:</b></td>
+                                <td><b><div title="Highest price of stock during the day">Day High:</div></b></td>
                                 <td><span id="stock_9"></span></td>
                             </tr>
                             <tr width="50%">
-                                <td><b>50 Day Moving Avg:</b></td>
+                                <td><b><div title="Average closing price of stock over last 50 days">50 Day Moving Avg:</div></b></td>
                                 <td><span id="stock_10"></span></td>
                             </tr>
                             <tr width="50%">
-                                <td><b>Market Cap:</b></td>
+                                <td><b><div title="Total market value of all outstanding shares of company">Market Cap:</div></b></td>
                                 <td><span id="stock_11"></span></td>
                             </tr>
                         </table>
@@ -471,6 +539,8 @@
                 document.getElementById("pos_currentPrice_" + k).innerHTML = "";
             }
         }
+
+
 
         function updateSlider() {
             clearSlider();
