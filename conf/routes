@@ -38,6 +38,10 @@ GET    /l/:name                    controllers.LeagueController.addLeague(name:S
 # GET a portfolio based on the league and user ids
 GET    /p/:userId/:leagueId        controllers.PortfolioController.getPortfolioOverview(userId:Long, leagueId:Long)
 
+# GET a leaderboard based on the league id
+GET    /lb					        controllers.Application.leaderboard()
+GET    /lb/:leagueId        controllers.LeaderboardController.getLeaderboard(leagueId:Long)
+
 # TRADES
 GET    /b/:portfolioId/:ticker/:qty controllers.Trader.buyStock(portfolioId:Long,ticker:String,qty:Long)
 GET    /s/:portfolioId/:ticker/:qty controllers.Trader.sellStock(portfolioId:Long,ticker:String,qty:Long)

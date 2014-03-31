@@ -75,6 +75,18 @@ public class Portfolio extends Model {
   }
 
   /**
+   * Method for finding a Portfolio in the DB.
+   * @param portfolioId is the DB id for the portfolio
+   * @return Returns a Portfolio if found, null otherwise.
+   */
+  public static List<Portfolio> findByLeadgueId( final long leagueId ) {
+    return Ebean.find(Portfolio.class)
+      .where()
+      .eq("leagueId", leagueId)
+      .findList();
+  }
+
+  /**
    * Method sets up a portfolio for a given user in a given league.
    */
   public static Portfolio getPortfolio( final long userId, final long leagueId ) {

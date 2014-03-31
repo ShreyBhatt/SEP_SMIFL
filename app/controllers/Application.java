@@ -54,6 +54,27 @@ public class Application extends Controller {
 
     }
 
+    @SecureSocial.SecuredAction
+    public static Result leaderboard() {
+
+        Identity identity = (Identity) ctx().args.get(SecureSocial.USER_KEY);
+        User user = User.find(identity.email().get());
+        Portfolio portfolio = Portfolio.find(user.id, 1L);
+        return ok(leaderboard.render(identity, (Long) user.id, (Long) 1L, (Long) portfolio.id));
+
+    }
+
+		//TODO: nonactive endpoint implement
+    @SecureSocial.SecuredAction
+    public static Result getLeaderboard(final long id) {
+
+        //Identity identity = (Identity) ctx().args.get(SecureSocial.USER_KEY);
+        //User user = User.find(identity.email().get());
+        //Portfolio portfolio = Portfolio.find(user.id, 1L);
+        //return ok(leaderboard.render(identity, (Long) user.id, (Long) 1L, (Long) portfolio.id));
+				return null;
+    }
+
     public static Result javascriptRoutes() {
         response().setContentType("text/javascript");
         return ok(
@@ -61,7 +82,8 @@ public class Application extends Controller {
                     routes.javascript.Query.getQuery(),
                     routes.javascript.Trader.buyStock(),
                     routes.javascript.Trader.sellStock(),
-                    routes.javascript.PortfolioController.getPortfolioOverview()
+                    routes.javascript.PortfolioController.getPortfolioOverview(),
+										routes.javascript.LeaderboardController.getLeaderboard()
                     )
                 );
     }

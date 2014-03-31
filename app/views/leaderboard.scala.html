@@ -1,0 +1,81 @@
+@(user: securesocial.core.Identity, userId: Long, leagueId: Long, portfolioId: Long)
+@import securesocial.core.IdentityProvider
+@import securesocial.core.Registry
+@import securesocial.core.AuthenticationMethod._
+@import securesocial.core.providers.utils.RoutesHelper
+@import Http.Context.Implicit
+
+@main("Paramount Investment League - Leaderboard", user.fullName, userId, leagueId) {
+
+<div class="x_container">
+	<div class="container">
+		<div class="row">
+		  <div class="col-md-12">
+				<div class="lb_top_header">Leaderboard ></div>
+				<div class="lb_top">
+					
+					<table id="users" class="lb_top_table">
+						<thead>
+							<tr>
+								<th>Rank</th>
+								<th>Name</th>
+								<th>Total Portfolio Value</th>
+								<th>Achievements</th>
+							</tr>
+						</thead>
+						<tbody>
+
+						</tbody>
+					</table>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<script>
+
+initLeaderboard();
+
+function initLeaderboard() {
+  myJsRoutes.controllers.LeaderboardController.getLeaderboard( 1 ).ajax({
+    type: "GET",
+    dataType: 'json',
+    success : function(data) {
+    	var k;
+			var j = 0;
+			for ( k = 0; k < data.standings.length; ++k ) {
+				if (j == 0) {
+					$( "#users tbody" ).append( "<tr class=\"lb_top_table_alt\">" + "<td>" + data.standings[k].rank + "</td>" 
+																						+ "<td>" + data.standings[k].fullName + "</td>" 
+																						+ "<td>" + data.standings[k].totalPortfolioValue + "</td>" 
+																						+ "<td>" + "ACHIEVE ME" + "</td>" 
+																						+ "</tr>" );
+					j = 1;
+				} else {
+					$( "#users tbody" ).append( "<tr>" + "<td>" + data.standings[k].rank + "</td>" 
+																		+ "<td>" + data.standings[k].fullName + "</td>" 
+																		+ "<td>" + data.standings[k].totalPortfolioValue + "</td>" 
+																		+ "<td>" + "ACHIEVE ME" + "</td>" 
+																		+ "</tr>" );
+					j = 0;
+				}
+			}
+
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      alert("Something bad happened " + errorThrown);
+    }
+
+  });
+}
+
+
+
+
+</script>
+
+}

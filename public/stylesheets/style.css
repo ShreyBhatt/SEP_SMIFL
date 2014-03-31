@@ -181,7 +181,7 @@
     overflow: hidden;
     position: absolute;
     top: 0;
-    left 0;
+    left: 0;
     background: #f3f9ff;
     border-width: thin;
     border-color: #338bd6;
@@ -221,7 +221,7 @@
     font-size: 12px;
     position: relative;
     border: 0;
-    padding: .5em, 1em;
+    padding: .5em 1em;
     background: none;
     overflow: auto;
 }
@@ -296,5 +296,37 @@
     background:url("../images/search.png") no-repeat 4px 4px;
     height: 30px;
     width: 30px;
+}
+
+.lb_top_table {
+    width: 100%;
+		height: 100%;
+   	padding-left: 30px;
+		padding-right: 30px;
+		
+}
+
+.lb_top_header {
+    color: #FFFFFF;
+    background-color: #338bd6;
+    width: 100%;
+    height: 50px;
+    font-size: 30px;
+    padding-left: 12px;
+    padding-top: 4px;
+
+}
+
+.lb_top {
+    background: #d4ebff;
+    width: 100%;
+    height: 100%;
+    font-size: 16px;
+		padding: 30px;
+}
+
+.lb_top_table_alt {
+	background-color: #338bd6;
+	color: #FFFFFF;
 }
 
