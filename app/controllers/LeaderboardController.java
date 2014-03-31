@@ -94,13 +94,12 @@ public class LeaderboardController extends Controller {
 						YahooFinanceService yahoo = YahooFinanceService.getInstance();
 
 						for ( final Position position : positions ) {
-										if ( position.typeOf.compareTo("CASH") != 0) {
-											double currentPrice = yahoo.getStock(position.ticker).getPrice();
-											totalPortfolioValue += position.qty * currentPrice;
-										} else {
-											totalPortfolioValue += position.price;
-										}
-										totalPortfolioValue -= portfolio.userId;
+							if ( position.typeOf.compareTo("CASH") != 0) {
+								double currentPrice = yahoo.getStock(position.ticker).getPrice();
+								totalPortfolioValue += position.qty * currentPrice;
+							} else {
+								totalPortfolioValue += position.price;
+							}
 						}
 
 						Standing standing = new Standing( portfolio.userId, totalPortfolioValue ); 
@@ -115,7 +114,6 @@ public class LeaderboardController extends Controller {
 					for (Standing stnd : standings) {
 	
 						leaderboardObj.add(stnd.getJson(i));
-						System.out.println(stnd.getJson(i));
 						i++;			
 					}
 
