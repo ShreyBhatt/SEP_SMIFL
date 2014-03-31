@@ -45,6 +45,12 @@ function initLeaderboard() {
     type: "GET",
     dataType: 'json',
     success : function(data) {
+
+			var d = document.getElementById("bs_nav1");
+			d.className = "";
+			var e = document.getElementById("bs_nav2");
+			e.className = "active";
+
     	var k;
 			var j = 0;
 			for ( k = 0; k < data.standings.length; ++k ) {

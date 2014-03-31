@@ -259,9 +259,10 @@
                         </tr>
                         <tr>
                             <td colspan="2">
-                        <div class="button_container">
-                            <button id="purchase2" class="purchase_stock">Purchase Stock</button>
-                                    </div>
+                        			<div class="button_container">
+																<button id="sell1" class="purchase_stock2">Sell Stock</button>
+																<button id="purchase2" class="purchase_stock">Purchase Stock</button>
+                              </div>
                         </td>
                             </tr>
                     </table>
@@ -444,6 +445,7 @@
                         </table>
                     </div>
                 </div>
+								<!-- 
                 <div class="rr">
                     <div class="purchase_header">Purchase Stock ></div>
                     <div class="purchase">
@@ -468,15 +470,12 @@
                                 <button class="purchase_stock2" name="purchase_stock" id="purchase_stock">submit</button>
                     </td>
                 </tr>
-                <tr><td>
-                            <button id="sell1" class="purchase_stock2">Sell Stock</button>
-                        </td><tr>
 
                             </table>
 
                     </div>
 
-                </div>
+                </div> -->
 
             </div>
         </div>
@@ -588,6 +587,12 @@
                 type: "GET",
                 dataType: 'json',
                 success : function(data) {
+
+										var d = document.getElementById("bs_nav1");
+										d.className = "active";
+										var e = document.getElementById("bs_nav2");
+										e.className = "";
+
                     document.getElementById("league_name").innerHTML = capitalizeFirstLetter(data.leagueName);
                     document.getElementById("cash").innerHTML =
                     "$ " + Number(data.cash).toFixed(2);

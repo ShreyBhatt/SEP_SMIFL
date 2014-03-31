@@ -159,6 +159,7 @@
 }
 
 .purchase_stock2 {
+		padding-left: 45px;
     color: #FFFFFF;
     display: table-cell;
     text-align: center;
@@ -169,6 +170,7 @@
     border-style: none;
     cursor: pointer;
     font-family: "Open Sans";
+		margin-right: 10px;
 }
 
 .button_container {
