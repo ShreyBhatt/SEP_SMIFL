@@ -149,15 +149,18 @@ public class Trader extends Controller {
 
     long qtyToSell = qty;
     final double price = stock.getPrice();
+		double cashValueOfSale = 0;
     for ( Position position : ownPositions ) {
       if ( position.qty <= qtyToSell ) {
+				cashValueOfSale += position.qty * price - position.qty * position.price;
         cashPosition.price += position.qty * price;
         qtyToSell -= position.qty;
         position.qty = 0;
         position.delete();
-
+				
       }
       else {
+				cashValueOfSale += position.qty * price - position.qty * position.price;
         cashPosition.price += qtyToSell * price;
         position.qty -= qtyToSell;
         position.update();
@@ -167,6 +170,9 @@ public class Trader extends Controller {
         break;
       }
     }
+
+		User user = User.findUserId(identity.identityId().userId());
+
     cashPosition.update();
     ObjectNode result = Json.newObject();
     result.put("status", "OK");
@@ -175,6 +181,13 @@ public class Trader extends Controller {
     result.put("price", price);
     result.put("total", price * qty);
     result.put("cashPosition", Position.getCashPosition( portfolioId ).getJson());
+		result.put("achv", user.achv);
+
+		//check for first buy then update achievements
+		if (((user.achv & 1<<1) == 0) && (cashValueOfSale > 0)) {
+			user.achv = user.achv | 1<<1;
+			user.update();
+		}
 
     return ok(result);
   }
