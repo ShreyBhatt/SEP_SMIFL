@@ -40,6 +40,9 @@ public class User extends Model {
   @Constraints.Required
   public String userId;
 
+	@Constraints.Required
+	public long achv;
+
   /** We use this to get all the users portfolios. */
   private Set<Portfolio> portfolios;
 
@@ -53,7 +56,8 @@ public class User extends Model {
       .put("email", this.email)
       .put("provider", this.provider)
       .put("userId", this.userId)
-      .put("id", this.id);
+      .put("id", this.id)
+			.put("achv", this.achv);
   }
 
   /**
