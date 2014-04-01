@@ -42,7 +42,8 @@ public class LeaderboardController extends Controller {
 							.put("rank", rank)
 							.put("userId", this.id)
 							.put("fullName", fullName)
-							.put("totalPortfolioValue", this.value);
+							.put("totalPortfolioValue", this.value)
+							.put("achv", user.achv);
 					}	
 				}
 

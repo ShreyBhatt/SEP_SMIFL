@@ -84,10 +84,20 @@ public class Trader extends Controller {
     if ( pos == null ) {
       return invalidRequest("Insufficient Funds");
     }
+	
+		User user = User.findUserId(identity.identityId().userId());
 
     ObjectNode result = Json.newObject();
     result.put("status", "OK");
     result.put("order", pos.getJson());
+		result.put("achv", user.achv);
+
+		//check for first buy then update achievements
+		if ((user.achv & 1L) == 0) {
+			user.achv = user.achv | 1;
+			user.update();
+		}
+
     return ok(result);
   }
 

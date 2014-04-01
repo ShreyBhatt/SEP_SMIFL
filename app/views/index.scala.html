@@ -40,6 +40,15 @@
                         myJsRoutes.controllers.Trader.buyStock(@portfolioId, ticker, qty).ajax({
                             success : function(data) {
                                 requestOK = true;
+																if (data.achv == 0) {
+																	//display achievement for first buy
+																	//set user.achv to 1
+																	//alert("need achievement!");
+																	var d = document.getElementById("achievements");
+																	d.className = "achievements";
+																	d.innerHTML = '<div class="achv_wrap"><img class="achv_img" src="@routes.Assets.at("images/money_bag.png")"></img><div class="achv_text">ACHIEVEMENT EARNED</br>First Stock Purchase</div></div>';
+																	$("#achievements").delay(3000).fadeOut(3000);
+																}
                                 initPortfolio();
                             },
                             error: function (jqXHR, textStatus, errorThrown) {
@@ -426,6 +435,8 @@
             </div>
         </div>
     </div>
+
+		<div id="achievements"></div>
 
     <script>
         $(document).ready(function(){

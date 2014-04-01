@@ -54,18 +54,23 @@ function initLeaderboard() {
     	var k;
 			var j = 0;
 			for ( k = 0; k < data.standings.length; ++k ) {
+
+				var m = "";
+				if (data.standings[k].achv & 1) {	var m = '<img src="@routes.Assets.at("images/money_bag_icon.png")">'; }
+
 				if (j == 0) {
+
 					$( "#users tbody" ).append( "<tr class=\"lb_top_table_alt\">" + "<td>" + data.standings[k].rank + "</td>" 
 																						+ "<td>" + data.standings[k].fullName + "</td>" 
 																						+ "<td>" + "$ " + Number(data.standings[k].totalPortfolioValue).toFixed(2) + "</td>" 
-																						+ "<td>" + "ACHIEVE ME" + "</td>" 
+																						+ "<td>" + m + "</td>" 
 																						+ "</tr>" );
 					j = 1;
 				} else {
 					$( "#users tbody" ).append( "<tr>" + "<td>" + data.standings[k].rank + "</td>" 
 																		+ "<td>" + data.standings[k].fullName + "</td>" 
 																		+ "<td>" + "$ " + Number(data.standings[k].totalPortfolioValue).toFixed(2) + "</td>" 
-																		+ "<td>" + "ACHIEVE ME" + "</td>" 
+																		+ "<td>" + m + "</td>" 
 																		+ "</tr>" );
 					j = 0;
 				}
