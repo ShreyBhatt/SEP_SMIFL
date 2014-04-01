@@ -18,6 +18,10 @@ import play.libs.F.*;
 import static play.test.Helpers.*;
 import static org.fest.assertions.Assertions.*;
 
+import service.*;
+import models.*;
+
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
 *
@@ -28,13 +32,46 @@ import static org.fest.assertions.Assertions.*;
 public class ApplicationTest {
 
     @Test
-    public void simpleCheck() {
+    public void simpleCheck() { 
         int a = 1 + 1;
         assertThat(a).isEqualTo(2);
     }
+    
+    /** YahooFinanceService.java UNIT TESTS */
+    
+    /** 
+    * Test to check Instance remains the same.
+    *
+    */
+    @Test
+    public void instanceTest(){ 
+      YahooFinanceService yahoo = YahooFinanceService.getInstance();
+      
+      YahooFinanceService yahoo2 = YahooFinanceService.getInstance();
+
+      Assert.assertTrue( yahoo == yahoo2 );
+
+    }
+    
+    /** Models Testing */
+
+    /** League.java
+    *
+    *   Testing Json Objects
+    *  
+    */
+    @Test
+    public void JsonTest() { //Testing Constructor
+      League league = new League("Jesse");
+      Assert.assertTrue( league.name.equals("Jesse") );
+      
+
+      ObjectNode JsonObject = league.getJson();
+      System.out.println( JsonObject.toString() );
 
 
-
-
+     // Assert.assertTrue( expectedOutput.equals( JsonObject.toString() );
+      
+    }
 
 }
