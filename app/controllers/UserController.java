@@ -21,6 +21,7 @@ public class UserController extends Controller {
     user.last = last;
     user.email = email;
     user.save();
+		user.achv = 0;
     user = User.find(user.email);
 
     ObjectNode result = Json.newObject();
