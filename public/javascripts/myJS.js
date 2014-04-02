@@ -174,6 +174,22 @@ function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+$(function() {
+    $( document ).tooltip( {
+        position: {
+            my: "center bottom-10",
+        at: "center top",
+        using: function( position, feedback ) {
+            $( this ).css( position );
+            $( "<div>" )
+        .addClass( feedback.vertical )
+        .addClass( feedback.horizontal )
+        .appendTo( this );
+        }
+        }
+    }
+    );
+});
 
 /*
 $('#purchase_stock')

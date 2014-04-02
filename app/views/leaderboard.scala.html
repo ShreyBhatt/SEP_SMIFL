@@ -8,81 +8,82 @@
 @main("Paramount Investment League - Leaderboard", user.fullName, userId, leagueId) {
 
 <div class="x_container">
-	<div class="container">
-		<div class="row">
-		  <div class="col-md-12">
-				<div class="lb_top_header">Leaderboard ></div>
-				<div class="lb_top">
-					
-					<table id="users" class="lb_top_table">
-						<thead>
-							<tr>
-								<th>Rank</th>
-								<th>Name</th>
-								<th>Total Portfolio Value</th>
-								<th>Achievements</th>
-							</tr>
-						</thead>
-						<tbody>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="lb_top_header">Leaderboard ></div>
+                <div class="lb_top">
 
-						</tbody>
-					</table>
+                    <table id="users" class="lb_top_table">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Name</th>
+                                <th>Total Portfolio Value</th>
+                                <th>Achievements</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-				</div>
-			</div>
-		</div>
-	</div>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
+<script src="@routes.Assets.at("javascripts/myJS.js")" type="text/javascript"></script>
 
 
 <script>
 
-initLeaderboard();
+    initLeaderboard();
 
-function initLeaderboard() {
-  myJsRoutes.controllers.LeaderboardController.getLeaderboard( 1 ).ajax({
-    type: "GET",
-    dataType: 'json',
-    success : function(data) {
+    function initLeaderboard() {
+        myJsRoutes.controllers.LeaderboardController.getLeaderboard( 1 ).ajax({
+            type: "GET",
+            dataType: 'json',
+            success : function(data) {
 
-			var d = document.getElementById("bs_nav1");
-			d.className = "";
-			var e = document.getElementById("bs_nav2");
-			e.className = "active";
+                var d = document.getElementById("bs_nav1");
+                d.className = "";
+                var e = document.getElementById("bs_nav2");
+                e.className = "active";
 
-    	var k;
-			var j = 0;
-			for ( k = 0; k < data.standings.length; ++k ) {
+                var k;
+                var j = 0;
+                for ( k = 0; k < data.standings.length; ++k ) {
 
-				var m = "";
-				if (data.standings[k].achv & 1) {	m = m + '<img src="@routes.Assets.at("images/money_bag_icon.png")">'; }
-				if (data.standings[k].achv & 1<<1) { m = m + '<img src="@routes.Assets.at("images/money_bag_icon.png")">'; }
-				if (j == 0) {
+                    var m = "";
+                    if (data.standings[k].achv & 1) {	m = m + '<img title= "First Stock Purchase" src="@routes.Assets.at("images/money_bag_icon.png")">'; }
+                    if (data.standings[k].achv & 1<<1) { m = m + '<img title="First Positive Sale" src="@routes.Assets.at("images/money_bag_icon.png")">'; }
+                    if (j == 0) {
 
-					$( "#users tbody" ).append( "<tr class=\"lb_top_table_alt\">" + "<td>" + data.standings[k].rank + "</td>" 
-																						+ "<td>" + data.standings[k].fullName + "</td>" 
-																						+ "<td>" + "$ " + Number(data.standings[k].totalPortfolioValue).toFixed(2) + "</td>" 
-																						+ "<td>" + m + "</td>" 
-																						+ "</tr>" );
-					j = 1;
-				} else {
-					$( "#users tbody" ).append( "<tr>" + "<td>" + data.standings[k].rank + "</td>" 
-																		+ "<td>" + data.standings[k].fullName + "</td>" 
-																		+ "<td>" + "$ " + Number(data.standings[k].totalPortfolioValue).toFixed(2) + "</td>" 
-																		+ "<td>" + m + "</td>" 
-																		+ "</tr>" );
-					j = 0;
-				}
-			}
+                        $( "#users tbody" ).append( "<tr class=\"lb_top_table_alt\">" + "<td>" + data.standings[k].rank + "</td>" 
+                            + "<td>" + data.standings[k].fullName + "</td>" 
+                            + "<td>" + "$ " + Number(data.standings[k].totalPortfolioValue).toFixed(2) + "</td>" 
+                            + "<td>" + m + "</td>" 
+                            + "</tr>" );
+                        j = 1;
+                        } else {
+                        $( "#users tbody" ).append( "<tr>" + "<td>" + data.standings[k].rank + "</td>" 
+                            + "<td>" + data.standings[k].fullName + "</td>" 
+                            + "<td>" + "$ " + Number(data.standings[k].totalPortfolioValue).toFixed(2) + "</td>" 
+                            + "<td>" + m + "</td>" 
+                            + "</tr>" );
+                        j = 0;
+                    }
+                }
 
-    },
-    error: function (jqXHR, textStatus, errorThrown) {
-      alert("Something bad happened " + errorThrown);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert("Something bad happened " + errorThrown);
+            }
+
+        });
     }
-
-  });
-}
 
 
 
