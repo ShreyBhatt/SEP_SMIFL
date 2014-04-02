@@ -93,6 +93,7 @@ public class YahooFinanceService {
                 )
             return null;
         return new Stock(
+
                 sym,
                 handleDouble(stockinfo[0]),
                 handleInt(stockinfo[1]),
@@ -103,7 +104,9 @@ public class YahooFinanceService {
                 handleDouble(stockinfo[6]),
                 handleDouble(stockinfo[7]),
                 handleDouble(stockinfo[8]),
-                stockinfo[9]
+                stockinfo[9],
+								stockinfo[10],
+                handleDouble(stockinfo[11])
                 );
     }
 
@@ -146,7 +149,7 @@ public class YahooFinanceService {
             final URL yahoo = new URL(
                     "http://finance.yahoo.com/d/quotes.csv?s="
                     + symbolString
-                    + "&f=l1vrejkghm3j1"
+                    + "&f=l1vrejkghm3j1no"
                     );
             return new BufferedReader(
                     new InputStreamReader(

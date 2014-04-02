@@ -18,16 +18,17 @@ public class Stock {
     private final double dayLow;
     private final double dayHigh;
     private final double moving50DayAvg;
+		private final double open;
     private final String marketCap;
 
     public Stock (
             String sym, double price, int volume,
             double pe, double eps, double week52Low, double week52High,
             double dayLow, double dayHigh, double moving50DayAvg,
-            String marketCap
+            String marketCap, String name, double open
             ) {
       //TODO, change this
-        this.name = null;
+        this.name = name;
         this.sym = sym;
         this.price = price;
         this.volume = volume;
@@ -39,12 +40,13 @@ public class Stock {
         this.dayHigh = dayHigh;
         this.moving50DayAvg = moving50DayAvg;
         this.marketCap = marketCap;
+				this.open = open;
             }
 
 
     public ObjectNode getJson() {
       return Json.newObject()
-        .put("company", "")
+        .put("company", this.name)
         .put("ticker", this.sym)
         .put("price", this.price)
         .put("volume", this.volume)
@@ -55,14 +57,16 @@ public class Stock {
         .put("dayLow", this.dayLow)
         .put("dayHigh", this.dayHigh)
         .put("moving50DayAvg", this.moving50DayAvg)
-        .put("marketCap",this.marketCap);
+        .put("marketCap",this.marketCap)
+        .put("open",this.open);
 
     }
 
 
     //Getter Methods
-    public String getTicker() { return this.sym; }
-    public double getPrice() { return this.price; }
+		public String getName() { return this.name; }
+		public String getTicker() { return this.sym; }
+		public double getPrice() { return this.price; }
     public int getVolume() { return this.volume; }
     public double getPE() { return this.pe; }
     public double getEPS() { return this.eps; }
@@ -71,6 +75,7 @@ public class Stock {
     public double getDayLow() { return this.dayLow; }
     public double getDayHigh() { return this.dayHigh; }
     public double getMoving50DayAvg() { return this.moving50DayAvg; }
+    public double getOpen() { return this.open; }
     public String getMarketCap() { return this.marketCap; }
 }
 

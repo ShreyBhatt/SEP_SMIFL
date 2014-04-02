@@ -182,6 +182,7 @@ public class Trader extends Controller {
     result.put("total", price * qty);
     result.put("cashPosition", Position.getCashPosition( portfolioId ).getJson());
 		result.put("achv", user.achv);
+		result.put("cashValueOfSale", cashValueOfSale);
 
 		//check for first buy then update achievements
 		if (((user.achv & 1<<1) == 0) && (cashValueOfSale > 0)) {
