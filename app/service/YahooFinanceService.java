@@ -62,7 +62,7 @@ public class YahooFinanceService {
             String line = br.readLine();
             String[] a = stockString.split(",");
             while ( line != null ) {
-                Stock stock = stockFromCSV(line.split(","), a[count]);
+                Stock stock = stockFromCSV(line.split("\""), a[count]);
                 newCache.put(a[count++], stock);
                 line = br.readLine();
             }
@@ -80,32 +80,36 @@ public class YahooFinanceService {
      * @param sym is the stock ticker symbol.
      * @return returns a new stock or null if the stock is invalid
      */
-    private Stock stockFromCSV ( final String[] stockinfo, final String sym ) {
-        if (
-                "N/A".equals(stockinfo[1]) &&
-                "N/A".equals(stockinfo[2]) &&
-                "N/A".equals(stockinfo[3]) &&
-                "N/A".equals(stockinfo[4]) &&
-                "N/A".equals(stockinfo[5]) &&
-                "N/A".equals(stockinfo[6]) &&
-                "N/A".equals(stockinfo[7]) &&
-                "N/A".equals(stockinfo[8])
-                )
-            return null;
+    private Stock stockFromCSV ( final String[] arr, final String sym ) {
+				if ( arr.length != 3 ) {
+					return null;
+				}
+				String[] stockinfo = arr[2].split(",");
+				if (
+	        "N/A".equals(stockinfo[2]) &&
+	        "N/A".equals(stockinfo[3]) &&
+	        "N/A".equals(stockinfo[4]) &&
+	        "N/A".equals(stockinfo[5]) &&
+	        "N/A".equals(stockinfo[6]) &&
+	        "N/A".equals(stockinfo[7]) &&
+	        "N/A".equals(stockinfo[8]) &&
+	        "N/A".equals(stockinfo[9])
+	        )
+        	return null;
         return new Stock(
 
                 sym,
-                handleDouble(stockinfo[0]),
-                handleInt(stockinfo[1]),
-                handleDouble(stockinfo[2]),
+                handleDouble(stockinfo[1]),
+                handleInt(stockinfo[2]),
                 handleDouble(stockinfo[3]),
                 handleDouble(stockinfo[4]),
                 handleDouble(stockinfo[5]),
                 handleDouble(stockinfo[6]),
                 handleDouble(stockinfo[7]),
                 handleDouble(stockinfo[8]),
-                stockinfo[9],
-								stockinfo[10],
+                handleDouble(stockinfo[9]),
+                stockinfo[10],
+								arr[1],
                 handleDouble(stockinfo[11])
                 );
     }
@@ -149,7 +153,7 @@ public class YahooFinanceService {
             final URL yahoo = new URL(
                     "http://finance.yahoo.com/d/quotes.csv?s="
                     + symbolString
-                    + "&f=l1vrejkghm3j1no"
+                    + "&f=nl1vrejkghm3j1o"
                     );
             return new BufferedReader(
                     new InputStreamReader(
@@ -183,7 +187,8 @@ public class YahooFinanceService {
             try {
 
                 String line = callYahooAPI(sym).readLine();
-                stock = stockFromCSV(line.split(","), sym);
+								String[] arr = line.split("\"");
+                stock = stockFromCSV(arr, sym);
             }
             catch (IOException e) {
                 Logger log = Logger.getLogger(YahooFinanceService.class.getName());
