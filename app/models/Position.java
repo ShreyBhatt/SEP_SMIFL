@@ -126,6 +126,21 @@ public class Position extends Model {
   }
 
   /**
+   * Method for getting all the SHORT positions of a stock for a ticker in the
+   * portfolio.
+   * @param portfolioId is the unique database id of the portfolio
+   * @param ticker is the ticker symbol of the stock positions to retrieve.
+   * @return a list of all the OWN positions of the ticker in portfolioId
+   */
+  public static List<Position> getAllShortPositions ( final long portfolioId ) {
+    return Ebean.find(Position.class)
+      .where()
+      .eq("portfolioId", portfolioId)
+      .eq("typeOf", "SHORT")
+      .findList();
+  }
+
+  /**
    * A method for adding a new OWN position to a portfolio, this is for a stock purchase.
    * @param portfolioId is the unique database id of the portfolio
    * @param qty is the number of shares to own

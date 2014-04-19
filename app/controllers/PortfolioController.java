@@ -59,7 +59,12 @@ public class PortfolioController extends Controller {
         return user.id == port.userId;
     }
 
-    //TODO: Make this work. bitch :) and fix tabs
+    /**
+     * Method for getting the overview of a portfolio
+     * @param userId is the OAuth userId
+     * @param leagueId is the DB id for a league to get the portfolio for
+     * @return a json object of the portfolio
+     */
     @SecureSocial.SecuredAction
     public static Result getPortfolioOverview( final long userId, final long leagueId ) {
 
@@ -75,6 +80,7 @@ public class PortfolioController extends Controller {
         League league = League.findById(leagueId);
         Position cash = Position.getCashPosition(portfolio.id);
         List<Position> positions = Position.getAllOwnPositions(portfolio.id);
+        List<Position> shorts = Position.getAllShortPositions(portfolio.id);
 
         ObjectNode result = Json.newObject();
 
@@ -88,6 +94,11 @@ public class PortfolioController extends Controller {
             double currentPrice = yahoo.getStock(position.ticker).getPrice();
             positionsObj.add(position.getJson(currentPrice));
             totalStockValue += position.qty * currentPrice;
+        }
+        for ( final Position position : shorts ) {
+            double currentPrice = yahoo.getStock(position.ticker).getPrice();
+            positionsObj.add(position.getJson(currentPrice));
+            totalStockValue += position.qty * (position.price - currentPrice);
         }
         result.put("totalStockValue", totalStockValue);
         result.put("startingValue", 250000);
