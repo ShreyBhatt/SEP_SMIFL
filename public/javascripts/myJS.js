@@ -43,6 +43,7 @@ $(href)
 
 
 /* Global varibales for paginating the stock list,
+ */
 iterator = 0;
 arr = [];
 
@@ -108,7 +109,6 @@ function prevSlider() {
 }
 
 function updatePrev() {
-    alert(" " + iterator);
     if ( iterator > 10 ) {
         document.getElementById("slider_prev_span").innerHTML =
             '<button class="purchase_stock2" id="slider_prev" style="padding-right:40px">Load Prev 10</button>';
@@ -192,7 +192,6 @@ $('.tb11_go').click(function(e) {
 /* Functions necessary in order to use the enter button */
 $("#query_input").focus(function() {
     $(this).data("hasfocus", true);
-    document.bg = red;
 });
 
 $("#query_input").blur(function() {
@@ -236,25 +235,5 @@ $(function() {
     }
     );
 });
-
-/*
-$('#purchase_stock')
-.click( function() {
-    var ticker = document.getElementById('ticker_input').value;
-    var qty = document.getElementById('qty_input').value;
-    myJsRoutes.controllers.Trader.buyStock(@portfolioId, ticker, qty).ajax({
-        success : function(data) {
-            requestOK = true;
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            var err = JSON.parse( jqXHR.responseText );
-            alert(err.message);
-        }
-    });
-    initPortfolio();
-    initPortfolio();
-
-});
-*/
 
 
