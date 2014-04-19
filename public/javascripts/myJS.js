@@ -43,7 +43,6 @@ $(href)
 
 
 /* Global varibales for paginating the stock list,
- * TODO: we should be paginating this server side */
 iterator = 0;
 arr = [];
 
@@ -83,6 +82,7 @@ function updateSlider() {
     updatePrev();
     updateNext();
 }
+
 /* this is what implements the pagination */
 function prevSlider() {
     clearSlider();
@@ -108,7 +108,8 @@ function prevSlider() {
 }
 
 function updatePrev() {
-    if ( iterator != 10 ) {
+    alert(" " + iterator);
+    if ( iterator > 10 ) {
         document.getElementById("slider_prev_span").innerHTML =
             '<button class="purchase_stock2" id="slider_prev" style="padding-right:40px">Load Prev 10</button>';
         $("#slider_prev").show();
