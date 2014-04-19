@@ -80,6 +80,45 @@ function updateSlider() {
             "$ " + Number(arr[k].currentPrice).toFixed(2);
     }
     iterator = k;
+    updatePrev();
+    updateNext();
+}
+/* this is what implements the pagination */
+function prevSlider() {
+    clearSlider();
+    var temp1 = iterator % 10;
+    if (temp1 == 0)
+        temp1 = 10
+    var temp = iterator - temp1;
+    var k, l;
+    for ( k = temp - 10; k < temp; ++k ) {
+        l = k + 1 - (temp - 10);
+        document.getElementById("pos_ticker_" + l).innerHTML = arr[k].ticker;
+        document.getElementById("pos_typeOf_" + l).innerHTML = arr[k].typeOf;
+        document.getElementById("pos_qty_" + l).innerHTML = arr[k].qty;
+        document.getElementById("pos_price_" + l).innerHTML =
+            "$ " + Number(arr[k].price).toFixed(2);
+        document.getElementById("pos_dateOf_" + l).innerHTML = arr[k].dateOf;
+        document.getElementById("pos_currentPrice_" + l).innerHTML =
+            "$ " + Number(arr[k].currentPrice).toFixed(2);
+    }
+    iterator = k;
+    updatePrev();
+    updateNext();
+}
+
+function updatePrev() {
+    if ( iterator != 10 ) {
+        document.getElementById("slider_prev_span").innerHTML =
+            '<button class="purchase_stock2" id="slider_prev" style="padding-right:40px">Load Prev 10</button>';
+        $("#slider_prev").show();
+    }
+    else {
+        $("#slider_prev").hide();
+    }
+}
+
+function updateNext() {
     if ( iterator < arr.length) {
         var j = arr.length - iterator;
         if ( j > 10 ) {
@@ -95,6 +134,12 @@ function updateSlider() {
     }
 }
 
+$( "#slider_prev_span" )
+    .button()
+    .click(function() {
+        clearSlider();
+        prevSlider();
+    });
 
 $( "#slider_button_span" )
     .button()
