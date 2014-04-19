@@ -17,6 +17,12 @@ import views.html.*;
 
 public class PortfolioController extends Controller {
 
+    /**
+     * Method for returning a portfolio object
+     * @param userId is the OAuth userId
+     * @param leagueId is the DB id for a league to get the portfolio for
+     * @return a JSON Result
+     */
     public static Result getPortfolio ( final long userId, final long leagueId ) {
         Portfolio portfolio = Portfolio.getPortfolio(userId, leagueId);
         ObjectNode result = Json.newObject();

@@ -38,8 +38,6 @@ public class Application extends Controller {
         return redirect("/p");
     }
 
-    //this should simply load the page but we'll leave this for testing
-    //until the view is built out
     /**
      * Get a user and load their portfolio, or if the user doesn't exist,
      * register them and generate a new global portfolio.
@@ -54,27 +52,33 @@ public class Application extends Controller {
 
     }
 
+    /**
+     * Returns the global leaderboard page.
+     * @return the global leaderboard webpage
+     */
     @SecureSocial.SecuredAction
     public static Result leaderboard() {
 
-        Identity identity = (Identity) ctx().args.get(SecureSocial.USER_KEY);
-        User user = User.find(identity.email().get());
-        Portfolio portfolio = Portfolio.find(user.id, 1L);
-        return ok(leaderboard.render(identity, (Long) user.id, (Long) 1L, (Long) portfolio.id));
-
+        return Application.getLeaderboard(1L);
     }
 
-		//TODO: nonactive endpoint implement
+    /**
+     * Returns a leaderboard page.
+     * @param id Is the leagueId to return a leaderboard for
+     * @return a leaderboard webpage
+     */
     @SecureSocial.SecuredAction
     public static Result getLeaderboard(final long id) {
 
-        //Identity identity = (Identity) ctx().args.get(SecureSocial.USER_KEY);
-        //User user = User.find(identity.email().get());
-        //Portfolio portfolio = Portfolio.find(user.id, 1L);
-        //return ok(leaderboard.render(identity, (Long) user.id, (Long) 1L, (Long) portfolio.id));
-				return null;
+        Identity identity = (Identity) ctx().args.get(SecureSocial.USER_KEY);
+        User user = User.find(identity.email().get());
+        Portfolio portfolio = Portfolio.find(user.id, id);
+        return ok(leaderboard.render(identity, (Long) user.id, (Long) id, (Long) portfolio.id));
     }
 
+    /**
+     * This function builds out all the ajax request calls
+     */
     public static Result javascriptRoutes() {
         response().setContentType("text/javascript");
         return ok(
@@ -82,8 +86,9 @@ public class Application extends Controller {
                     routes.javascript.Query.getQuery(),
                     routes.javascript.Trader.buyStock(),
                     routes.javascript.Trader.sellStock(),
+                    routes.javascript.Trader.shortStock(),
                     routes.javascript.PortfolioController.getPortfolioOverview(),
-										routes.javascript.LeaderboardController.getLeaderboard()
+                    routes.javascript.LeaderboardController.getLeaderboard()
                     )
                 );
     }
