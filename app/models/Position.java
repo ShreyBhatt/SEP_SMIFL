@@ -159,6 +159,36 @@ public class Position extends Model {
   }
 
   /**
+   * A method for adding a new SHORT position to a portfolio.
+   * @param portfolioId is the unique database id of the portfolio
+   * @param qty is the number of shares to short
+   * @param stock is the stock information to conduct the trade
+   * @return the object representation of the created position
+   */
+  public static Position addShortPosition (
+      final long portfolioId, final long qty, final Stock stock ) {
+    Position cashPosition = Ebean.find(Position.class)
+      .where()
+      .eq("portfolioId", portfolioId)
+      .eq("typeOf", "CASH")
+      .findUnique();
+
+    final double cashValue = cashPosition.price;
+    if ( stock.getPrice() * qty > cashValue / 4) {
+      return null;
+    }
+
+    Position pos = new Position( portfolioId, "SHORT",
+        stock.getTicker(), stock.getPrice(), qty );
+    Ebean.save(pos);
+
+    return Ebean.find(Position.class)
+      .where()
+      .eq("dateOf", pos.dateOf)
+      .findUnique();
+  }
+
+  /**
    * Method for initializing a portfolio with a cash position.
    * @param portfolioId is the unique database id of the portfolio
    * @param price is the amount of cash to add to the portfolio

@@ -45,6 +45,7 @@ GET    /lb/:leagueId        controllers.LeaderboardController.getLeaderboard(lea
 # TRADES
 GET    /b/:portfolioId/:ticker/:qty controllers.Trader.buyStock(portfolioId:Long,ticker:String,qty:Long)
 GET    /s/:portfolioId/:ticker/:qty controllers.Trader.sellStock(portfolioId:Long,ticker:String,qty:Long)
+GET    /sh/:portfolioId/:ticker/:qty controllers.Trader.shortStock(portfolioId:Long,ticker:String,qty:Long)
 
 
 # JAVASCRIPT ROUTES
