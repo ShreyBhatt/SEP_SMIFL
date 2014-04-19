@@ -153,7 +153,7 @@ $( "#slider_button_span" )
 /* function that updates the query box */
 function updateQuery(data) {
 
-    document.getElementById("stock_1").innerHTML = data.stock.ticker;
+    document.getElementById("stock_1").innerHTML = data.stock.company;
     document.getElementById("stock_2").innerHTML =
         "$ " + Number(data.stock.price).toFixed(2);
     document.getElementById("stock_3").innerHTML = data.stock.volume;
