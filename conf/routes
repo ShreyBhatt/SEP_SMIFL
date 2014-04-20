@@ -19,6 +19,7 @@ GET     /logout                     securesocial.controllers.LoginPage.logout
 
 # Make a query into YahooFinanceService and return Stock data for symbol
 GET     /quote/:stock              controllers.Query.getQuery(stock:String)
+GET     /data/:stock              controllers.Query.getData(stock:String)
 
 # This point lets us get a user.  If the user doens't exist, it will return
 # a badRequest will be returned and a status of "KO"

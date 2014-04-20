@@ -84,6 +84,7 @@ public class Application extends Controller {
         return ok(
                 Routes.javascriptRouter("myJsRoutes",
                     routes.javascript.Query.getQuery(),
+                    routes.javascript.Query.getData(),
                     routes.javascript.Trader.buyStock(),
                     routes.javascript.Trader.sellStock(),
                     routes.javascript.Trader.shortStock(),

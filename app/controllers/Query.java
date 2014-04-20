@@ -8,6 +8,7 @@ import play.*;
 import play.mvc.*;
 
 import service.YahooFinanceService;
+import service.YahooHistorical;
 
 import views.html.*;
 import models.Stock;
@@ -35,5 +36,17 @@ public class Query extends Controller {
       result.put("stock", stock.getJson());
       return ok(result);
     }
+  }
+
+  public static Result getData(final String symbol) {
+      YahooHistorical yahoo = YahooHistorical.getInstance();
+      ObjectNode result = yahoo.getHistoricalStock(symbol);
+      if (result == null) {
+          result = Json.newObject();
+          result.put("status", "KO");
+          result.put("message", "Stock symbol: " + symbol.toUpperCase() + " can not be found");
+          return badRequest(result);
+      }
+      return ok(result);
   }
 }

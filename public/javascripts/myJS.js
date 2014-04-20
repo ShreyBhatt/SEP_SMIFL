@@ -181,6 +181,7 @@ $('.tb11_go').click(function(e) {
         success : function(data) {
             requestOK = true;
             updateQuery(data);
+            updateChart(idToGet);
         },
         error: function (jqXHR, textStatus, errorThrown) {
             var err = JSON.parse( jqXHR.responseText );
@@ -205,6 +206,7 @@ $(document.body).keyup(function(e) {
             success : function(data) {
                 requestOK = true;
                 updateQuery(data);
+                updateChart(idToGet);
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 var err = JSON.parse( jqXHR.responseText );
