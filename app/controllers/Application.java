@@ -79,6 +79,55 @@ public class Application extends Controller {
     /**
      * This function builds out all the ajax request calls
      */
+    @SecureSocial.SecuredAction
+    public static Result leagues() {
+
+        Identity identity = (Identity) ctx().args.get(SecureSocial.USER_KEY);
+        User user = User.find(identity.email().get());
+        return ok(leagues.render(identity, (Long) user.id, (Long) 1L));
+
+    }
+
+		//TODO: nonactive endpoint implement
+    @SecureSocial.SecuredAction
+    public static Result getPublicLeagues(final long id) {
+
+        //Identity identity = (Identity) ctx().args.get(SecureSocial.USER_KEY);
+        //User user = User.find(identity.email().get());
+        //Portfolio portfolio = Portfolio.find(user.id, 1L);
+        //return ok(leaderboard.render(identity, (Long) user.id, (Long) 1L, (Long) portfolio.id));
+				return null;
+    }
+
+    @SecureSocial.SecuredAction
+    public static Result createLeague() {
+
+        Identity identity = (Identity) ctx().args.get(SecureSocial.USER_KEY);
+        User user = User.find(identity.email().get());
+        return ok(createleague.render(identity, (Long) user.id, (Long) 1L));
+
+    }
+
+    @SecureSocial.SecuredAction
+    public static Result joinLeague() {
+
+        Identity identity = (Identity) ctx().args.get(SecureSocial.USER_KEY);
+        User user = User.find(identity.email().get());
+        return ok(joinleague.render(identity, (Long) user.id, (Long) 1L));
+
+    }
+    
+    //TODO: nonactive endpoint implement
+    @SecureSocial.SecuredAction
+    public static Result searchLeague(final String leagueName) {
+
+        //Identity identity = (Identity) ctx().args.get(SecureSocial.USER_KEY);
+        //User user = User.find(identity.email().get());
+        //Portfolio portfolio = Portfolio.find(user.id, 1L);
+        //return ok(leaderboard.render(identity, (Long) user.id, (Long) 1L, (Long) portfolio.id));
+				return null;
+    }
+    
     public static Result javascriptRoutes() {
         response().setContentType("text/javascript");
         return ok(
@@ -89,7 +138,13 @@ public class Application extends Controller {
                     routes.javascript.Trader.sellStock(),
                     routes.javascript.Trader.shortStock(),
                     routes.javascript.PortfolioController.getPortfolioOverview(),
-                    routes.javascript.LeaderboardController.getLeaderboard()
+                    routes.javascript.LeaderboardController.getLeaderboard(),
+                    routes.javascript.LeagueController.getPublicLeagues(),
+                    routes.javascript.LeagueController.addPublicLeague(),
+										routes.javascript.LeagueController.addPrivateLeague(),
+                    routes.javascript.LeagueController.joinPublicLeague(),
+										routes.javascript.LeagueController.joinPrivateLeague(),
+										routes.javascript.LeagueController.searchLeague()
                     )
                 );
     }

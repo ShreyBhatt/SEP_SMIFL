@@ -1,0 +1,46 @@
+@(user: securesocial.core.Identity, userId: Long, leagueId: Long)
+@import securesocial.core.IdentityProvider
+@import securesocial.core.Registry
+@import securesocial.core.AuthenticationMethod._
+@import securesocial.core.providers.utils.RoutesHelper
+@import Http.Context.Implicit
+
+@main("Paramount Investment League - Join League", user.fullName, userId, leagueId) {
+
+<div class="x_container">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="lb_top_header">Join League ></div>
+                <div class="lb_top">
+									<form>
+										Search for a League:</br><input type="text" name="leagueName" id="leagueName">
+										</br></br>
+								  </form>
+                    <input type="submit" value="Submit" onclick="findLeague()">
+										
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+var d = document.getElementById("bs_nav1");
+d.className = "";
+var e = document.getElementById("bs_nav2");
+e.className = "";
+var e = document.getElementById("bs_nav3");
+e.className = "active";
+  
+function findLeague() {
+                
+	
+	
+}
+
+</script>
+
+
+}

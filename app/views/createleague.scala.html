@@ -1,0 +1,92 @@
+@(user: securesocial.core.Identity, userId: Long, leagueId: Long)
+@import securesocial.core.IdentityProvider
+@import securesocial.core.Registry
+@import securesocial.core.AuthenticationMethod._
+@import securesocial.core.providers.utils.RoutesHelper
+@import Http.Context.Implicit
+
+@main("Paramount Investment League - Create League", user.fullName, userId, leagueId) {
+
+<div class="x_container">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="lb_top_header">Create League ></div>
+                <div class="lb_top">
+									<form>
+										League Name:</br><input type="text" name="name" id="name"></br></br>
+										Goal:</br><input type="text" name="goal" id="goal"></br></br>
+                    <input type="radio" name="public" value="Public" id="public" onclick="hidePasskey()" checked>Public 
+										<input type="radio" name="public" value="Private" id="private" onclick="showPasskey()">Private</br>
+                    <span id="passkey_text" class="hidden">Passkey:</br></span><input type="text" name="passkey" id="passkey" class="hidden"></br></br>
+                    Initial Balance:</br><input type="text" name="initial_balance" id="initial_balance"></br></br>
+                    Brokerage Fee:</br><input type="text" name="brokerage_fee" id="brokerage_fee"></br></br>
+										
+								  </form>
+                    <input type="submit" value="Submit" onclick="createLeague()">
+										
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+var d = document.getElementById("bs_nav1");
+d.className = "";
+var e = document.getElementById("bs_nav2");
+e.className = "";
+var e = document.getElementById("bs_nav3");
+e.className = "active";
+  
+function createLeague() {
+                
+	var name = document.getElementById("name").value;
+	var goal = document.getElementById("goal").value;
+	var initial_balance = document.getElementById("initial_balance").value;
+	var brokerage_fee = document.getElementById("brokerage_fee").value;
+
+	if(document.getElementById('public').checked) {
+		myJsRoutes.controllers.LeagueController.addPublicLeague( name, "default", @userId, initial_balance, brokerage_fee ).ajax({
+		          type: "GET",
+		          dataType: 'json',
+		          success : function(data) {
+		            alert("cool");
+		          },
+		          error: function (jqXHR, textStatus, errorThrown) {
+		              alert("Something bad happened " + errorThrown);
+		          }
+
+		      });
+	} else {
+	  var passkey = document.getElementById("passkey").value;
+		myJsRoutes.controllers.LeagueController.addPrivateLeague( name, "default", passkey, @userId, initial_balance, brokerage_fee ).ajax({
+		          type: "GET",
+		          dataType: 'json',
+		          success : function(data) {
+		            alert("cool");
+		          },
+		          error: function (jqXHR, textStatus, errorThrown) {
+		              alert("Something bad happened " + errorThrown);
+		          }
+
+		      });
+	}
+	
+}
+
+function hidePasskey() {
+	document.getElementById("passkey").className = 'hidden';
+	document.getElementById("passkey_text").className = 'hidden';
+}
+
+function showPasskey() {
+	document.getElementById("passkey").className = '';
+	document.getElementById("passkey_text").className = '';
+}
+
+</script>
+
+
+}

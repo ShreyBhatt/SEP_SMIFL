@@ -1,0 +1,97 @@
+@(user: securesocial.core.Identity, userId: Long, leagueId: Long)
+@import securesocial.core.IdentityProvider
+@import securesocial.core.Registry
+@import securesocial.core.AuthenticationMethod._
+@import securesocial.core.providers.utils.RoutesHelper
+@import Http.Context.Implicit
+
+@main("Paramount Investment League - Join League", user.fullName, userId, leagueId) {
+
+<div class="x_container">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="lb_top_header">Join League ></div>
+                <div class="lb_top">
+									<form>
+										Search for a League:</br><input type="text" name="leagueName" id="searchBox">
+										</br></br>
+								  </form>
+                    <input type="submit" value="Submit" onclick="searchLeague()">
+										
+										</br></br></br>
+                    <table id="leagues" class="lb_top_table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Goal</th>
+                                <th>Owner Id</th>
+                                <th>Initial Balance</th>
+                                <th>Brokerage Fee</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+										
+										
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+var d = document.getElementById("bs_nav1");
+d.className = "";
+var e = document.getElementById("bs_nav2");
+e.className = "";
+var e = document.getElementById("bs_nav3");
+e.className = "active";
+
+function searchLeague() {
+        myJsRoutes.controllers.LeagueController.searchLeague( document.getElementById("searchBox").value ).ajax({
+            type: "GET",
+            dataType: 'json',
+            success : function(data) {
+                $( "#leagues tbody" ).empty();
+                var k;
+                var j = 0;
+                for ( k = 0; k < data.leagues.length; ++k ) {
+                    if (j == 0) {
+                        $( "#leagues tbody" ).append( "<tr class=\"lb_top_table_alt\">" + "<td>" + k + "</td>" 
+                            + "<td>" + data.leagues[k].name + "</td>" 
+                            + "<td>" + data.leagues[k].goal + "</td>" 
+                            + "<td>" + data.leagues[k].ownerId + "</td>" 
+                            + "<td>" + data.leagues[k].initialBalance + "</td>" 
+                            + "<td>" + data.leagues[k].brokerageFee + "</td>" 
+                            + "</tr>" );
+                        j = 1;
+                        } else {
+                        $( "#leagues tbody" ).append( "<tr>" + "<td>" + k + "</td>" 
+                            + "<td>" + data.leagues[k].name + "</td>" 
+                            + "<td>" + data.leagues[k].goal + "</td>" 
+                            + "<td>" + data.leagues[k].ownerId + "</td>" 
+                            + "<td>" + data.leagues[k].initialBalance + "</td>" 
+                            + "<td>" + data.leagues[k].brokerageFee + "</td>" 
+                            + "</tr>" );
+                        j = 0;
+                    }
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert("Something bad happened " + errorThrown);
+            }
+
+        });
+}
+
+
+
+</script>
+
+
+}

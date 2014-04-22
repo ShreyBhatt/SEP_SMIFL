@@ -31,10 +31,21 @@ GET     /u/:email                  controllers.UserController.getUser(email:Stri
 # user
 GET    /u/:first/:last/:email      controllers.UserController.addUser(first:String, last:String, email:String)
 
+# GET all public leagues
+GET    /l					                 controllers.Application.leagues()
+GET    /l/:leagueId                controllers.LeagueController.getPublicLeagues(leagueId:Long)
+
 # This should be a POST or PUT
 # This should only be hit to create a new league
 # Also need to add support for goals
-GET    /l/:name                    controllers.LeagueController.addLeague(name:String)
+GET    /create                   controllers.Application.createLeague()
+GET    /create/public/:name/:goal/:ownerId/:initialBalance/:brokerageFee        controllers.LeagueController.addPublicLeague(name:String, goal:String, ownerId:Long, initialBalance:Double, brokerageFee:Double)
+GET    /create/private/:name/:goal/:passkey/:ownerId/:initialBalance/:brokerageFee        controllers.LeagueController.addPrivateLeague(name:String, goal:String, passkey:String, ownerId:Long, initialBalance:Double, brokerageFee:Double)
+
+GET    /join                                           controllers.Application.joinLeague()
+GET    /join/:leagueName                               controllers.LeagueController.searchLeague(leagueName:String)
+GET    /join/public/:leagueId/:userId                  controllers.LeagueController.joinPublicLeague(leagueId:Long, userId:Long)
+GET    /join/private/:leagueId/:userId/:passkey        controllers.LeagueController.joinPrivateLeague(leagueId:Long, userId:Long, passkey:String)
 
 # GET a portfolio based on the league and user ids
 GET    /p/:userId/:leagueId        controllers.PortfolioController.getPortfolioOverview(userId:Long, leagueId:Long)

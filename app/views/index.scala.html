@@ -503,6 +503,39 @@
                     // Create the chart
                     $('#chart').highcharts('StockChart', {
 
+        <div id="achievements"></div>
+
+        <script src="@routes.Assets.at("javascripts/myJS.js")" type="text/javascript"></script>
+
+        <script>
+            initPortfolio();
+            function initPortfolio() {
+                myJsRoutes.controllers.PortfolioController.getPortfolioOverview(@userId, @leagueId).ajax({
+                    type: "GET",
+                    dataType: 'json',
+                    success : function(data) {
+
+                        var d = document.getElementById("bs_nav1");
+                        d.className = "active";
+                        var e = document.getElementById("bs_nav2");
+                        e.className = "";
+                        var e = document.getElementById("bs_nav3");
+                        e.className = "";
+
+                        document.getElementById("league_name").innerHTML = capitalizeFirstLetter(data.leagueName);
+                        document.getElementById("cash").innerHTML = "$ " + Number(data.cash).toFixed(2);
+                        document.getElementById("total_stock_value").innerHTML = "$ " + Number(data.totalStockValue).toFixed(2);
+                        document.getElementById("starting_value").innerHTML = "$ " + Number(data.startingValue).toFixed(2);
+                        document.getElementById("portfolio_value").innerHTML = "$ " + Number(data.totalStockValue + data.cash).toFixed(2);
+                        document.getElementById("percent_return").innerHTML = Number(-100 * (1 - (data.totalStockValue + data.cash) / data.startingValue)).toFixed(2) + "%";
+
+                        arr = data.positions;
+                        iterator = 0;
+                        updateSlider();
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        alert("Something bad happened " + errorThrown);
+                    }
 
                         rangeSelector : {
                             selected : 1,
