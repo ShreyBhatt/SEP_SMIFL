@@ -46,11 +46,13 @@ public class LeagueController extends Controller {
       return user.id == port.userId;
   }
 
+  @SecureSocial.SecuredAction
   public static Result addPublicLeague ( final String name, final String goal, final long ownerId, final double initialBalance, final double brokerageFee ) {
 		
     return addPrivateLeague( name, goal, null, ownerId, initialBalance, brokerageFee );
   }
 
+  @SecureSocial.SecuredAction
   public static Result addPrivateLeague ( final String name, final String goal, final String passkey, final long ownerId, final double initialBalance, final double brokerageFee ) {
 		
 		//TODO: CHECK IF LEAGUE ALREADY EXISTS
@@ -69,16 +71,7 @@ public class LeagueController extends Controller {
     }
   }
   
-  public static Result joinPublicLeague ( final long leagueId, final long userId ) {
-		
-    return joinPrivateLeague( leagueId, userId, null );
-  }
-
-  public static Result joinPrivateLeague ( final long leagueId, final long userId, final String passkey ) {
-		ObjectNode result = Json.newObject();
-    return ok(result);
-  }
-  
+  @SecureSocial.SecuredAction
   public static Result searchLeague ( final String leagueName ) {
     
     List<League> tmp = League.searchByName( leagueName );
@@ -109,6 +102,39 @@ public class LeagueController extends Controller {
       return ok(result);
 
   }
+  
+  @SecureSocial.SecuredAction
+  public static Result joinPublicLeague( final long userId, final long leagueId ) {
+
+    return joinPrivateLeague( userId, leagueId, null );
+
+  }
+  
+  @SecureSocial.SecuredAction
+  public static Result joinPrivateLeague( final long userId, final long leagueId, final String passkey ) {
+
+    ObjectNode result = Json.newObject();
+    League league = League.findById( leagueId );
+    
+    //if passkey not null, check against leagueId's passkey then continue
+    if ( passkey != null ) {
+      if ( passkey.compareTo(league.passkey) != 0 ) {
+        result.put("status", "KO");
+        result.put("message", "Failed to join league. Bad passkey");
+        result.put("passkey", league.passkey);
+        return badRequest(result);
+      }
+    }
+    
+    //create new portfolio for userId, leagueId
+    Portfolio portfolio = Portfolio.add( userId, leagueId );
+    
+    //create new CASH position for portfolioId, price
+    Position position = Position.addCashPosition( portfolio.id, league.initialBalance );
+    
+    return ok(result);
+
+  }  
 
 }
 

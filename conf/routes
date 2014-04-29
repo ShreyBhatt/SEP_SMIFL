@@ -44,8 +44,8 @@ GET    /create/private/:name/:goal/:passkey/:ownerId/:initialBalance/:brokerageF
 
 GET    /join                                           controllers.Application.joinLeague()
 GET    /join/:leagueName                               controllers.LeagueController.searchLeague(leagueName:String)
-GET    /join/public/:leagueId/:userId                  controllers.LeagueController.joinPublicLeague(leagueId:Long, userId:Long)
-GET    /join/private/:leagueId/:userId/:passkey        controllers.LeagueController.joinPrivateLeague(leagueId:Long, userId:Long, passkey:String)
+GET    /join/public/:leagueId/:userId                  controllers.LeagueController.joinPublicLeague(userId:Long, leagueId:Long )
+GET    /join/private/:leagueId/:userId/:passkey        controllers.LeagueController.joinPrivateLeague(userId:Long, leagueId:Long, passkey:String)
 
 # GET a portfolio based on the league and user ids
 GET    /p/:userId/:leagueId        controllers.PortfolioController.getPortfolioOverview(userId:Long, leagueId:Long)

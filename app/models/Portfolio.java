@@ -112,6 +112,18 @@ public class Portfolio extends Model {
       .eq("userId", userId)
       .findList();
   }
+  
+  public static Portfolio add ( final long userId, final long leagueId ) {
+    Portfolio portfolio = Portfolio.find( userId, leagueId );
+
+    if ( portfolio != null ) {
+      return portfolio;
+    }
+
+    portfolio = new Portfolio( userId, leagueId );
+    Ebean.save(portfolio);
+    return Portfolio.find( userId, leagueId );
+  }
 
 }
 
