@@ -110,7 +110,8 @@ public class PortfolioController extends Controller {
         List<Position> shorts = Position.getAllShortPositions(portfolio.id);
 
         ObjectNode result = Json.newObject();
-
+        
+        result.put("portfolioId", portfolio.id);
         result.put("leagueName", league.name);
         result.put("cash", cash.price);
         result.put("achv", user.achv);

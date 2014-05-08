@@ -37,7 +37,7 @@
                         alert("All fields must be filled out")
                     }
                     else {
-                        myJsRoutes.controllers.Trader.buyStock(@portfolioId, ticker, qty).ajax({
+                        myJsRoutes.controllers.Trader.buyStock(portfolio_id, ticker, qty).ajax({
                             success : function(data) {
                                 requestOK = true;
                                 if ((data.achv & 1) == 0) {
@@ -104,7 +104,7 @@
                         alert("All fields must be filled out");
                     }
                     else {
-                        myJsRoutes.controllers.Trader.sellStock(@portfolioId, ticker, qty).ajax({
+                        myJsRoutes.controllers.Trader.sellStock(portfolio_id, ticker, qty).ajax({
                             success : function(data) {
                                 requestOK = true;
                                 if (((data.achv & 1<<1) == 0) && (data.cashValueOfSale > 0)) {
@@ -169,7 +169,7 @@
                         alert("All fields must be filled out");
                     }
                     else {
-                        myJsRoutes.controllers.Trader.shortStock(@portfolioId, ticker, qty).ajax({
+                        myJsRoutes.controllers.Trader.shortStock(portfolio_id, ticker, qty).ajax({
                             success : function(data) {
                                 requestOK = true;
                                 //if (((data.achv & 1<<1) == 0) && (data.cashValueOfSale > 0)) {
@@ -591,11 +591,11 @@
      
         }
     
+        var portfolio_id;
+    
         initPortfolio(@leagueId);
         function initPortfolio( league_id ) {
-        
- 
-        
+       
             document.getElementById("leaderboard_a").href = "/lb/" + league_id;
         
             myJsRoutes.controllers.PortfolioController.getPortfolioOverview( @userId, league_id).ajax({
@@ -607,6 +607,8 @@
                       //display Short Stock if they have achievement
                       document.getElementById("short1").style.display = 'inline';
                     }
+                    
+                    portfolio_id= data.portfolioId;
                     
                     var d = document.getElementById("bs_nav1");
                     d.className = "active";
