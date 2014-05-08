@@ -2,6 +2,4 @@
 9995:securesocial.core.DefaultIdGenerator
 9997:controllers.plugin.CustomTemplatesPlugin
 9998:service.MyUserService
-10000:securesocial.core.providers.TwitterProvider
 10001:securesocial.core.providers.FacebookProvider
-10009:securesocial.core.providers.InstagramProvider
