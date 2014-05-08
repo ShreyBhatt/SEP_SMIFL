@@ -50,7 +50,7 @@
                                     d.innerHTML = '<div class="achv_wrap"><img class="achv_img" src="@routes.Assets.at("images/money_bag.png")"></img><div class="achv_text">ACHIEVEMENT EARNED</br>First Stock Purchase</div></div>';
                                     $("#achievements").delay(3000).fadeOut(3000);
                                 }
-                                initPortfolio();
+                                initPortfolio(current_league);
                             },
                             error: function (jqXHR, textStatus, errorThrown) {
                                 var err = JSON.parse( jqXHR.responseText );
@@ -115,7 +115,7 @@
                                     d.innerHTML = '<div class="achv_wrap"><img class="achv_img" src="@routes.Assets.at("images/money_bag.png")"></img><div class="achv_text">ACHIEVEMENT EARNED</br>First Positive Sale</div></div>';
                                     $("#achievements").delay(3000).fadeOut(3000);
                                 }
-                                initPortfolio();
+                                initPortfolio(current_league);
                             },
                             error: function (jqXHR, textStatus, errorThrown) {
                                 var err = JSON.parse( jqXHR.responseText );
@@ -160,7 +160,7 @@
             width: 350,
             modal: true,
             buttons: {
-                "Sell": function() {
+                "Short": function() {
                     var bValid = true;
                     allFields.removeClass( "ui-state-error" );
                     var ticker = document.getElementById('ticker3').value;
@@ -180,7 +180,7 @@
                                     //d.innerHTML = '<div class="achv_wrap"><img class="achv_img" src="@routes.Assets.at("images/money_bag.png")"></img><div class="achv_text">ACHIEVEMENT EARNED</br>First Positive Sale</div></div>';
                                     //$("#achievements").delay(3000).fadeOut(3000);
                                 //}
-                                initPortfolio();
+                                initPortfolio(current_league);
                             },
                             error: function (jqXHR, textStatus, errorThrown) {
                                 var err = JSON.parse( jqXHR.responseText );
@@ -201,7 +201,7 @@
         $( "#short1" )
         .button()
         .click(function() {
-            $( "#sell-form" ).dialog( "open" );
+            $( "#short-form" ).dialog( "open" );
         });
     });
 </script>
@@ -256,7 +256,6 @@
                             <option>Select a Portfolio</option>
                           </select>
                         </form></div>
-                    
                     </div>
 
                     <table class="main_top_table">
@@ -520,7 +519,6 @@
         </div>
     </div>
     <div class="col-md-2"></div>
-    
 
     <div id="achievements"></div>
 
@@ -563,16 +561,13 @@
     </script>
 
     <script>
-    
-    
         initSelector();
         function initSelector() {
-        
           myJsRoutes.controllers.PortfolioController.findPortfoliosByUserId(@userId).ajax({
                 type: "GET",
                 dataType: 'json',
                 success : function(data) {
-                  var select = document.getElementById("selectLeague"); 
+                  var select = document.getElementById("selectLeague");
                   for(var i = 0; i < data.leagues.length; i++) {
                     //alert("test: " + data.leagues[i].id);
                     var opt = data.leagues[i].name;
@@ -581,35 +576,28 @@
                     el.value = data.leagues[i].id;
                     select.appendChild(el);
                   }
-                    
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     alert("Something bad happened " + errorThrown);
                 }
 
             });
-     
         }
-    
         var portfolio_id;
-    
+        var current_league;
         initPortfolio(@leagueId);
         function initPortfolio( league_id ) {
-       
+            current_league = league_id;
             document.getElementById("leaderboard_a").href = "/lb/" + league_id;
-        
             myJsRoutes.controllers.PortfolioController.getPortfolioOverview( @userId, league_id).ajax({
                 type: "GET",
                 dataType: 'json',
                 success : function(data) {
-                    
-                    if ((data.achv & 1<<1<<1) == 1) {
+                    if (data.achv & 1<<1<<1) {
                       //display Short Stock if they have achievement
                       document.getElementById("short1").style.display = 'inline';
                     }
-                    
                     portfolio_id= data.portfolioId;
-                    
                     var d = document.getElementById("bs_nav1");
                     d.className = "active";
                     var e = document.getElementById("bs_nav2");
