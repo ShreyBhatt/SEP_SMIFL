@@ -43,7 +43,7 @@ public class MyUserService extends BaseUserService {
     user.first = identity.firstName();
     user.last = identity.lastName();
     try { 
-      user.email = identity.email().get());
+      user.email = identity.email().get();
     } catch ( final Exception e ) {
       user.email = "testing@test.com";
     }
