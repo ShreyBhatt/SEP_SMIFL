@@ -15,7 +15,6 @@
                 <div class="lb_top">
 									<form>
 										League Name:</br><input type="text" name="name" id="name"></br></br>
-										Goal:</br><input type="text" name="goal" id="goal"></br></br>
                     <input type="radio" name="public" value="Public" id="public" onclick="hidePasskey()" checked>Public 
 										<input type="radio" name="public" value="Private" id="private" onclick="showPasskey()">Private</br>
                     <span id="passkey_text" class="hidden">Passkey:</br></span><input type="text" name="passkey" id="passkey" class="hidden"></br></br>
@@ -43,7 +42,6 @@ e.className = "active";
 function createLeague() {
                 
 	var name = document.getElementById("name").value;
-	var goal = document.getElementById("goal").value;
 	var initial_balance = document.getElementById("initial_balance").value;
 	var brokerage_fee = document.getElementById("brokerage_fee").value;
 
@@ -52,7 +50,9 @@ function createLeague() {
 		          type: "GET",
 		          dataType: 'json',
 		          success : function(data) {
-		            alert("cool");
+		            if (data.status === "OK") {
+		            	window.location = "http://localhost:9000/l";
+		            }
 		          },
 		          error: function (jqXHR, textStatus, errorThrown) {
 		              alert("Something bad happened " + errorThrown);
@@ -65,7 +65,9 @@ function createLeague() {
 		          type: "GET",
 		          dataType: 'json',
 		          success : function(data) {
-		            alert("cool");
+		            if (data.status === "OK") {
+		            	window.location = "http://localhost:9000/l";
+		            }
 		          },
 		          error: function (jqXHR, textStatus, errorThrown) {
 		              alert("Something bad happened " + errorThrown);
@@ -73,6 +75,8 @@ function createLeague() {
 
 		      });
 	}
+	
+
 	
 }
 

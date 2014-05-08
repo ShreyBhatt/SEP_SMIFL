@@ -37,7 +37,6 @@ public class LeaderboardController extends Controller {
 						User user = User.findById(this.id);
 						String fullName = user.first + " " + user.last;
 						
-						
 						return Json.newObject()
 							.put("rank", rank)
 							.put("userId", this.id)
@@ -111,6 +110,8 @@ public class LeaderboardController extends Controller {
 					ObjectNode result = Json.newObject();
 					ArrayNode leaderboardObj = result.putArray("standings");
 
+          result.put("leagueName", League.findById(leagueId).name);
+          
 					int i = 1;
 					for (Standing stnd : standings) {
 	

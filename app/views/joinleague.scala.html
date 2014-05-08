@@ -25,10 +25,10 @@
                             <tr>
                                 <th>#</th>
                                 <th>Name</th>
-                                <th>Goal</th>
                                 <th>Owner Id</th>
                                 <th>Initial Balance</th>
                                 <th>Brokerage Fee</th>
+                                <th>Join</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -62,23 +62,44 @@ function searchLeague() {
                 var j = 0;
                 for ( k = 0; k < data.leagues.length; ++k ) {
                     if (j == 0) {
+                        
+                      if ( data.leagues[k].passkey != null ) {
                         $( "#leagues tbody" ).append( "<tr class=\"lb_top_table_alt\">" + "<td>" + k + "</td>" 
                             + "<td>" + data.leagues[k].name + "</td>" 
-                            + "<td>" + data.leagues[k].goal + "</td>" 
                             + "<td>" + data.leagues[k].ownerId + "</td>" 
                             + "<td>" + data.leagues[k].initialBalance + "</td>" 
                             + "<td>" + data.leagues[k].brokerageFee + "</td>" 
+                            + "<td><input style='color: black;' type='password' name='leaguePasskey' id='password_" + k + "'><a style='color: blue; text-decoration: underline' href='#' onclick='joinPriv(" + data.leagues[k].id + ", " + k + ")'>PRIVATE</a></td>"
                             + "</tr>" );
+                      } else {
+                        $( "#leagues tbody" ).append( "<tr class=\"lb_top_table_alt\">" + "<td>" + k + "</td>" 
+                          + "<td>" + data.leagues[k].name + "</td>" 
+                          + "<td>" + data.leagues[k].ownerId + "</td>" 
+                          + "<td>" + data.leagues[k].initialBalance + "</td>" 
+                          + "<td>" + data.leagues[k].brokerageFee + "</td>" 
+                          + "<td><a style='color: white; text-decoration: underline' href='#' onclick='joinPub(" + data.leagues[k].id + ", " + k + ")'>PUBLIC</a></td>" 
+                          + "</tr>" );
+                      }
                         j = 1;
-                        } else {
+                    } else {
+                      if ( data.leagues[k].passkey != null ) {
                         $( "#leagues tbody" ).append( "<tr>" + "<td>" + k + "</td>" 
                             + "<td>" + data.leagues[k].name + "</td>" 
-                            + "<td>" + data.leagues[k].goal + "</td>" 
                             + "<td>" + data.leagues[k].ownerId + "</td>" 
                             + "<td>" + data.leagues[k].initialBalance + "</td>" 
                             + "<td>" + data.leagues[k].brokerageFee + "</td>" 
+                            + "<td><input type='password' name='leaguePasskey' id='password_" + k + "'><a style='color: blue; text-decoration: underline' href='#' onclick='joinPriv(" + data.leagues[k].id + ", " + k + ")'>PRIVATE</a></td>"
                             + "</tr>" );
-                        j = 0;
+                      } else {
+                        $( "#leagues tbody" ).append( "<tr>" + "<td>" + k + "</td>" 
+                            + "<td>" + data.leagues[k].name + "</td>" 
+                            + "<td>" + data.leagues[k].ownerId + "</td>" 
+                            + "<td>" + data.leagues[k].initialBalance + "</td>" 
+                            + "<td>" + data.leagues[k].brokerageFee + "</td>" 
+                            + "<td><a style='color: blue; text-decoration: underline' href='#' onclick='joinPub(" + data.leagues[k].id + ", " + k + ")'>PUBLIC</a></td>"
+                            + "</tr>" );
+                      }
+                      j = 0;
                     }
                 }
             },
@@ -89,7 +110,39 @@ function searchLeague() {
         });
 }
 
+function joinPriv(leagueId, k) {
 
+
+myJsRoutes.controllers.LeagueController.joinPrivateLeague( @userId, leagueId, document.getElementById('password_' + k).value).ajax({
+		          type: "GET",
+		          dataType: 'json',
+		          success : function(data) {
+		            alert("You've joined this league!");
+		          },
+		          error: function (jqXHR, textStatus, errorThrown) {
+		              alert("Bad passkey!");
+		          }
+
+		      });
+
+}
+
+function joinPub(leagueId, k) {
+
+
+myJsRoutes.controllers.LeagueController.joinPublicLeague( @userId, leagueId ).ajax({
+		          type: "GET",
+		          dataType: 'json',
+		          success : function(data) {
+		            alert("You've joined this league!");
+		          },
+		          error: function (jqXHR, textStatus, errorThrown) {
+		              alert("An error occurred!");
+		          }
+
+		      });
+
+}
 
 </script>
 

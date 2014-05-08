@@ -9,7 +9,7 @@
 .main_top {
     background: #f3f9ff;
     width: 100%;
-    height: 200px;
+    height: 230px;
     margin-left: auto;
     margin-right: auto;
     font-family: "Open Sans";
@@ -409,5 +409,26 @@
 
 .achv_text {
 	margin-left: 20px;
+}
+
+.red {
+
+font-weight: bold;
+color: red;
+
+}
+
+.green {
+
+font-weight: bold;
+color: green;
+
+}
+
+.black {
+
+font-weight: bold;
+color: black;
+
 }
 

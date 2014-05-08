@@ -35,6 +35,27 @@ public class PortfolioController extends Controller {
         result.put("portfolio", portfolio.getJson());
         return ok(result);
     }
+    
+    public static Result findPortfoliosByUserId ( final long userId ) {
+        
+        List<Portfolio> portfolios = Portfolio.findAllByUserId(userId);
+        List<League> tmp = new ArrayList<League>();
+        
+        for ( Portfolio portfolio : portfolios ) {
+          tmp.add(League.findById(portfolio.leagueId));
+        }
+        
+			  ArrayList<League> leagues = new ArrayList<League>(tmp);
+			  ObjectNode result = Json.newObject();
+			  ArrayNode leaguesObj = result.putArray("leagues");
+			
+			  for (League league : leagues) {
+				  leaguesObj.add(league.getJson());
+			  }
+
+        result.put("status", "OK");
+        return ok(result);
+    }   
 
     /**
      * Method for returning a badRequest for an invalid stock ticker.
@@ -92,21 +113,30 @@ public class PortfolioController extends Controller {
 
         result.put("leagueName", league.name);
         result.put("cash", cash.price);
-
+        result.put("achv", user.achv);
+        
         double totalStockValue = 0;
+        double openingStockValue = 0;
         YahooFinanceService yahoo = YahooFinanceService.getInstance();
         ArrayNode positionsObj = result.putArray("positions");
         for ( final Position position : positions ) {
-            double currentPrice = yahoo.getStock(position.ticker).getPrice();
-            positionsObj.add(position.getJson(currentPrice));
+            Stock stock = yahoo.getStock(position.ticker);
+            double currentPrice = stock.getPrice();
+            double openPrice = stock.getOpen();
+            positionsObj.add(position.getJson(currentPrice, openPrice));
             totalStockValue += position.qty * currentPrice;
+            openingStockValue += position.qty * openPrice;
         }
         for ( final Position position : shorts ) {
-            double currentPrice = yahoo.getStock(position.ticker).getPrice();
-            positionsObj.add(position.getJson(currentPrice));
+            Stock stock = yahoo.getStock(position.ticker);
+            double currentPrice = stock.getPrice();
+            double openPrice = stock.getOpen();
+            positionsObj.add(position.getJson(currentPrice, openPrice));
             totalStockValue += position.qty * (position.price - currentPrice);
+            openingStockValue += position.qty * (position.price - openPrice);
         }
         result.put("totalStockValue", totalStockValue);
+        result.put("openingStockValue", openingStockValue);
         result.put("startingValue", 250000);
 
         return ok(result);

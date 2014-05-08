@@ -248,7 +248,16 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="main_top">
-                    <div class="main_top_header">Portfolio Overview ></div>
+                    <div class="main_top_header">
+                      <div style="float: left">Portfolio Overview ></div>
+                      <div style="float: right; font-size: 16px; color: black; margin-right: 10px; margin-top: 7px;">
+                        <form id="selectLeagueForm">
+                          <select id="selectLeague" onchange="initPortfolio(this.value)">
+                            <option>Select a Portfolio</option>
+                          </select>
+                        </form></div>
+                    
+                    </div>
 
                     <table class="main_top_table">
                         <tr>
@@ -282,13 +291,23 @@
                             </td>
                         </tr>
                         <tr>
+                            <td>
+                                <b>Opening Stock Value:</b>
+                                <span id="opening_stock_value"></span>
+                            </td>
+                            <td>
+                                <b>Daily Return:</b>
+                                <span id="daily_return"></span>
+                            </td>
+                        </tr>
+                        <tr>
                             <td colspan="2">
 
                             </td>
                         </tr>
                     </table>
                     <div class="button_container">
-                        <button id="short1" class="purchase_stock2">Short Stock</button>
+                        <button id="short1" style="display: none" class="purchase_stock2">Short Stock</button>
                         <button id="sell1" class="purchase_stock2">Sell Stock</button>
                         <button id="purchase2" class="purchase_stock">Purchase Stock</button>
                     </div>
@@ -311,6 +330,7 @@
                             <td><b>QTY</b></td>
                             <td><b>PRICE</b></td>
                             <td><b>DATEOF</b></td>
+                            <td><b>OPENPRICE</b></td>
                             <td><b>CURRENTPRICE</b></td>
                         </tr>
                         <tr>
@@ -319,6 +339,7 @@
                             <td><span id="pos_qty_1"></span></td>
                             <td><span id="pos_price_1"></span></td>
                             <td><span id="pos_dateOf_1"></span></td>
+                            <td><span id="pos_open_1"></span></td>
                             <td><span id="pos_currentPrice_1"></span></td>
                         </tr>
                         <tr>
@@ -327,6 +348,7 @@
                             <td><span id="pos_qty_2"></span></td>
                             <td><span id="pos_price_2"></span></td>
                             <td><span id="pos_dateOf_2"></span></td>
+                            <td><span id="pos_open_2"></span></td>
                             <td><span id="pos_currentPrice_2"></span></td>
                         </tr>
                         <tr>
@@ -335,6 +357,7 @@
                             <td><span id="pos_qty_3"></span></td>
                             <td><span id="pos_price_3"></span></td>
                             <td><span id="pos_dateOf_3"></span></td>
+                            <td><span id="pos_open_3"></span></td>
                             <td><span id="pos_currentPrice_3"></span></td>
                         </tr>
                         <tr>
@@ -343,6 +366,7 @@
                             <td><span id="pos_qty_4"></span></td>
                             <td><span id="pos_price_4"></span></td>
                             <td><span id="pos_dateOf_4"></span></td>
+                            <td><span id="pos_open_4"></span></td>
                             <td><span id="pos_currentPrice_4"></span></td>
                         </tr>
                         <tr>
@@ -351,6 +375,7 @@
                             <td><span id="pos_qty_5"></span></td>
                             <td><span id="pos_price_5"></span></td>
                             <td><span id="pos_dateOf_5"></span></td>
+                            <td><span id="pos_open_5"></span></td>
                             <td><span id="pos_currentPrice_5"></span></td>
                         </tr>
                         <tr>
@@ -359,6 +384,7 @@
                             <td><span id="pos_qty_6"></span></td>
                             <td><span id="pos_price_6"></span></td>
                             <td><span id="pos_dateOf_6"></span></td>
+                            <td><span id="pos_open_6"></span></td>
                             <td><span id="pos_currentPrice_6"></span></td>
                         </tr>
                         <tr>
@@ -367,6 +393,7 @@
                             <td><span id="pos_qty_7"></span></td>
                             <td><span id="pos_price_7"></span></td>
                             <td><span id="pos_dateOf_7"></span></td>
+                            <td><span id="pos_open_7"></span></td>
                             <td><span id="pos_currentPrice_7"></span></td>
                         </tr>
                         <tr>
@@ -375,6 +402,7 @@
                             <td><span id="pos_qty_8"></span></td>
                             <td><span id="pos_price_8"></span></td>
                             <td><span id="pos_dateOf_8"></span></td>
+                            <td><span id="pos_open_8"></span></td>
                             <td><span id="pos_currentPrice_8"></span></td>
                         </tr>
                         <tr>
@@ -383,6 +411,7 @@
                             <td><span id="pos_qty_9"></span></td>
                             <td><span id="pos_price_9"></span></td>
                             <td><span id="pos_dateOf_9"></span></td>
+                            <td><span id="pos_open_9"></span></td>
                             <td><span id="pos_currentPrice_9"></span></td>
                         </tr>
                         <tr>
@@ -391,6 +420,7 @@
                             <td><span id="pos_qty_10"></span></td>
                             <td><span id="pos_price_10"></span></td>
                             <td><span id="pos_dateOf_10"></span></td>
+                            <td><span id="pos_open_10"></span></td>
                             <td><span id="pos_currentPrice_10"></span></td>
                         </tr>
                     </table>
@@ -411,7 +441,7 @@
                 <div class="slide">
                     <div class="btn-slide">
                         v</div></div>
-
+              <div class="col-md-12" id="chart" style="height:400px;"></div>
             </div>
 
             <div class="col-md-4">
@@ -441,6 +471,10 @@
                             <tr width="50%">
                                 <td><b><div title="The price of the stock">Price:</div></b></td>
                                 <td><span id="stock_2"></span></td>
+                            </tr>
+                            <tr width="50%">
+                                <td><b><div title="The open price of the stock">Open Price:</div></b></td>
+                                <td><span id="stock_12"></span></td>
                             </tr>
                             <tr width="50%">
                                 <td><b><div title="Amount of shares that have been traded in a specific period">Volume:</div></b></td>
@@ -486,7 +520,7 @@
         </div>
     </div>
     <div class="col-md-2"></div>
-    <div class="col-md-6" id="chart" style="height:400px;"></div>
+    
 
     <div id="achievements"></div>
 
@@ -529,13 +563,51 @@
     </script>
 
     <script>
-        initPortfolio();
-        function initPortfolio() {
-            myJsRoutes.controllers.PortfolioController.getPortfolioOverview(@userId, @leagueId).ajax({
+    
+    
+        initSelector();
+        function initSelector() {
+        
+          myJsRoutes.controllers.PortfolioController.findPortfoliosByUserId(@userId).ajax({
                 type: "GET",
                 dataType: 'json',
                 success : function(data) {
+                  var select = document.getElementById("selectLeague"); 
+                  for(var i = 0; i < data.leagues.length; i++) {
+                    //alert("test: " + data.leagues[i].id);
+                    var opt = data.leagues[i].name;
+                    var el = document.createElement("option");
+                    el.textContent = opt;
+                    el.value = data.leagues[i].id;
+                    select.appendChild(el);
+                  }
+                    
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert("Something bad happened " + errorThrown);
+                }
 
+            });
+     
+        }
+    
+        initPortfolio(@leagueId);
+        function initPortfolio( league_id ) {
+        
+ 
+        
+            document.getElementById("leaderboard_a").href = "/lb/" + league_id;
+        
+            myJsRoutes.controllers.PortfolioController.getPortfolioOverview( @userId, league_id).ajax({
+                type: "GET",
+                dataType: 'json',
+                success : function(data) {
+                    
+                    if ((data.achv & 1<<1<<1) == 1) {
+                      //display Short Stock if they have achievement
+                      document.getElementById("short1").style.display = 'inline';
+                    }
+                    
                     var d = document.getElementById("bs_nav1");
                     d.className = "active";
                     var e = document.getElementById("bs_nav2");
@@ -547,6 +619,8 @@
                     document.getElementById("starting_value").innerHTML = "$ " + Number(data.startingValue).toFixed(2);
                     document.getElementById("portfolio_value").innerHTML = "$ " + Number(data.totalStockValue + data.cash).toFixed(2);
                     document.getElementById("percent_return").innerHTML = Number(-100 * (1 - (data.totalStockValue + data.cash) / data.startingValue)).toFixed(2) + "%";
+                    document.getElementById("opening_stock_value").innerHTML = "$ " + Number(data.openingStockValue).toFixed(2);
+                    document.getElementById("daily_return").innerHTML = Number(-100 * (1 - (data.totalStockValue) / data.openingStockValue)).toFixed(2) + "%";
 
                     arr = data.positions;
                     iterator = 0;

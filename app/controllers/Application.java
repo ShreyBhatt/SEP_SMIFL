@@ -57,9 +57,9 @@ public class Application extends Controller {
      * @return the global leaderboard webpage
      */
     @SecureSocial.SecuredAction
-    public static Result leaderboard() {
+    public static Result leaderboard(final long leagueId) {
 
-        return Application.getLeaderboard(1L);
+        return Application.getLeaderboard(leagueId);
     }
 
     /**
@@ -138,6 +138,7 @@ public class Application extends Controller {
                     routes.javascript.Trader.sellStock(),
                     routes.javascript.Trader.shortStock(),
                     routes.javascript.PortfolioController.getPortfolioOverview(),
+                    routes.javascript.PortfolioController.findPortfoliosByUserId(),
                     routes.javascript.LeaderboardController.getLeaderboard(),
                     routes.javascript.LeagueController.getPublicLeagues(),
                     routes.javascript.LeagueController.addPublicLeague(),

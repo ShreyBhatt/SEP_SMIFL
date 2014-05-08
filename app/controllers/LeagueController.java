@@ -80,7 +80,6 @@ public class LeagueController extends Controller {
 		ArrayNode leaguesObj = result.putArray("leagues");
 		
 		for (League league : leagues) {
-		  System.out.println("found league");
 			leaguesObj.add(league.getJson());			
 		}
     

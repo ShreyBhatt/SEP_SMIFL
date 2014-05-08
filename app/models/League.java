@@ -58,6 +58,7 @@ public class League extends Model {
       .put("id", this.id)
       .put("name", this.name)
       .put("goal", this.goal)
+      .put("passkey", this.passkey)
       .put("ownerId", this.ownerId)
       .put("initialBalance", this.initialBalance)
       .put("brokerageFee", this.brokerageFee);
@@ -75,6 +76,13 @@ public class League extends Model {
       .where()
       .eq("id", id)
       .findUnique();
+  }
+  
+  public static List<League> findAllById ( final Long id ) {
+    return Ebean.find(League.class)
+      .where()
+      .eq("id", id)
+      .findList();
   }
 
   public static League add ( final String name, final String goal, final String passkey, final long ownerId, final double initialBalance, final double brokerageFee ) {
@@ -97,7 +105,6 @@ public class League extends Model {
   }
   
   public static List<League> searchByName ( String leagueName ) {
-
     return Ebean.find(League.class)
       .where()
       .ilike("name", "%" + leagueName + "%")

@@ -69,7 +69,7 @@ public class Position extends Model {
    * Method for making a JSON representation of this object.
    * @return Returns an ObjectNode that contains the JSON for this object.
    */
-  public ObjectNode getJson( final double price) {
+  public ObjectNode getJson( final double price, final double open ) {
     return Json.newObject()
       .put("portfolioId", this.portfolioId)
       .put("typeOf", this.typeOf)
@@ -79,7 +79,8 @@ public class Position extends Model {
       .put("dateOf",
               this.dateOf.toString()
                 .substring(0, this.dateOf.toString().length() - 9))
-      .put("currentPrice", price);
+      .put("currentPrice", price)
+      .put("open", open);
   }
 
   /**

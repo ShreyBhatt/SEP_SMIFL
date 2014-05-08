@@ -19,7 +19,6 @@
                             <tr>
                                 <th>#</th>
                                 <th>Name</th>
-                                <th>Goal</th>
                                 <th>Owner Id</th>
                                 <th>Initial Balance</th>
                                 <th>Brokerage Fee</th>
@@ -64,7 +63,6 @@
 
                         $( "#leagues tbody" ).append( "<tr class=\"lb_top_table_alt\">" + "<td>" + k + "</td>" 
                             + "<td>" + data.leagues[k].name + "</td>" 
-                            + "<td>" + data.leagues[k].goal + "</td>" 
                             + "<td>" + data.leagues[k].ownerId + "</td>" 
                             + "<td>" + data.leagues[k].initialBalance + "</td>" 
                             + "<td>" + data.leagues[k].brokerageFee + "</td>" 
@@ -73,7 +71,6 @@
                         } else {
                         $( "#leagues tbody" ).append( "<tr>" + "<td>" + k + "</td>" 
                             + "<td>" + data.leagues[k].name + "</td>" 
-                            + "<td>" + data.leagues[k].goal + "</td>" 
                             + "<td>" + data.leagues[k].ownerId + "</td>" 
                             + "<td>" + data.leagues[k].initialBalance + "</td>" 
                             + "<td>" + data.leagues[k].brokerageFee + "</td>" 

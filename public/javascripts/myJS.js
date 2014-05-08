@@ -56,6 +56,7 @@ function clearSlider() {
         document.getElementById("pos_qty_" + k).innerHTML = "";
         document.getElementById("pos_price_" + k).innerHTML = "";
         document.getElementById("pos_dateOf_" + k).innerHTML = "";
+        document.getElementById("pos_open_" + k).innerHTML = "";
         document.getElementById("pos_currentPrice_" + k).innerHTML = "";
     }
 }
@@ -76,8 +77,12 @@ function updateSlider() {
         document.getElementById("pos_price_" + l).innerHTML =
             "$ " + Number(arr[k].price).toFixed(2);
         document.getElementById("pos_dateOf_" + l).innerHTML = arr[k].dateOf;
+        document.getElementById("pos_open_" + l).innerHTML =  
+            "$ " + Number(arr[k].open).toFixed(2);
         document.getElementById("pos_currentPrice_" + l).innerHTML =
             "$ " + Number(arr[k].currentPrice).toFixed(2);
+        priceColors(arr[k].open, arr[k].price, "pos_open_" + l);
+        priceColors(arr[k].currentPrice, arr[k].open, "pos_currentPrice_" + l);
     }
     iterator = k;
     updatePrev();
@@ -100,8 +105,12 @@ function prevSlider() {
         document.getElementById("pos_price_" + l).innerHTML =
             "$ " + Number(arr[k].price).toFixed(2);
         document.getElementById("pos_dateOf_" + l).innerHTML = arr[k].dateOf;
+        document.getElementById("pos_open_" + l).innerHTML = 
+            "$ " + Number(arr[k].open).toFixed(2);
         document.getElementById("pos_currentPrice_" + l).innerHTML =
             "$ " + Number(arr[k].currentPrice).toFixed(2);
+        priceColors(arr[k].open, arr[k].price, "pos_open_" + l);
+        priceColors(arr[k].currentPrice, arr[k].open, "pos_currentPrice_" + l);
     }
     iterator = k;
     updatePrev();
@@ -173,6 +182,30 @@ function updateQuery(data) {
     document.getElementById("stock_10").innerHTML =
         "$ " + Number(data.stock.moving50DayAvg).toFixed(2);
     document.getElementById("stock_11").innerHTML = data.stock.marketCap;
+    document.getElementById("stock_12").innerHTML =
+        "$ " + Number(data.stock.open).toFixed(2);
+        
+        
+    priceColors(data.stock.price, data.stock.open, "stock_2");
+
+}
+
+function priceColors(price, open, element) {
+
+    if (price < open) {
+    
+      document.getElementById(element).className = "red";
+    
+    } else if (price > open) {
+    
+      document.getElementById(element).className = "green";
+      
+    } else {
+    
+      document.getElementById(element).className = "black";
+      
+    }
+
 }
 
 $('.tb11_go').click(function(e) {

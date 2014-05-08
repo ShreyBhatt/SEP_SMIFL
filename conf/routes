@@ -32,7 +32,7 @@ GET     /u/:email                  controllers.UserController.getUser(email:Stri
 GET    /u/:first/:last/:email      controllers.UserController.addUser(first:String, last:String, email:String)
 
 # GET all public leagues
-GET    /l					                 controllers.Application.leagues()
+GET    /l                     controllers.Application.leagues()
 GET    /l/:leagueId                controllers.LeagueController.getPublicLeagues(leagueId:Long)
 
 # This should be a POST or PUT
@@ -49,10 +49,11 @@ GET    /join/private/:leagueId/:userId/:passkey        controllers.LeagueControl
 
 # GET a portfolio based on the league and user ids
 GET    /p/:userId/:leagueId        controllers.PortfolioController.getPortfolioOverview(userId:Long, leagueId:Long)
+GET    /q/:userId                  controllers.PortfolioController.findPortfoliosByUserId(userId:Long)
 
 # GET a leaderboard based on the league id
-GET    /lb                          controllers.Application.leaderboard()
-GET    /lb/:leagueId                controllers.Application.getLeaderboard(leagueId:Long)
+GET    /lb/:leagueId                          controllers.Application.leaderboard(leagueId:Long)
+GET    /lb/get/:leagueId                controllers.Application.getLeaderboard(leagueId:Long)
 GET    /lb_content/:leagueId        controllers.LeaderboardController.getLeaderboard(leagueId:Long)
 
 # TRADES
