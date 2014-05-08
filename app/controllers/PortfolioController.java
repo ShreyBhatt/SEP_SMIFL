@@ -137,7 +137,7 @@ public class PortfolioController extends Controller {
         }
         result.put("totalStockValue", totalStockValue);
         result.put("openingStockValue", openingStockValue);
-        result.put("startingValue", 250000);
+        result.put("startingValue", league.initialBalance);
 
         return ok(result);
 

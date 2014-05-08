@@ -42,7 +42,10 @@ public class MyUserService extends BaseUserService {
     user.provider = identity.identityId().providerId();
     user.first = identity.firstName();
     user.last = identity.lastName();
-    user.email = identity.email().get();
+    if(user.email = identity.email().get()) {
+    } else {
+      user.email = "testing@test.com";
+    }
     return user;
   }
 
