@@ -42,8 +42,9 @@ public class MyUserService extends BaseUserService {
     user.provider = identity.identityId().providerId();
     user.first = identity.firstName();
     user.last = identity.lastName();
-    if(user.email = identity.email().get()) {
-    } else {
+    try { 
+      user.email = identity.email().get());
+    } catch ( final Exception e ) {
       user.email = "testing@test.com";
     }
     return user;
